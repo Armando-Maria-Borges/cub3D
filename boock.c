@@ -200,6 +200,39 @@ Coral: 0xFF7F50
 Chocolate: 0xD2691E
 Lima: 0x00FF00
 
+Aqui estão as cores no formato x,x,x:
+
+Branco: 255,255,255
+Preto: 0,0,0
+Vermelho: 255,0,0
+Verde: 0,255,0
+Azul: 0,0,255
+Amarelo: 255,255,0
+Ciano: 0,255,255
+Magenta: 255,0,255
+Cinza: 128,128,128
+Cinza Claro: 211,211,211
+Marrom: 165,42,42
+Bege: 245,245,220
+Roxo: 128,0,128
+Laranja: 255,165,0
+Rosa: 255,192,203
+Verde Claro: 144,238,144
+Azul Claro: 173,216,230
+Azul Marinho: 0,0,128
+Azul Turquesa: 64,224,208
+Ouro: 255,215,0
+Prata: 192,192,192
+Turquesa: 72,209,204
+Vermelho Escuro: 139,0,0
+Verde Escuro: 0,100,0
+Azul Escuro: 0,0,139
+Pêssego: 255,218,185
+Lavanda: 230,230,250
+Coral: 255,127,80
+Chocolate: 210,105,30
+Lima: 0,255,0
+
 
 
 https://imageresizer.com/pt
