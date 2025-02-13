@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/02/12 12:56:04 by aborges          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:19:54 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,10 @@ void encontrar_jogador(t_data *data);
 int fechar_janela(void *param);
 void pintar_chao_teto(t_data *data);
 
+void pintar_janela(t_data *data);
 
 unsigned int cria_trgb(int t, int r, int g, int b);
-
-//void rotacionar_jogador(int keycode, t_player *player);
 void rotacionar_jogador(t_data *data);
-
-// Prototipação das funções utilizadas
 void carregar_textura(void *mlx, t_texture *texture, const char *diretorio, const char *nome_textura);
 void carregar_cor(char *linha, int *r, int *g, int *b);
 char *substituir_tabs(const char *linha);
@@ -601,23 +598,20 @@ int check_collision(t_data *data, double new_x, double new_y)
 
 void mover_jogador(t_data *data)
 {
-    double move_speed = 0.1;
-    double rotation_speed = 0.05;
+    double move_speed = 0.05;
+    double rotation_speed = 0.04;
     double new_x, new_y;
 
-    // Rotação do player
     if (data->keys.left)
         data->player.angle -= rotation_speed;
     if (data->keys.right)
         data->player.angle += rotation_speed;
 
-    // Manter o ângulo entre 0 e 2*PI
     if (data->player.angle < 0)
         data->player.angle += 2 * M_PI;
     if (data->player.angle > 2 * M_PI)
         data->player.angle -= 2 * M_PI;
 
-    // Movimento para frente
     if (data->keys.w)
     {
         new_x = data->player.x + cos(data->player.angle) * move_speed;
@@ -629,7 +623,6 @@ void mover_jogador(t_data *data)
         }
     }
     
-    // Movimento para trás
     if (data->keys.s)
     {
         new_x = data->player.x - cos(data->player.angle) * move_speed;
@@ -641,7 +634,6 @@ void mover_jogador(t_data *data)
         }
     }
     
-    // Movimento para direita (strafe)
     if (data->keys.d)
     {
         new_x = data->player.x + cos(data->player.angle + M_PI_2) * move_speed;
@@ -653,7 +645,6 @@ void mover_jogador(t_data *data)
         }
     }
     
-    // Movimento para esquerda (strafe)
     if (data->keys.a)
     {
         new_x = data->player.x - cos(data->player.angle + M_PI_2) * move_speed;
@@ -668,7 +659,6 @@ void mover_jogador(t_data *data)
 
 
 //##########################################################3333
-
 int key_press(int keycode, void *param)
 {
     t_data *data = (t_data *)param;
@@ -734,8 +724,6 @@ void desenhar_mapa(t_data *data)
             }
         }
     }
-
-    // Desenhar jogador no minimapa
     for (i = 0; i < TILE_SIZE / 2; i++)
     {
         for (j = 0; j < TILE_SIZE / 2; j++)
@@ -750,12 +738,11 @@ int render_scene(void *param)
     t_data *data = (t_data *)param;
 
     pintar_chao_teto(data);
-    raycast(data); // Chamada para a função raycast
+    raycast(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+    mover_jogador(data);
 
-    mover_jogador(data); // Atualiza a posição do jogador
-
-    desenhar_mapa(data); //tem o mini mapa
+    desenhar_mapa(data);
 
     return 0;
 }
@@ -781,8 +768,7 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: ./cub3d <mapa>\n");
         return 1;
     }
-    
-    // Inicializar a MLX
+
     data.mlx = mlx_init();
     if (!data.mlx)
     {
@@ -790,7 +776,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Criar a janela
     data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
     if (!data.win)
     {
@@ -798,7 +783,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Criar a imagem principal
     data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
     if (!data.img)
     {
@@ -806,7 +790,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Obter endereço da imagem
     data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
                                   &data.line_length, &data.endian);
     if (!data.addr)
@@ -818,15 +801,13 @@ int main(int argc, char **argv)
     printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
            data.bits_per_pixel, data.line_length, data.endian);
     
-    /* Ler o arquivo de mapa – esta função também processa as configurações (texturas e cores) */
     data.mapa = ler_mapa(argv[1], &data);
     if (!data.mapa)
     {
         fprintf(stderr, "Erro ao carregar o mapa\n");
         return 1;
     }
-    
-    /* Verificar as configurações lidas */
+
     for (int i = 0; i < 4; i++)
     {
         if (!data.texture_paths[i])
@@ -838,8 +819,7 @@ int main(int argc, char **argv)
     }
     printf("Cor do Chão (F): #%06X\n", data.floor_color);
     printf("Cor do Teto (C): #%06X\n", data.ceiling_color);
-    
-    /* Carregar as texturas usando os caminhos lidos */
+
     for (int i = 0; i < 4; i++)
     {
         carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
@@ -851,8 +831,7 @@ int main(int argc, char **argv)
         printf("Textura %d carregada: %dx%d\n", i, 
                data.textures[i].width, data.textures[i].height);
     }
-    
-    /* Debug: imprimir o mapa carregado */
+
     printf("Mapa carregado:\n");
     for (int y = 0; y < data.map_height; y++)
     {
@@ -862,8 +841,6 @@ int main(int argc, char **argv)
     encontrar_jogador(&data);
     printf("Jogador encontrado em: %.2f, %.2f, ângulo: %.2f\n",
            data.player.x, data.player.y, data.player.angle);
-    
-    // Hooks para eventos de teclado e renderização
     mlx_hook(data.win, 2, 1L << 0, key_press, &data);
     mlx_hook(data.win, 3, 1L << 1, key_release, &data);
     mlx_hook(data.win, 17, 0, fechar_janela, &data);
