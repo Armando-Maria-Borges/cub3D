@@ -1019,9 +1019,6 @@ Em resumo, cos e sin convertem ângulos em vetores de movimento, enquanto π é 
     return 0;
 }
 
-
-Cada bloco de código agora contém comentários explicativos sobre:
-
 Cálculos e fórmulas: Por exemplo, no raycast explicamos como se calcula as distâncias incrementais, a distância perpendicular para evitar distorção, e o mapeamento da textura.
 Lógica de movimentação: Na função mover_jogador, detalhamos como as posições são atualizadas usando funções trigonométricas e como se evita colisões.
 Leitura do mapa: Na função ler_mapa, comentamos a dupla passagem para ler as configurações e depois as linhas do mapa, além do tratamento de tabs.
