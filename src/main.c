@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/02/12 10:38:50 by aborges          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:19:54 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,10 @@ void encontrar_jogador(t_data *data);
 int fechar_janela(void *param);
 void pintar_chao_teto(t_data *data);
 
+void pintar_janela(t_data *data);
 
 unsigned int cria_trgb(int t, int r, int g, int b);
-
-//void rotacionar_jogador(int keycode, t_player *player);
 void rotacionar_jogador(t_data *data);
-
-// Prototipação das funções utilizadas
 void carregar_textura(void *mlx, t_texture *texture, const char *diretorio, const char *nome_textura);
 void carregar_cor(char *linha, int *r, int *g, int *b);
 char *substituir_tabs(const char *linha);
@@ -163,7 +160,6 @@ void pintar_chao_teto(t_data *data)
         }
     }
 }
-
 
 
 // Implementação da função (no arquivo .c)
@@ -287,6 +283,7 @@ char *substituir_tabs(const char *linha)
 
     return nova_linha;
 }
+
 char **ler_mapa(char *arquivo, t_data *data)
 {
     FILE *f = fopen(arquivo, "r");
@@ -553,112 +550,6 @@ void raycast(t_data *data)
     }
 }
 
-
-/*
-void raycast(t_data *data)
-{
-    int x;
-    double delta_angle = FOV / (double)NUM_RAYS;
-    double ray_angle = data->player.angle - (FOV / 2);
-
-    for (x = 0; x < NUM_RAYS; x++)
-    {
-        double dir_x = cos(ray_angle);
-        double dir_y = sin(ray_angle);
-
-        int map_x = (int)data->player.x;
-        int map_y = (int)data->player.y;
-
-        double delta_dist_x = (dir_x != 0) ? fabs(1 / dir_x) : 1e30;
-        double delta_dist_y = (dir_y != 0) ? fabs(1 / dir_y) : 1e30;
-        double side_dist_x, side_dist_y;
-
-        int step_x = (dir_x < 0) ? -1 : 1;
-        int step_y = (dir_y < 0) ? -1 : 1;
-
-        side_dist_x = (dir_x < 0) ? (data->player.x - map_x) * delta_dist_x : (map_x + 1.0 - data->player.x) * delta_dist_x;
-        side_dist_y = (dir_y < 0) ? (data->player.y - map_y) * delta_dist_y : (map_y + 1.0 - data->player.y) * delta_dist_y;
-
-        int hit = 0, side;
-        double perp_wall_dist;
-
-        while (!hit)
-        {
-            if (side_dist_x < side_dist_y)
-            {
-                side_dist_x += delta_dist_x;
-                map_x += step_x;
-                side = 0;
-            }
-            else
-            {
-                side_dist_y += delta_dist_y;
-                map_y += step_y;
-                side = 1;
-            }
-
-            if (map_y >= 0 && map_y < data->map_height && map_x >= 0 && map_x < data->map_width &&
-                data->mapa[map_y][map_x] == '1')
-            {
-                hit = 1;
-                perp_wall_dist = (side == 0) ? (map_x - data->player.x + (1 - step_x) / 2) / dir_x
-                                             : (map_y - data->player.y + (1 - step_y) / 2) / dir_y;
-                if (perp_wall_dist < 0.1)
-                    perp_wall_dist = 0.1;
-            }
-        }
-
-        int wall_height = (int)(NOVA_ALTURA / perp_wall_dist * 1.5);
-
-        int start = (NOVA_ALTURA / 2) - (wall_height / 2);
-        int end = (NOVA_ALTURA / 2) + (wall_height / 2);
-        if (start < 0) start = 0;
-        if (end >= NOVA_ALTURA) end = NOVA_ALTURA - 1;
-
-        t_texture *texture;
-        if (side == 0 && step_x > 0)
-            texture = &data->textures[0];
-        else if (side == 0 && step_x < 0)
-            texture = &data->textures[1];
-        else if (side == 1 && step_y > 0)
-            texture = &data->textures[2];
-        else
-            texture = &data->textures[3];
-
-
-
-        double wall_x;
-        if (side == 0) // Se a parede é vertical
-            wall_x = data->player.y + perp_wall_dist * dir_y;
-        else           // Se a parede é horizontal
-            wall_x = data->player.x + perp_wall_dist * dir_x;
-        wall_x -= floor(wall_x); // Obtém a parte fracionária
-
-
-        int tex_x = (int)(wall_x * (double)(texture->width));
-        if (tex_x < 0)
-            tex_x = 0;
-        if (tex_x >= texture->width)
-            tex_x = texture->width - 1;
-
-
-        for (int y = start; y < end; y++)
-        {
-            int d = y * 256 - NOVA_ALTURA * 128 + wall_height * 128;
-            int tex_y = ((d * texture->height) / wall_height) / 256;
-            if (tex_y < 0)
-                tex_y = 0;
-            if (tex_y >= texture->height)
-                tex_y = texture->height - 1;
-            unsigned int color = get_pixel(texture, tex_x, tex_y);
-            my_mlx_pixel_put(data, x, y, color);
-        }
-
-        ray_angle += delta_angle;
-    }
-}
-*/
-
 //##########################################################
 
 // Função auxiliar para limitar um valor entre um mínimo e máximo.
@@ -707,23 +598,20 @@ int check_collision(t_data *data, double new_x, double new_y)
 
 void mover_jogador(t_data *data)
 {
-    double move_speed = 0.1;
-    double rotation_speed = 0.05;
+    double move_speed = 0.05;
+    double rotation_speed = 0.04;
     double new_x, new_y;
 
-    // Rotação do player
     if (data->keys.left)
         data->player.angle -= rotation_speed;
     if (data->keys.right)
         data->player.angle += rotation_speed;
 
-    // Manter o ângulo entre 0 e 2*PI
     if (data->player.angle < 0)
         data->player.angle += 2 * M_PI;
     if (data->player.angle > 2 * M_PI)
         data->player.angle -= 2 * M_PI;
 
-    // Movimento para frente
     if (data->keys.w)
     {
         new_x = data->player.x + cos(data->player.angle) * move_speed;
@@ -735,7 +623,6 @@ void mover_jogador(t_data *data)
         }
     }
     
-    // Movimento para trás
     if (data->keys.s)
     {
         new_x = data->player.x - cos(data->player.angle) * move_speed;
@@ -747,7 +634,6 @@ void mover_jogador(t_data *data)
         }
     }
     
-    // Movimento para direita (strafe)
     if (data->keys.d)
     {
         new_x = data->player.x + cos(data->player.angle + M_PI_2) * move_speed;
@@ -759,7 +645,6 @@ void mover_jogador(t_data *data)
         }
     }
     
-    // Movimento para esquerda (strafe)
     if (data->keys.a)
     {
         new_x = data->player.x - cos(data->player.angle + M_PI_2) * move_speed;
@@ -774,7 +659,6 @@ void mover_jogador(t_data *data)
 
 
 //##########################################################3333
-
 int key_press(int keycode, void *param)
 {
     t_data *data = (t_data *)param;
@@ -840,8 +724,6 @@ void desenhar_mapa(t_data *data)
             }
         }
     }
-
-    // Desenhar jogador no minimapa
     for (i = 0; i < TILE_SIZE / 2; i++)
     {
         for (j = 0; j < TILE_SIZE / 2; j++)
@@ -856,10 +738,11 @@ int render_scene(void *param)
     t_data *data = (t_data *)param;
 
     pintar_chao_teto(data);
-    raycast(data); // Chamada para a função raycast
+    raycast(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+    mover_jogador(data);
 
-    mover_jogador(data); // Atualiza a posição do jogador
+    desenhar_mapa(data);
 
     return 0;
 }
@@ -885,8 +768,7 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: ./cub3d <mapa>\n");
         return 1;
     }
-    
-    // Inicializar a MLX
+
     data.mlx = mlx_init();
     if (!data.mlx)
     {
@@ -894,7 +776,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Criar a janela
     data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
     if (!data.win)
     {
@@ -902,7 +783,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Criar a imagem principal
     data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
     if (!data.img)
     {
@@ -910,7 +790,6 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Obter endereço da imagem
     data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
                                   &data.line_length, &data.endian);
     if (!data.addr)
@@ -922,15 +801,13 @@ int main(int argc, char **argv)
     printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
            data.bits_per_pixel, data.line_length, data.endian);
     
-    /* Ler o arquivo de mapa – esta função também processa as configurações (texturas e cores) */
     data.mapa = ler_mapa(argv[1], &data);
     if (!data.mapa)
     {
         fprintf(stderr, "Erro ao carregar o mapa\n");
         return 1;
     }
-    
-    /* Verificar as configurações lidas */
+
     for (int i = 0; i < 4; i++)
     {
         if (!data.texture_paths[i])
@@ -942,8 +819,7 @@ int main(int argc, char **argv)
     }
     printf("Cor do Chão (F): #%06X\n", data.floor_color);
     printf("Cor do Teto (C): #%06X\n", data.ceiling_color);
-    
-    /* Carregar as texturas usando os caminhos lidos */
+
     for (int i = 0; i < 4; i++)
     {
         carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
@@ -955,8 +831,7 @@ int main(int argc, char **argv)
         printf("Textura %d carregada: %dx%d\n", i, 
                data.textures[i].width, data.textures[i].height);
     }
-    
-    /* Debug: imprimir o mapa carregado */
+
     printf("Mapa carregado:\n");
     for (int y = 0; y < data.map_height; y++)
     {
@@ -966,8 +841,6 @@ int main(int argc, char **argv)
     encontrar_jogador(&data);
     printf("Jogador encontrado em: %.2f, %.2f, ângulo: %.2f\n",
            data.player.x, data.player.y, data.player.angle);
-    
-    // Hooks para eventos de teclado e renderização
     mlx_hook(data.win, 2, 1L << 0, key_press, &data);
     mlx_hook(data.win, 3, 1L << 1, key_release, &data);
     mlx_hook(data.win, 17, 0, fechar_janela, &data);
