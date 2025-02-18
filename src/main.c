@@ -40,22 +40,21 @@
 #define KEY_RIGHT 65363
 #define TAB_SIZE 4  // Define quantos espaços um tab equivale
 
-typedef struct s_player
+typedef	struct	s_player
 {
-    double x;
-    double y;
-    double angle;
-} t_player;
+	double x;
+	double y;
+	double angle;
+}	t_player;
 
-typedef struct s_key_state
+typedef	struct	s_key_state
 {
-    int w;
-    int a;
-    int s;
-    int d;
-    int left;
-    int right;
-} t_key_state;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int right;
+}	t_key_state;
 
 typedef struct s_texture
 {
@@ -90,321 +89,369 @@ typedef struct s_data
 } t_data;
 
 // Funções auxiliares
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
-unsigned int get_pixel(t_texture *tex, int x, int y);
-void desenhar_mapa(t_data *data);
-int render_scene(void *param);
-void carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path, char **paths);
-void carregar_cor(char *linha, int *r, int *g, int *b);
-void raycast(t_data *data);
-void mover_jogador(t_data *data);
-int key_press(int keycode, void *param);
-int key_release(int keycode, void *param);
-char **ler_mapa(char *arquivo, t_data *data);
-void encontrar_jogador(t_data *data);
-int fechar_janela(void *param);
-void pintar_chao_teto(t_data *data);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+unsigned int	get_pixel(t_texture *tex, int x, int y);
+void	desenhar_mapa(t_data *data);
+int		render_scene(void *param);
+void	carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path, char **paths);
+void	carregar_cor(char *linha, int *r, int *g, int *b);
+void	raycast(t_data *data);
+void	mover_jogador(t_data *data);
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+char	**ler_mapa(char *arquivo, t_data *data);
+void	encontrar_jogador(t_data *data);
+int		fechar_janela(void *param);
+void	pintar_chao_teto(t_data *data);
 
-void pintar_janela(t_data *data);
+void	pintar_janela(t_data *data);
 
-unsigned int cria_trgb(int t, int r, int g, int b);
-void rotacionar_jogador(t_data *data);
-void carregar_textura(void *mlx, t_texture *texture, const char *diretorio, const char *nome_textura);
-void carregar_cor(char *linha, int *r, int *g, int *b);
-char *substituir_tabs(const char *linha);
+unsigned int	cria_trgb(int t, int r, int g, int b);
+void	carregar_textura(void *mlx, t_texture *texture, const char *diretorio, const char *nome_textura);
+void	carregar_cor(char *linha, int *r, int *g, int *b);
+char	*substituir_tabs(const char *linha);
 
-int fechar_janela(void *param)
+int	fechar_janela(void *param)
 {
-    t_data *data = (t_data *)param;
-
-    if (data->win)
-        mlx_destroy_window(data->mlx, data->win);
-    exit(0);
-    return (0);
+	t_data *data;
+	
+	data = (t_data *)param;
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	exit(0);
+	return (0);
 }
 
-void pintar_janela(t_data *data)
+void	pintar_janela(t_data *data)
 {
-    if (!data->mlx || !data->win)
-        return;
+	int	x;
+	int	y;
+	int	cor; 	
 
-    int x, y;
-    for (y = 0; y < NOVA_ALTURA; y++)
-    {
-        for (x = 0; x < NOVA_LARGURA; x++)
-        {
-            int cor = (y < NOVA_ALTURA / 2) ? 0xFFD700 : 0x00008B;
-            mlx_pixel_put(data->mlx, data->win, x, y, cor);
-        }
-    }
+	y = 0;
+	if (!data->mlx || !data->win)
+		return;
+	while (y < NOVA_ALTURA)
+	{
+		x = 0;
+		while (x < NOVA_LARGURA)
+		{
+			cor = (y < NOVA_ALTURA / 2) ? 0xFFD700 : 0x00008B;
+			mlx_pixel_put(data->mlx, data->win, x, y, cor);
+			x++;
+		}
+		y++;
+	}
 }
 
-void pintar_chao_teto(t_data *data)
+void	pintar_chao_teto(t_data *data)
 {
-    int x, y;
-    int floor_color = data->floor_color;   // Cor já no formato 0xRRGGBB
-    int ceiling_color = data->ceiling_color; // Cor já no formato 0xRRGGBB
+	int	x;
+	int	y;
+	int	floor_color;
+	int	ceiling_color = data->ceiling_color;
 
-    for (y = 0; y < NOVA_ALTURA / 2; y++)
-    {
-        for (x = 0; x < NOVA_LARGURA; x++)
-        {
-            my_mlx_pixel_put(data, x, y, ceiling_color);
-        }
-    }
-    for (y = NOVA_ALTURA / 2; y < NOVA_ALTURA; y++)
-    {
-        for (x = 0; x < NOVA_LARGURA; x++)
-        {
-            my_mlx_pixel_put(data, x, y, floor_color);
-        }
-    }
+    	y = 0;
+    	floor_color = data->floor_color;    // Cor já no formato 0xRRGGBB
+    	ceiling_color = data->ceiling_color; // Cor já no formato 0xRRGGBB
+    	while (y < NOVA_ALTURA / 2)
+    	{
+    		x = 0;
+    		while (x < NOVA_LARGURA)
+    		{
+    			my_mlx_pixel_put(data, x, y, ceiling_color);
+    			x++;
+    		}
+    		y++;
+    	}
+    	y = NOVA_ALTURA / 2
+    	while (y < NOVA_ALTURA)
+    	{
+    		x = 0;
+    		while (x < NOVA_LARGURA)
+    		{
+	    		my_mlx_pixel_put(data, x, y, floor_color);
+	    		x++;
+	    	}
+	    	y++;
+	    }
 }
-
 
 // Implementação da função (no arquivo .c)
-void carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path, char **paths)
+void	carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path, char **paths)
 {
-    for (int i = 0; i < 4; i++)
-    {
-        carregar_textura(mlx, &textures[i], cub_file_path, paths[i]);
-    }
+	int	i;
+	
+	i = 0;
+	while (i < 4)
+	{
+		carregar_textura(mlx, &textures[i], cub_file_path, paths[i]);
+		i++;
+	}
 }
 
 // Função para carregar texturas
-void carregar_textura(void *mlx, t_texture *texture, const char *base_dir, const char *nome_textura)
+void	carregar_textura(void *mlx, t_texture *texture, const char *base_dir, const char *nome_textura)
 {
-    char caminho_completo[1024];
+	char caminho_completo[1024];
 
     /* Se base_dir estiver vazio, usamos nome_textura diretamente */
-    if (base_dir == NULL || base_dir[0] == '\0')
-        snprintf(caminho_completo, sizeof(caminho_completo), "%s", nome_textura);
-    else
-        snprintf(caminho_completo, sizeof(caminho_completo), "%s/%s", base_dir, nome_textura);
+    	if (base_dir == NULL || base_dir[0] == '\0')
+		snprintf(caminho_completo, sizeof(caminho_completo), "%s", nome_textura);
+	else
+		snprintf(caminho_completo, sizeof(caminho_completo), "%s/%s", base_dir, nome_textura);
+	texture->img = mlx_xpm_file_to_image(mlx, caminho_completo, &texture->width, &texture->height);
+	if (!texture->img)
+        	fprintf(stderr, "Erro ao carregar a textura: %s\n", caminho_completo);
 
-    texture->img = mlx_xpm_file_to_image(mlx, caminho_completo, &texture->width, &texture->height);
-    if (!texture->img)
-    {
-        fprintf(stderr, "Erro ao carregar a textura: %s\n", caminho_completo);
-    }
-    else
-    {
-        texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, &texture->line_length, &texture->endian);
-    }
+	else
+		texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, &texture->line_length, &texture->endian);
 }
 
 
-void carregar_cor(char *linha, int *r, int *g, int *b)
+void	carregar_cor(char *linha, int *r, int *g, int *b)
 {
     sscanf(linha, "%d,%d,%d", r, g, b);
 }
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-    if (x >= 0 && x < NOVA_LARGURA && y >= 0 && y < NOVA_ALTURA)
-    {
-        char *dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-        *(unsigned int *)dst = color;
-    }
+	char *dst;
+
+	if (x >= 0 && x < NOVA_LARGURA && y >= 0 && y < NOVA_ALTURA)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+			*(unsigned int *)dst = color;
+	}
 }
 
-void encontrar_jogador(t_data *data)
+void	encontrar_jogador(t_data *data)
 {
-    int y, x;
-    for (y = 0; data->mapa[y] != NULL; y++)
-    {
-        for (x = 0; data->mapa[y][x] != '\0'; x++)
-        {
-            // Apenas considerar caracteres válidos para o jogador
-            if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' || 
-                data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
-            {
-                data->player.x = x + 0.5; // Centraliza no bloco
-                data->player.y = y + 0.5; // Centraliza no bloco
-
-                if (data->mapa[y][x] == 'N')
-                    data->player.angle = 3 * M_PI / 2;
-                else if (data->mapa[y][x] == 'S')
-                    data->player.angle = M_PI / 2;
-                else if (data->mapa[y][x] == 'E')
-                    data->player.angle = 0;
-                else if (data->mapa[y][x] == 'W')
-                    data->player.angle = M_PI;
-                return;
-            }
-        }
-    }
-    printf("Jogador não encontrado no mapa!\n");
+	int	y;
+	int	x;
+	
+	y = 0;
+	while (data->mapa[y] != NULL)
+	{
+		x = 0;
+		while (data->mapa[y][x] != '\0')
+		{
+			// Apenas considerar caracteres válidos para o jogador
+			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' || 
+				data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
+			{
+				data->player.x = x + 0.5; // Centraliza no bloco
+				data->player.y = y + 0.5; // Centraliza no bloco
+				if (data->mapa[y][x] == 'N')
+					data->player.angle = 3 * M_PI / 2;
+				else if (data->mapa[y][x] == 'S')
+					data->player.angle = M_PI / 2;
+				else if (data->mapa[y][x] == 'E')
+					data->player.angle = 0;
+				else if (data->mapa[y][x] == 'W')
+					data->player.angle = M_PI;
+				return;
+			}
+			x++;
+		}
+		y++;
+	}
+	printf("Jogador não encontrado no mapa!\n");
 }
 
-void rotacionar_jogador(t_data *data)
+void	rotacionar_jogador(t_data *data)
 {
-    double rotation_speed = 0.05;
+	double rotation_speed;
     
-    if (data->keys.left)
-        data->player.angle -= rotation_speed;
-    if (data->keys.right)
-        data->player.angle += rotation_speed;
-        
-    // Manter o ângulo entre 0 e 2*PI
-    if (data->player.angle < 0)
-        data->player.angle += 2 * M_PI;
-    if (data->player.angle > 2 * M_PI)
-        data->player.angle -= 2 * M_PI;
+	rotation_speed = 0.05;
+	if (data->keys.left)
+		data->player.angle -= rotation_speed;
+	if (data->keys.right)
+		data->player.angle += rotation_speed;
+        // Manter o ângulo entre 0 e 2*PI
+	if (data->player.angle < 0)
+		data->player.angle += 2 * M_PI;
+	if (data->player.angle > 2 * M_PI)
+		data->player.angle -= 2 * M_PI;
 }
 
-char *substituir_tabs(const char *linha)
+char	*substituir_tabs(const char *linha)
 {
-    int j, tab_count = 0;
-    size_t i, len = strlen(linha);
+	int	j;tab_count = 0;
+	int	tab_count;
+	size_t	i;
+	size_t	len;
+	char	*nova_linha
+	int	k;
 
-    // Conta quantos tabs existem na linha
-    for (i = 0; i < len; i++)
-        if (linha[i] == '\t')
-            tab_count++;
-
-    // Aloca memória para nova string com os espaços extras
-    char *nova_linha = malloc(len + (tab_count * (TAB_SIZE - 1)) + 1);
-    if (!nova_linha)
-        return NULL;
-
-    // Copia a linha substituindo tabs por espaços
-    for (i = 0, j = 0; linha[i] != '\0'; i++)
-    {
-        if (linha[i] == '\t')
-        {
-            for (int k = 0; k < TAB_SIZE; k++)
-                nova_linha[j++] = ' ';
-        }
-        else
-            nova_linha[j++] = linha[i];
-    }
-    nova_linha[j] = '\0';
-
-    return nova_linha;
+	tab_count = 0;
+	i = 0;
+	len = strlen(linha);
+		// Conta quantos tabs existem na linha
+	while (i < len)
+	{
+		if (linha[i] == '\t')
+			tab_count++;
+		i++;
+	}
+		// Aloca memória para nova string com os espaços extras
+	nova_linha = malloc(len + (tab_count * (TAB_SIZE - 1)) + 1);
+	if (!nova_linha)
+		return NULL;
+		// Copia a linha substituindo tabs por espaços
+	i = 0;
+	j = 0;
+	while (linha[i] != '\0')
+	{
+		if (linha[i] == '\t')
+		{
+			k = 0;
+			while (k < TAB_SIZE)
+				nova_linha[j++] = ' ';
+			k++;
+		}
+		else
+			nova_linha[j++] = linha[i];
+		i++;
+		nova_linha[j] = '\0';
+	}
+	return (nova_linha);
 }
 
-char **ler_mapa(char *arquivo, t_data *data)
+char	**ler_mapa(char *arquivo, t_data *data)
 {
-    FILE *f = fopen(arquivo, "r");
-    char **mapa = NULL;
-    char linha[1024];
-    int i = 0;
-    int config_count = 0;
+	FILE	*f;
+	char	**mapa;
+	char	linha[1024];
+	int	i;
+	int	config_count;
+	char	*linha_corrigida;
+	int	j;
     
-    data->map_height = 0; // Inicializa a altura do mapa
+	f = fopen(arquivo, "r");
+	mapa = NULL;
+	i = 0;
+	config_count = 0;
+	data->map_height = 0; // Inicializa a altura do mapa
+	if (!f)
+	{
+		write(2, "Erro ao abrir o mapa\n", 22);
+		return NULL;
+	}
+	printf("Abrindo arquivo: %s\n", arquivo);
+	while ()
+		
 
-    if (!f)
-    {
-        write(2, "Erro ao abrir o mapa\n", 22);
-        return NULL;
-    }
-    printf("Abrindo arquivo: %s\n", arquivo);
+	if (!f)
+	{
+		write(2, "Erro ao abrir o mapa\n", 22);
+		return NULL;
+    	}
+	printf("Abrindo arquivo: %s\n", arquivo);
+		/* Primeira passagem: processa as configurações e conta as linhas do mapa */
+	while (fgets(linha, sizeof(linha), f))
+	{
+		linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
+		if (strncmp(linha, "NO ", 3) == 0)
+		{
+			data->texture_paths[0] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "SO ", 3) == 0)
+		{
+			data->texture_paths[1] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "WE ", 3) == 0)
+		{
+			data->texture_paths[2] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "EA ", 3) == 0)
+		{
+			data->texture_paths[3] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "F ", 2) == 0)
+		{
+			int	r;
+			int	g;
+			int	b;
 
-    /* Primeira passagem: processa as configurações e conta as linhas do mapa */
-    while (fgets(linha, sizeof(linha), f))
-    {
-        linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
+			sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
+			data->floor_color = (r << 16) | (g << 8) | b;
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "C ", 2) == 0)
+		{
+			int r, g, b;
 
-        if (strncmp(linha, "NO ", 3) == 0)
-        {
-            data->texture_paths[0] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "SO ", 3) == 0)
-        {
-            data->texture_paths[1] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "WE ", 3) == 0)
-        {
-            data->texture_paths[2] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "EA ", 3) == 0)
-        {
-            data->texture_paths[3] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "F ", 2) == 0)
-        {
-            int r, g, b;
-            sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
-            data->floor_color = (r << 16) | (g << 8) | b;
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "C ", 2) == 0)
-        {
-            int r, g, b;
-            sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
-            data->ceiling_color = (r << 16) | (g << 8) | b;
-            config_count++;
-            continue;
-        }
-        // Se a linha não for vazia, ela faz parte do mapa
-        if (linha[0] != '\0')
-            data->map_height++;
-    }
-    
-    if (config_count < 6)
-    {
-        fprintf(stderr, "Erro: Configurações incompletas no mapa.\n");
-        fclose(f);
-        return NULL;
-    }
-    
-    // Aloca o array para as linhas do mapa (+1 para o terminador NULL)
-    mapa = malloc(sizeof(char *) * (data->map_height + 1));
-    if (!mapa)
-    {
-        write(2, "Erro ao alocar memória para o mapa\n", 34);
-        fclose(f);
-        return NULL;
-    }
-    
-    fseek(f, 0, SEEK_SET);
-    i = 0;
-    while (fgets(linha, sizeof(linha), f))
-    {
-        linha[strcspn(linha, "\r\n")] = '\0';
-        if (strncmp(linha, "NO ", 3) == 0 ||
-            strncmp(linha, "SO ", 3) == 0 ||
-            strncmp(linha, "WE ", 3) == 0 ||
-            strncmp(linha, "EA ", 3) == 0 ||
-            strncmp(linha, "F ", 2) == 0  ||
-            strncmp(linha, "C ", 2) == 0)
-        {
-            continue;
-        }
-        if (linha[0] != '\0')
-        {
-            char *linha_corrigida = substituir_tabs(linha); // Sua função para tratar tabs
-            if (!linha_corrigida)
-            {
-                write(2, "Erro ao processar linha do mapa\n", 32);
-                fclose(f);
-                for (int j = 0; j < i; j++)
-                    free(mapa[j]);
-                free(mapa);
-                return NULL;
-            }
-            printf("Linha carregada: %s\n", linha_corrigida);
-            mapa[i++] = linha_corrigida;
-        }
-    }
-    mapa[i] = NULL;
-    
-    if (i > 0)
-        data->map_width = strlen(mapa[0]);
-    
-    printf("Mapa alocado com %d linhas e largura %d\n", data->map_height, data->map_width);
-    fclose(f);
-    return mapa;
+			sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
+			data->ceiling_color = (r << 16) | (g << 8) | b;
+			config_count++;
+			continue;
+		}
+			// Se a linha não for vazia, ela faz parte do mapa
+		if (linha[0] != '\0')
+			data->map_height++;
+	}
+	if (config_count < 6)
+	{
+		fprintf(stderr, "Erro: Configurações incompletas no mapa.\n");
+		fclose(f);
+		return NULL;
+	}
+    		// Aloca o array para as linhas do mapa (+1 para o terminador NULL)
+	mapa = malloc(sizeof(char *) * (data->map_height + 1));
+	if (!mapa)
+	{
+		write(2, "Erro ao alocar memória para o mapa\n", 34);
+		fclose(f);
+		return NULL;
+	}
+	fseek(f, 0, SEEK_SET);
+	i = 0;
+	while (fgets(linha, sizeof(linha), f))
+	{
+		linha[strcspn(linha, "\r\n")] = '\0';
+		if (strncmp(linha, "NO ", 3) == 0 ||
+			strncmp(linha, "SO ", 3) == 0 ||
+			strncmp(linha, "WE ", 3) == 0 ||
+			strncmp(linha, "EA ", 3) == 0 ||
+			strncmp(linha, "F ", 2) == 0  ||
+		{
+			continue;
+		}
+		if (linha[0] != '\0')
+		{
+			linha_corrigida = substituir_tabs(linha); // Sua função para tratar tabs
+			if (!linha_corrigida)
+			{
+				write(2, "Erro ao processar linha do mapa\n", 32);
+				fclose(f);
+				j = 0;
+				while (j < i)
+				{
+					free(mapa[j]);
+					j++;
+				}
+				free(mapa);
+				return (NULL);
+			}
+			printf("Linha carregada: %s\n", linha_corrigida);
+			mapa[i++] = linha_corrigida;
+		}
+	}
+	mapa[i] = NULL;
+    	if (i > 0)
+		data->map_width = strlen(mapa[0]);
+	fclose(f);
+	return mapa;
 }
 
 unsigned int get_pixel(t_texture *texture, int x, int y)
