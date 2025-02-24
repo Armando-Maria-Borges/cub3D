@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 17:39:00 by aborges           #+#    #+#             */
-/*   Updated: 2024/05/15 17:39:04 by aborges          ###   ########.fr       */
+/*   Created: 2024/05/14 09:58:09 by lnzila            #+#    #+#             */
+/*   Updated: 2024/05/14 09:58:12 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)

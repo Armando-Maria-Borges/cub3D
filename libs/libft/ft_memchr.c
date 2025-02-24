@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 15:40:23 by aborges           #+#    #+#             */
-/*   Updated: 2024/05/15 15:49:32 by aborges          ###   ########.fr       */
+/*   Created: 2024/05/14 10:01:02 by lnzila            #+#    #+#             */
+/*   Updated: 2024/05/14 10:01:06 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)

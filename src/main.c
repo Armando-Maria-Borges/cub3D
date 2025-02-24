@@ -164,7 +164,7 @@ void	pintar_chao_teto(t_data *data)
     		}
     		y++;
     	}
-    	y = NOVA_ALTURA / 2
+    	y = NOVA_ALTURA / 2;
     	while (y < NOVA_ALTURA)
     	{
     		x = 0;
@@ -277,16 +277,16 @@ void	rotacionar_jogador(t_data *data)
 
 char	*substituir_tabs(const char *linha)
 {
-	int	j;tab_count = 0;
+	int	j;
 	int	tab_count;
 	size_t	i;
 	size_t	len;
-	char	*nova_linha
+	char	*nova_linha;
 	int	k;
 
 	tab_count = 0;
 	i = 0;
-	len = strlen(linha);
+	len = ft_strlen(linha);
 		// Conta quantos tabs existem na linha
 	while (i < len)
 	{
@@ -340,8 +340,7 @@ char	**ler_mapa(char *arquivo, t_data *data)
 	}
 	printf("Abrindo arquivo: %s\n", arquivo);
 	while ()
-		
-
+		;
 	if (!f)
 	{
 		write(2, "Erro ao abrir o mapa\n", 22);
@@ -351,32 +350,32 @@ char	**ler_mapa(char *arquivo, t_data *data)
 		/* Primeira passagem: processa as configurações e conta as linhas do mapa */
 	while (fgets(linha, sizeof(linha), f))
 	{
-		linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
-		if (strncmp(linha, "NO ", 3) == 0)
+		linha[ft_strjoin(linha, "\r\n")] = '\0';  // Remove \n e \r
+		if (ft_strchr(linha, "NO ", 3) == 0)
 		{
-			data->texture_paths[0] = strdup(linha + 3);
+			data->texture_paths[0] = ft_strchr(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "SO ", 3) == 0)
+		else if (ft_strncmp(linha, "SO ", 3) == 0)
 		{
-			data->texture_paths[1] = strdup(linha + 3);
+			data->texture_paths[1] = ft_strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "WE ", 3) == 0)
+		else if (ft_strncmp(linha, "WE ", 3) == 0)
 		{
-			data->texture_paths[2] = strdup(linha + 3);
+			data->texture_paths[2] = ft_strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "EA ", 3) == 0)
+		else if (ft_strncmp(linha, "EA ", 3) == 0)
 		{
-			data->texture_paths[3] = strdup(linha + 3);
+			data->texture_paths[3] = ft_strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "F ", 2) == 0)
+		else if (ft_strncmp(linha, "F ", 2) == 0)
 		{
 			int	r;
 			int	g;
@@ -387,7 +386,7 @@ char	**ler_mapa(char *arquivo, t_data *data)
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "C ", 2) == 0)
+		else if (ft_strncmp(linha, "C ", 2) == 0)
 		{
 			int r, g, b;
 
@@ -418,12 +417,12 @@ char	**ler_mapa(char *arquivo, t_data *data)
 	i = 0;
 	while (fgets(linha, sizeof(linha), f))
 	{
-		linha[strcspn(linha, "\r\n")] = '\0';
-		if (strncmp(linha, "NO ", 3) == 0 ||
-			strncmp(linha, "SO ", 3) == 0 ||
-			strncmp(linha, "WE ", 3) == 0 ||
-			strncmp(linha, "EA ", 3) == 0 ||
-			strncmp(linha, "F ", 2) == 0  ||
+		linha[ft_strcspn(linha, "\r\n")] = '\0';
+		if (ft_strncmp(linha, "NO ", 3) == 0 ||
+			ft_strncmp(linha, "SO ", 3) == 0 ||
+			ft_strncmp(linha, "WE ", 3) == 0 ||
+			ft_strncmp(linha, "EA ", 3) == 0 ||
+			ft_strncmp(linha, "F ", 2) == 0  ||
 		{
 			continue;
 		}
@@ -449,77 +448,86 @@ char	**ler_mapa(char *arquivo, t_data *data)
 	}
 	mapa[i] = NULL;
     	if (i > 0)
-		data->map_width = strlen(mapa[0]);
+		data->map_width = ft_strlen(mapa[0]);
 	fclose(f);
 	return mapa;
 }
 
-unsigned int get_pixel(t_texture *texture, int x, int y)
+unsigned int	get_pixel(t_texture *texture, int x, int y)
 {
-    char *dst;
+	char *dst;
 
-    dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
-    return *(unsigned int *)dst;
+	dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
+	return *(unsigned int *)dst;
 }
 
-unsigned int cria_trgb(int t, int r, int g, int b)
+unsigned int	cria_trgb(int t, int r, int g, int b)
 {
-    return (t << 24) | (r << 16) | (g << 8) | b;
+	return (t << 24) | (r << 16) | (g << 8) | b;
 }
 
-void raycast(t_data *data)
+void	raycast(t_data *data)
 {
-    int x;
-    double delta_angle = FOV / (double)NUM_RAYS;
+	int	x;
+	double	delta_angle;
+	double	ray_angle;
+	double	dir_x;
+	double	dir_y;
+	int	map_x;
+	int	map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+        double	side_dist_x;
+        double	side_dist_y;
+        int	step_x = (dir_x < 0) ? -1 : 1;
+        int	step_y = (dir_y < 0) ? -1 : 1;
+        int	hit = 0;
+        int	= side;
+        double	perp_wall_dist;
 
-    for (x = 0; x < NUM_RAYS; x++)
-    {
-        double ray_angle = data->player.angle - (FOV / 2) + x * delta_angle;
-        double dir_x = cos(ray_angle);
-        double dir_y = sin(ray_angle);
-
-        int map_x = (int)data->player.x;
-        int map_y = (int)data->player.y;
-
-        double delta_dist_x = (dir_x == 0) ? 1e30 : fabs(1 / dir_x);
-        double delta_dist_y = (dir_y == 0) ? 1e30 : fabs(1 / dir_y);
-        double side_dist_x, side_dist_y;
-
-        int step_x = (dir_x < 0) ? -1 : 1;
-        int step_y = (dir_y < 0) ? -1 : 1;
-
-        side_dist_x = (dir_x < 0) ? (data->player.x - map_x) * delta_dist_x : (map_x + 1.0 - data->player.x) * delta_dist_x;
-        side_dist_y = (dir_y < 0) ? (data->player.y - map_y) * delta_dist_y : (map_y + 1.0 - data->player.y) * delta_dist_y;
-
-        int hit = 0, side;
-        double perp_wall_dist;
-
-        while (!hit)
-        {
-            if (side_dist_x < side_dist_y)
-            {
-                side_dist_x += delta_dist_x;
-                map_x += step_x;
-                side = 0; // Parede vertical
-            }
-            else
-            {
-                side_dist_y += delta_dist_y;
-                map_y += step_y;
-                side = 1; // Parede horizontal
-            }
-
-            if (map_y >= 0 && map_y < data->map_height && map_x >= 0 && map_x < data->map_width &&
-                data->mapa[map_y][map_x] == '1')
-            {
-                hit = 1;
-                if (side == 0)
-                    perp_wall_dist = (map_x - data->player.x + (1 - step_x) / 2.0) / dir_x;
-                else
-                    perp_wall_dist = (map_y - data->player.y + (1 - step_y) / 2.0) / dir_y;
-                if (perp_wall_dist < 0.1)
-                    perp_wall_dist = 0.1;
-            }
+	delta_angle = FOV / (double)NUM_RAYS;
+	x = 0;
+	while (x < NUM_RAYS)
+	{
+		ray_angle = data->player.angle - (FOV / 2) + x * delta_angle;
+		dir_x = cos(ray_angle);
+		dir_y = sin(ray_angle);
+		map_x = (int)data->player.x;
+		map_y = (int)data->player.y;
+		delta_dist_x = (dir_x == 0) ? 1e30 : fabs(1 / dir_x);
+		delta_dist_y = (dir_y == 0) ? 1e30 : fabs(1 / dir_y);
+		side_dist_x, side_dist_y;
+		step_x = (dir_x < 0) ? -1 : 1;
+		step_y = (dir_y < 0) ? -1 : 1;
+		side_dist_x = (dir_x < 0) ? (data->player.x - map_x) * delta_dist_x : (map_x + 1.0 - data->player.x) * delta_dist_x;
+		side_dist_y = (dir_y < 0) ? (data->player.y - map_y) * delta_dist_y : (map_y + 1.0 - data->player.y) * delta_dist_y;
+		hit = 0;
+		while (!hit)
+		{
+			if (side_dist_x < side_dist_y)
+			{
+				side_dist_x += delta_dist_x;
+				map_x += step_x;
+				side = 0; // Parede vertical
+			}
+			else
+			{
+				side_dist_y += delta_dist_y;
+				map_y += step_y;
+				side = 1; // Parede horizontal
+			}
+			if (map_y >= 0 && map_y < data->map_height && map_x >= 0 && map_x < data->map_width &&
+				data->mapa[map_y][map_x] == '1')
+			{
+				hit = 1;
+				if (side == 0)
+					perp_wall_dist = (map_x - data->player.x + (1 - step_x) / 2.0) / dir_x;
+				else
+					perp_wall_dist = (map_y - data->player.y + (1 - step_y) / 2.0) / dir_y;
+				if (perp_wall_dist < 0.1)
+					perp_wall_dist = 0.1;
+		}
+		x++;
         }
 
         // Cálculo da altura da parede a ser desenhada
@@ -808,7 +816,7 @@ void debug_print_map(t_data *data)
 int main(int argc, char **argv)
 {
     t_data data;
-    memset(&data, 0, sizeof(data));
+    ft_memset(&data, 0, sizeof(data));
     
     if (argc != 2)
     {
@@ -872,7 +880,7 @@ int main(int argc, char **argv)
         carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
         if (!data.textures[i].img || !data.textures[i].addr)
         {
-            fprintf(stderr, "Erro ao carregar textura %d\n", i);
+            printf(stderr, "Erro ao carregar textura %d\n", i);
             return 1;
         }
         printf("Textura %d carregada: %dx%d\n", i, 

@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_very_digit.c                                    :+:      :+:    :+:   */
+/*   ft_strcspn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/29 12:29:11 by aborges           #+#    #+#             */
-/*   Updated: 2024/08/02 18:18:06 by aborges          ###   ########.fr       */
+/*   Created: 2025/02/24 08:22:03 by lnzila            #+#    #+#             */
+/*   Updated: 2025/02/24 08:25:33 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "libft.h"
 
-int	ft_very_digit(char *str)
+size_t	ft_strcspn(const char *str, char *reject)
 {
-	int	i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	if ((str[i] && !ft_isdigit(str[i])) || !str[i])
+	while (str[i] != '\0')
 	{
-		write (1, "Error", 5);
-		exit (0);
-	}
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]) && str[i] != ' ' && str[i] != '-'
-			&& str[i] != '+')
+		j = 0;
+		while (reject[j] != '\0')
 		{
-			return (0);
+			if (str[i] == reject[j])
+				return (i);
+			j++;
 		}
 		i++;
 	}
-	return (1);
+	return (i);
 }
+

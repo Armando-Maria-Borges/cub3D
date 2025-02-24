@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 17:04:28 by aborges           #+#    #+#             */
-/*   Updated: 2024/05/16 19:35:13 by aborges          ###   ########.fr       */
+/*   Created: 2024/05/14 09:32:24 by lnzila            #+#    #+#             */
+/*   Updated: 2024/05/14 09:32:27 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
@@ -31,7 +32,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 				j++;
 			}
 			j = 0;
-		}	
+		}
 		i++;
 	}
 	return (NULL);
