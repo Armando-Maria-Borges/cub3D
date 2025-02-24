@@ -286,7 +286,7 @@ char	*substituir_tabs(const char *linha)
 
 	tab_count = 0;
 	i = 0;
-	len = ft_strlen(linha);
+	len = strlen(linha);
 		// Conta quantos tabs existem na linha
 	while (i < len)
 	{
@@ -324,7 +324,7 @@ char	**ler_mapa(char *arquivo, t_data *data)
 	char	**mapa;
 	char	linha[1024];
 	int	i;
-	int	config_count;
+	//int	config_count;
 	char	*linha_corrigida;
 	int	j;
     
@@ -339,43 +339,35 @@ char	**ler_mapa(char *arquivo, t_data *data)
 		return NULL;
 	}
 	printf("Abrindo arquivo: %s\n", arquivo);
-	while ()
-		;
-	if (!f)
-	{
-		write(2, "Erro ao abrir o mapa\n", 22);
-		return NULL;
-    	}
-	printf("Abrindo arquivo: %s\n", arquivo);
 		/* Primeira passagem: processa as configurações e conta as linhas do mapa */
 	while (fgets(linha, sizeof(linha), f))
 	{
-		linha[ft_strjoin(linha, "\r\n")] = '\0';  // Remove \n e \r
-		if (ft_strchr(linha, "NO ", 3) == 0)
+		linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
+		if (strncmp(linha, "NO ", 3) == 0)
 		{
-			data->texture_paths[0] = ft_strchr(linha + 3);
+			data->texture_paths[0] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (ft_strncmp(linha, "SO ", 3) == 0)
+		else if (strncmp(linha, "SO ", 3) == 0)
 		{
-			data->texture_paths[1] = ft_strdup(linha + 3);
+			data->texture_paths[1] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (ft_strncmp(linha, "WE ", 3) == 0)
+		else if (strncmp(linha, "WE ", 3) == 0)
 		{
-			data->texture_paths[2] = ft_strdup(linha + 3);
+			data->texture_paths[2] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (ft_strncmp(linha, "EA ", 3) == 0)
+		else if (strncmp(linha, "EA ", 3) == 0)
 		{
-			data->texture_paths[3] = ft_strdup(linha + 3);
+			data->texture_paths[3] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (ft_strncmp(linha, "F ", 2) == 0)
+		else if (strncmp(linha, "F ", 2) == 0)
 		{
 			int	r;
 			int	g;
@@ -386,7 +378,7 @@ char	**ler_mapa(char *arquivo, t_data *data)
 			config_count++;
 			continue;
 		}
-		else if (ft_strncmp(linha, "C ", 2) == 0)
+		else if (strncmp(linha, "C ", 2) == 0)
 		{
 			int r, g, b;
 
@@ -417,12 +409,12 @@ char	**ler_mapa(char *arquivo, t_data *data)
 	i = 0;
 	while (fgets(linha, sizeof(linha), f))
 	{
-		linha[ft_strcspn(linha, "\r\n")] = '\0';
-		if (ft_strncmp(linha, "NO ", 3) == 0 ||
-			ft_strncmp(linha, "SO ", 3) == 0 ||
-			ft_strncmp(linha, "WE ", 3) == 0 ||
-			ft_strncmp(linha, "EA ", 3) == 0 ||
-			ft_strncmp(linha, "F ", 2) == 0  ||
+		linha[strcspn(linha, "\r\n")] = '\0';
+		if (strncmp(linha, "NO ", 3) == 0 ||
+			strncmp(linha, "SO ", 3) == 0 ||
+			strncmp(linha, "WE ", 3) == 0 ||
+			strncmp(linha, "EA ", 3) == 0 ||
+			strncmp(linha, "F ", 2) == 0  ||
 		{
 			continue;
 		}
@@ -448,7 +440,8 @@ char	**ler_mapa(char *arquivo, t_data *data)
 	}
 	mapa[i] = NULL;
     	if (i > 0)
-		data->map_width = ft_strlen(mapa[0]);
+		data->map_width = strlen(mapa[0]);
+	printf("Mapa alocado com %d linhas e largura %d\n", data->map_height, data->map_width);
 	fclose(f);
 	return mapa;
 }
@@ -482,7 +475,7 @@ void	raycast(t_data *data)
         int	step_x = (dir_x < 0) ? -1 : 1;
         int	step_y = (dir_y < 0) ? -1 : 1;
         int	hit = 0;
-        int	= side;
+        int	side;
         double	perp_wall_dist;
 
 	delta_angle = FOV / (double)NUM_RAYS;
@@ -496,7 +489,6 @@ void	raycast(t_data *data)
 		map_y = (int)data->player.y;
 		delta_dist_x = (dir_x == 0) ? 1e30 : fabs(1 / dir_x);
 		delta_dist_y = (dir_y == 0) ? 1e30 : fabs(1 / dir_y);
-		side_dist_x, side_dist_y;
 		step_x = (dir_x < 0) ? -1 : 1;
 		step_y = (dir_y < 0) ? -1 : 1;
 		side_dist_x = (dir_x < 0) ? (data->player.x - map_x) * delta_dist_x : (map_x + 1.0 - data->player.x) * delta_dist_x;
@@ -816,7 +808,7 @@ void debug_print_map(t_data *data)
 int main(int argc, char **argv)
 {
     t_data data;
-    ft_memset(&data, 0, sizeof(data));
+    memset(&data, 0, sizeof(data));
     
     if (argc != 2)
     {
@@ -880,7 +872,7 @@ int main(int argc, char **argv)
         carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
         if (!data.textures[i].img || !data.textures[i].addr)
         {
-            printf(stderr, "Erro ao carregar textura %d\n", i);
+            fprintf(stderr, "Erro ao carregar textura %d\n", i);
             return 1;
         }
         printf("Textura %d carregada: %dx%d\n", i, 
