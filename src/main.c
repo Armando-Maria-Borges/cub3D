@@ -296,7 +296,7 @@ void	carregar_cor(char *linha, int *r, int *g, int *b)
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	char	*dst
+	char	*dst;
 
 	if (x >= 0 && x < NOVA_LARGURA && y >= 0 && y < NOVA_ALTURA)
 	{
