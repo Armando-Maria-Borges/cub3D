@@ -305,18 +305,19 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-void	encontrar_jogador(t_data *data)
+void encontrar_jogador(t_data *data)
 {
-	int y, x;
+    int y, x;
     for (y = 0; data->mapa[y] != NULL; y++)
     {
         for (x = 0; data->mapa[y][x] != '\0'; x++)
         {
+            // Apenas considerar caracteres válidos para o jogador
             if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' || 
                 data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
             {
-                data->player.x = x + 0.5;
-                data->player.y = y + 0.5;
+                data->player.x = x + 0.5; // Centraliza no bloco
+                data->player.y = y + 0.5; // Centraliza no bloco
 
                 if (data->mapa[y][x] == 'N')
                     data->player.angle = 3 * M_PI / 2;
@@ -332,7 +333,6 @@ void	encontrar_jogador(t_data *data)
     }
     printf("Jogador não encontrado no mapa!\n");
 }
-
 
 void rotacionar_jogador(t_data *data)
 {
@@ -350,77 +350,92 @@ void rotacionar_jogador(t_data *data)
         data->player.angle -= 2 * M_PI;
 }
 
-char *substituir_tabs(const char *linha)
+char	*substituir_tabs(const char *linha)
 {
-    int j, tab_count = 0;
-    size_t i, len = strlen(linha);
+	int	j;
+	int	tab_count;
+	size_t	i;
+	size_t	len;
+	char	*nova_linha;
+	int	k;
 
+	tab_count = 0;
+	len = strlen(linha);
+	i = 0;
     // Conta quantos tabs existem na linha
-    for (i = 0; i < len; i++)
-        if (linha[i] == '\t')
-            tab_count++;
-
-    // Aloca memória para nova string com os espaços extras
-    char *nova_linha = malloc(len + (tab_count * (TAB_SIZE - 1)) + 1);
-    if (!nova_linha)
-        return NULL;
-
-    // Copia a linha substituindo tabs por espaços
-    for (i = 0, j = 0; linha[i] != '\0'; i++)
+    while (i < len)
     {
-        if (linha[i] == '\t')
-        {
-            for (int k = 0; k < TAB_SIZE; k++)
-                nova_linha[j++] = ' ';
-        }
-        else
-            nova_linha[j++] = linha[i];
+    	if (linha[i] == '\t')
+    		tab_count++;
+    	i++;
     }
-    nova_linha[j] = '\0';
-
-    return nova_linha;
+    		 // Aloca memória para nova string com os espaços extras
+    	nova_linha = malloc(len + (tab_count * (TAB_SIZE - 1)) + 1);
+    	if (!nova_linha)
+    		return (NULL);
+    	  // Copia a linha substituindo tabs por espaços
+    	i = 0;
+    	j = 0;
+    	k = 0;
+	while (linha[i] != '\0')
+	{
+		if (linha[i] == '\t')
+		{
+			while (k++ < TAB_SIZE)
+				nova_linha[j++] = ' ';
+			
+		
+		}
+		else
+			nova_linha[j++] = linha[i];
+		i++;
+	}
+	nova_linha[j] = '\0';
+	return (nova_linha);
 }
 
-char **ler_mapa(char *arquivo, t_data *data)
+char	**ler_mapa(char *arquivo, t_data *data)
 {
-    FILE *f = fopen(arquivo, "r");
-    char **mapa = NULL;
-    char linha[1024];
-    int i = 0;
-    int config_count = 0;
-    
-    data->map_height = 0; // Inicializa a altura do mapa
+	FILE	*f;
+	char	**mapa;
+	char	linha[1024];
+	int	i;
+	int	config_count;
 
-    if (!f)
-    {
-        write(2, "Erro ao abrir o mapa\n", 22);
-        return NULL;
-    }
-    printf("Abrindo arquivo: %s\n", arquivo);
+	f = fopen(arquivo, "r");
+	mapa = NULL;
+	i = 0;
+	config_count = 0;
+    	data->map_height = 0; // Inicializa a altura do mapa
+	if (!f)
+	{
+		write(2, "Erro ao abrir o mapa\n", 22);
+		return NULL;
+	}
+	printf("Abrindo arquivo: %s\n", arquivo);
 
     /* Primeira passagem: processa as configurações e conta as linhas do mapa */
-    while (fgets(linha, sizeof(linha), f))
-    {
-        linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
-
-        if (strncmp(linha, "NO ", 3) == 0)
-        {
-            data->texture_paths[0] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "SO ", 3) == 0)
-        {
-            data->texture_paths[1] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "WE ", 3) == 0)
-        {
-            data->texture_paths[2] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
+	while (fgets(linha, sizeof(linha), f))
+	{
+		linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
+		if (strncmp(linha, "NO ", 3) == 0)
+		{
+			data->texture_paths[0] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "SO ", 3) == 0)
+		{
+			data->texture_paths[1] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (strncmp(linha, "WE ", 3) == 0)
+		{
+			data->texture_paths[2] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
         else if (strncmp(linha, "EA ", 3) == 0)
         {
             data->texture_paths[3] = strdup(linha + 3);
@@ -504,17 +519,17 @@ char **ler_mapa(char *arquivo, t_data *data)
     return mapa;
 }
 
-unsigned int get_pixel(t_texture *texture, int x, int y)
+unsigned int	get_pixel(t_texture *texture, int x, int y)
 {
-    char *dst;
+	char	*dst;
 
-    dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
-    return *(unsigned int *)dst;
+	dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
+	return *(unsigned int *)dst;
 }
 
-unsigned int cria_trgb(int t, int r, int g, int b)
+unsigned int	cria_trgb(int t, int r, int g, int b)
 {
-    return (t << 24) | (r << 16) | (g << 8) | b;
+	return (t << 24) | (r << 16) | (g << 8) | b;
 }
 
 void raycast(t_data *data)
@@ -650,13 +665,13 @@ void raycast(t_data *data)
 //##########################################################
 
 // Função auxiliar para limitar um valor entre um mínimo e máximo.
-static double clamp(double value, double min, double max)
+static double	clamp(double value, double min, double max)
 {
-    if (value < min)
-        return min;
-    if (value > max)
-        return max;
-    return value;
+	if (value < min)
+		return min;
+	if (value > max)
+		return max;
+	return value;
 }
 
 // Função que verifica colisão: retorna 1 se houver colisão, 0 caso contrário.
