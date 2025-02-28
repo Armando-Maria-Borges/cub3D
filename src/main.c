@@ -166,6 +166,41 @@ char	*ft_strcat(char *dest, const char *src)
 	return (dest);
 }
 
+/*int	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+*/
+int	ft_atoi(const char *str)
+{
+	unsigned int	i;
+	unsigned int	neg;
+	unsigned int	res;
+
+	i = 0;
+	neg = 1;
+	res = 0;
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (str[i] - '0') + (res * 10);
+		i++;
+	}
+	return (res * neg);
+}
+
 int	fechar_janela(void *param)
 {
 	t_data *data;
@@ -283,15 +318,15 @@ void	carregar_cor(char *linha, int *r, int *g, int *b)
     
 	token = strtok(linha, ",");
 	if (token) 
-		*r = atoi(token);
+		*r = ft_atoi(token);
     
 	token = strtok(NULL, ",");
 	if (token) 
-		*g = atoi(token);
+		*g = ft_atoi(token);
     
 	token = strtok(NULL, ",");
 	if (token)
-		*b = atoi(token);
+		*b = ft_atoi(token);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -305,49 +340,53 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-void encontrar_jogador(t_data *data)
+void	encontrar_jogador(t_data *data)
 {
-    int y, x;
-    for (y = 0; data->mapa[y] != NULL; y++)
-    {
-        for (x = 0; data->mapa[y][x] != '\0'; x++)
-        {
-            // Apenas considerar caracteres válidos para o jogador
-            if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' || 
-                data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
-            {
-                data->player.x = x + 0.5; // Centraliza no bloco
-                data->player.y = y + 0.5; // Centraliza no bloco
+	int	y;
+	int	x;
 
-                if (data->mapa[y][x] == 'N')
-                    data->player.angle = 3 * M_PI / 2;
-                else if (data->mapa[y][x] == 'S')
-                    data->player.angle = M_PI / 2;
-                else if (data->mapa[y][x] == 'E')
-                    data->player.angle = 0;
-                else if (data->mapa[y][x] == 'W')
-                    data->player.angle = M_PI;
-                return;
-            }
-        }
-    }
-    printf("Jogador não encontrado no mapa!\n");
+	y = 0;
+	while (data->mapa[y] != NULL)
+	{
+		x = 0;
+		while (data->mapa[y][x] != '\0')
+		{
+			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' || 
+				data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
+			{
+				data->player.x = x + 0.5; // Centraliza no bloco
+				data->player.y = y + 0.5; // Centraliza no bloco
+				if (data->mapa[y][x] == 'N')
+					data->player.angle = 3 * M_PI / 2;
+				else if (data->mapa[y][x] == 'S')
+					data->player.angle = M_PI / 2;
+				else if (data->mapa[y][x] == 'E')
+					data->player.angle = 0;
+				else if (data->mapa[y][x] == 'W')
+					data->player.angle = M_PI;
+				return;
+			}
+			x++;		
+		}
+		y++;
+	}
+	printf("Jogador não encontrado no mapa!\n");
 }
 
-void rotacionar_jogador(t_data *data)
+void	rotacionar_jogador(t_data *data)
 {
-    double rotation_speed = 0.05;
-    
-    if (data->keys.left)
-        data->player.angle -= rotation_speed;
-    if (data->keys.right)
-        data->player.angle += rotation_speed;
-        
-    // Manter o ângulo entre 0 e 2*PI
-    if (data->player.angle < 0)
-        data->player.angle += 2 * M_PI;
-    if (data->player.angle > 2 * M_PI)
-        data->player.angle -= 2 * M_PI;
+	double	rotation_speed;
+
+	rotation_speed = 0.05;
+	if (data->keys.left)
+		data->player.angle -= rotation_speed;
+	if (data->keys.right)
+		data->player.angle += rotation_speed;
+        // Manter o ângulo entre 0 e 2*PI
+	if (data->player.angle < 0)
+		data->player.angle += 2 * M_PI;
+	if (data->player.angle > 2 * M_PI)
+		data->player.angle -= 2 * M_PI;
 }
 
 char	*substituir_tabs(const char *linha)
@@ -363,12 +402,12 @@ char	*substituir_tabs(const char *linha)
 	len = strlen(linha);
 	i = 0;
     // Conta quantos tabs existem na linha
-    while (i < len)
-    {
-    	if (linha[i] == '\t')
-    		tab_count++;
-    	i++;
-    }
+	while (i < len)
+	{
+		if (linha[i] == '\t')
+			tab_count++;
+		i++;
+	}
     		 // Aloca memória para nova string com os espaços extras
     	nova_linha = malloc(len + (tab_count * (TAB_SIZE - 1)) + 1);
     	if (!nova_linha)
