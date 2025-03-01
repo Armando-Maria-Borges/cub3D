@@ -90,28 +90,28 @@ typedef struct s_data
 } t_data;
 
 // Funções auxiliares
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
-unsigned int get_pixel(t_texture *tex, int x, int y);
-void desenhar_mapa(t_data *data);
-int render_scene(void *param);
-void carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path, char **paths);
-void carregar_cor(char *linha, int *r, int *g, int *b);
-void raycast(t_data *data);
-void mover_jogador(t_data *data);
-int key_press(int keycode, void *param);
-int key_release(int keycode, void *param);
-char **ler_mapa(char *arquivo, t_data *data);
-void encontrar_jogador(t_data *data);
-int fechar_janela(void *param);
-void pintar_chao_teto(t_data *data);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+unsigned int	get_pixel(t_texture *tex, int x, int y);
+void	desenhar_mapa(t_data *data);
+int		render_scene(void *param);
+void	carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path, char **paths);
+void	carregar_cor(char *linha, int *r, int *g, int *b);
+void	raycast(t_data *data);
+void	mover_jogador(t_data *data);
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+char	**ler_mapa(char *arquivo, t_data *data);
+void	encontrar_jogador(t_data *data);
+int		fechar_janela(void *param);
+void	pintar_chao_teto(t_data *data);
 
-void pintar_janela(t_data *data);
+void	pintar_janela(t_data *data);
 
-unsigned int cria_trgb(int t, int r, int g, int b);
-void rotacionar_jogador(t_data *data);
-void carregar_textura(void *mlx, t_texture *texture, const char *diretorio, const char *nome_textura);
-void carregar_cor(char *linha, int *r, int *g, int *b);
-char *substituir_tabs(const char *linha);
+unsigned int	cria_trgb(int t, int r, int g, int b);
+void	rotacionar_jogador(t_data *data);
+void	carregar_textura(void *mlx, t_texture *texture, const char *diretorio, const char *nome_textura);
+void	carregar_cor(char *linha, int *r, int *g, int *b);
+char	*substituir_tabs(const char *linha);
 
 char	*ft_strcpy(char *dest, const char *src)
 {
@@ -433,130 +433,223 @@ char	*substituir_tabs(const char *linha)
 	return (nova_linha);
 }
 
+
+
+
+// Função para comparar strings (substitui strncmp)
+/*int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	while (*s1 != '\0' && *s1 == *s2 && n > 0)
+	{
+		s1++;
+		s2++;
+		n--;
+	}
+	if (n == 0)
+		return (0);
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+}*/
+
+int	compara_strings(const char *str1, const char *str2, size_t n)
+{
+	while (n-- > 0)
+	{
+		if (*str1 != *str2)
+			return (0);
+		if (*str1 == '\0')
+			break;
+		str1++;
+		str2++;
+	}
+	return 1;
+}
+
+// Função para remover caracteres de nova linha (\n e \r)
+void	remove_novo_linha(char *str) {
+	int	i;
+
+	i = 0;    
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n' || str[i] == '\r')
+			str[i] = '\0';
+		i++;
+        }
+}
+
+// Função para ler uma linha do arquivo
+int	ler_linha(int fd, char *buffer, int buffer_size)
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	while (i < buffer_size - 1)
+	{
+		n = read(fd, &buffer[i], 1);
+		if (n <= 0)
+			break;
+		if (buffer[i] == '\n' || buffer[i] == '\r')
+		{
+			buffer[i] = '\0';
+			return (i + 1);
+		}
+		i++;
+	}
+	buffer[i] = '\0';
+	return (i);
+}
+
+// Função para processar valores RGB (substitui sscanf)
+int	processa_rgb(const char *str, int *r, int *g, int *b)
+{
+	char	*end;
+
+	*r = strtol(str, &end, 10);
+	if (*end != ',')
+		return (0);
+	*g = strtol(end + 1, &end, 10);
+	if (*end != ',')
+		return (0);
+	*b = strtol(end + 1, &end, 10);
+	return (*end == '\0');
+}
+
 char	**ler_mapa(char *arquivo, t_data *data)
 {
-	FILE	*f;
-	char	**mapa;
-	char	linha[1024];
-	int	i;
-	int	config_count;
-
-	f = fopen(arquivo, "r");
-	mapa = NULL;
-	i = 0;
-	config_count = 0;
-    	data->map_height = 0; // Inicializa a altura do mapa
-	if (!f)
+	int	f = open(arquivo, O_RDONLY);
+	char	**mapa = NULL;
+	char	linha[BUFFER_SIZE];
+	int	i = 0;
+	int	config_count = 0;
+	int	r;
+	int	g;
+	int	b;
+	char	*linha_corrigida;
+	int	j;
+    
+	if (f == -1)
 	{
 		write(2, "Erro ao abrir o mapa\n", 22);
 		return NULL;
 	}
+	data->map_height = 0;
 	printf("Abrindo arquivo: %s\n", arquivo);
-
-    /* Primeira passagem: processa as configurações e conta as linhas do mapa */
-	while (fgets(linha, sizeof(linha), f))
+	// Primeira leitura: processa configurações e conta as linhas do mapa
+	while (ler_linha(f, linha, sizeof(linha)) > 0)
 	{
-		linha[strcspn(linha, "\r\n")] = '\0';  // Remove \n e \r
-		if (strncmp(linha, "NO ", 3) == 0)
+		remove_novo_linha(linha);
+		if (compara_strings(linha, "NO ", 3))
 		{
 			data->texture_paths[0] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "SO ", 3) == 0)
+		else if (compara_strings(linha, "SO ", 3))
 		{
 			data->texture_paths[1] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-		else if (strncmp(linha, "WE ", 3) == 0)
+		else if (compara_strings(linha, "WE ", 3))
 		{
 			data->texture_paths[2] = strdup(linha + 3);
 			config_count++;
 			continue;
 		}
-        else if (strncmp(linha, "EA ", 3) == 0)
-        {
-            data->texture_paths[3] = strdup(linha + 3);
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "F ", 2) == 0)
-        {
-            int r, g, b;
-            sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
-            data->floor_color = (r << 16) | (g << 8) | b;
-            config_count++;
-            continue;
-        }
-        else if (strncmp(linha, "C ", 2) == 0)
-        {
-            int r, g, b;
-            sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
-            data->ceiling_color = (r << 16) | (g << 8) | b;
-            config_count++;
-            continue;
-        }
-        // Se a linha não for vazia, ela faz parte do mapa
-        if (linha[0] != '\0')
-            data->map_height++;
-    }
-    
-    if (config_count < 6)
-    {
-        fprintf(stderr, "Erro: Configurações incompletas no mapa.\n");
-        fclose(f);
-        return NULL;
-    }
-    
-    // Aloca o array para as linhas do mapa (+1 para o terminador NULL)
-    mapa = malloc(sizeof(char *) * (data->map_height + 1));
-    if (!mapa)
-    {
-        write(2, "Erro ao alocar memória para o mapa\n", 34);
-        fclose(f);
-        return NULL;
-    }
-    
-    fseek(f, 0, SEEK_SET);
-    i = 0;
-    while (fgets(linha, sizeof(linha), f))
-    {
-        linha[strcspn(linha, "\r\n")] = '\0';
-        if (strncmp(linha, "NO ", 3) == 0 ||
-            strncmp(linha, "SO ", 3) == 0 ||
-            strncmp(linha, "WE ", 3) == 0 ||
-            strncmp(linha, "EA ", 3) == 0 ||
-            strncmp(linha, "F ", 2) == 0  ||
-            strncmp(linha, "C ", 2) == 0)
-        {
-            continue;
-        }
-        if (linha[0] != '\0')
-        {
-            char *linha_corrigida = substituir_tabs(linha); // Sua função para tratar tabs
-            if (!linha_corrigida)
-            {
-                write(2, "Erro ao processar linha do mapa\n", 32);
-                fclose(f);
-                for (int j = 0; j < i; j++)
-                    free(mapa[j]);
-                free(mapa);
-                return NULL;
-            }
-            printf("Linha carregada: %s\n", linha_corrigida);
-            mapa[i++] = linha_corrigida;
-        }
-    }
-    mapa[i] = NULL;
-    
-    if (i > 0)
-        data->map_width = strlen(mapa[0]);
-    
-    printf("Mapa alocado com %d linhas e largura %d\n", data->map_height, data->map_width);
-    fclose(f);
-    return mapa;
+		else if (compara_strings(linha, "EA ", 3))
+		{
+			data->texture_paths[3] = strdup(linha + 3);
+			config_count++;
+			continue;
+		}
+		else if (compara_strings(linha, "F ", 2))
+		{
+			if (!processa_rgb(linha + 2, &r, &g, &b))
+			{
+				write(2, "Erro ao processar a cor do chão\n", 32);
+				close(f);
+				return NULL;
+			}
+			data->floor_color = (r << 16) | (g << 8) | b;
+			config_count++;
+			continue;
+		}
+		else if (compara_strings(linha, "C ", 2))
+		{
+            //int r, g, b;
+			if (!processa_rgb(linha + 2, &r, &g, &b))
+			{
+				write(2, "Erro ao processar a cor do teto\n", 32);
+				close(f);
+				return NULL;
+			}
+			data->ceiling_color = (r << 16) | (g << 8) | b;
+			config_count++;
+			continue;
+		}
+		if (linha[0] != '\0')
+			data->map_height++;
+	}
+	close(f);  // Fecha o arquivo para poder reabri-lo do início
+	if (config_count < 6)
+	{
+		write(2, "Erro: Configurações incompletas no mapa.\n", 42);
+		return NULL;
+    	}
+		// Aloca memória para o mapa
+	mapa = malloc(sizeof(char *) * (data->map_height + 1));
+	if (!mapa)
+	{
+		write(2, "Erro ao alocar memória para o mapa\n", 34);
+		return NULL;
+	}
+	// Reabre o arquivo para ler as linhas do mapa
+	f = open(arquivo, O_RDONLY);
+	if (f == -1)
+	{
+		write(2, "Erro ao reabrir o arquivo\n", 26);
+		free(mapa);
+		return NULL;
+	}
+	i = 0;
+	while (ler_linha(f, linha, sizeof(linha)) > 0)
+	{
+		remove_novo_linha(linha);
+		if (compara_strings(linha, "NO ", 3) ||
+		compara_strings(linha, "SO ", 3) ||
+		compara_strings(linha, "WE ", 3) ||
+		compara_strings(linha, "EA ", 3) ||
+		compara_strings(linha, "F ", 2) ||
+		compara_strings(linha, "C ", 2))
+			continue;
+		if (linha[0] != '\0')
+		{
+			linha_corrigida = substituir_tabs(linha);
+			if (!linha_corrigida)
+			{
+				write(2, "Erro ao processar linha do mapa\n", 32);
+  				close(f);
+  				while (j < i)
+  				{
+  					free(mapa);
+  					j++;
+  				}
+				free(mapa);
+				return NULL;
+			}
+			printf("Linha carregada: %s\n", linha_corrigida);
+			mapa[i++] = linha_corrigida;
+		}
+	}
+	mapa[i] = NULL;
+	if (i > 0)
+		data->map_width = strlen(mapa[0]);
+	printf("Mapa alocado com %d linhas e largura %d\n", data->map_height, data->map_width);
+	close(f);
+	return mapa;
 }
+
 
 unsigned int	get_pixel(t_texture *texture, int x, int y)
 {
@@ -747,223 +840,286 @@ int check_collision(t_data *data, double new_x, double new_y)
     return 0;
 }
 
-void mover_jogador(t_data *data)
+void	mover_jogador(t_data *data)
 {
-    double move_speed = 0.05;
-    double rotation_speed = 0.04;
-    double new_x, new_y;
+	double	move_speed;
+	double	rotation_speed;
+	double	new_x, new_y;
 
-    if (data->keys.left)
-        data->player.angle -= rotation_speed;
-    if (data->keys.right)
-        data->player.angle += rotation_speed;
+	move_speed = 0.05;
+	rotation_speed = 0.04;
 
-    if (data->player.angle < 0)
-        data->player.angle += 2 * M_PI;
-    if (data->player.angle > 2 * M_PI)
-        data->player.angle -= 2 * M_PI;
+	if (data->keys.left)
+		data->player.angle -= rotation_speed;
+	if (data->keys.right)
+		data->player.angle += rotation_speed;
 
-    if (data->keys.w)
-    {
-        new_x = data->player.x + cos(data->player.angle) * move_speed;
-        new_y = data->player.y + sin(data->player.angle) * move_speed;
-        if (!check_collision(data, new_x, new_y))
-        {
-            data->player.x = new_x;
-            data->player.y = new_y;
-        }
-    }
-    
-    if (data->keys.s)
-    {
-        new_x = data->player.x - cos(data->player.angle) * move_speed;
-        new_y = data->player.y - sin(data->player.angle) * move_speed;
-        if (!check_collision(data, new_x, new_y))
-        {
-            data->player.x = new_x;
-            data->player.y = new_y;
-        }
-    }
-    
-    if (data->keys.d)
-    {
-        new_x = data->player.x + cos(data->player.angle + M_PI_2) * move_speed;
-        new_y = data->player.y + sin(data->player.angle + M_PI_2) * move_speed;
-        if (!check_collision(data, new_x, new_y))
-        {
-            data->player.x = new_x;
-            data->player.y = new_y;
-        }
-    }
-    
-    if (data->keys.a)
-    {
-        new_x = data->player.x - cos(data->player.angle + M_PI_2) * move_speed;
-        new_y = data->player.y - sin(data->player.angle + M_PI_2) * move_speed;
-        if (!check_collision(data, new_x, new_y))
-        {
-            data->player.x = new_x;
-            data->player.y = new_y;
-        }
-    }
+	if (data->player.angle < 0)
+		data->player.angle += 2 * M_PI;
+	if (data->player.angle > 2 * M_PI)
+		data->player.angle -= 2 * M_PI;
+	if (data->keys.w)
+	{
+		new_x = data->player.x + cos(data->player.angle) * move_speed;
+		new_y = data->player.y + sin(data->player.angle) * move_speed;
+		if (!check_collision(data, new_x, new_y))
+		{
+			data->player.x = new_x;
+			data->player.y = new_y;
+		}
+	}
+	if (data->keys.s)
+	{
+		new_x = data->player.x - cos(data->player.angle) * move_speed;
+		new_y = data->player.y - sin(data->player.angle) * move_speed;
+		if (!check_collision(data, new_x, new_y))
+		{
+			data->player.x = new_x;
+			data->player.y = new_y;
+		}
+	}
+	if (data->keys.d)
+	{
+		new_x = data->player.x + cos(data->player.angle + M_PI_2) * move_speed;
+		new_y = data->player.y + sin(data->player.angle + M_PI_2) * move_speed;
+		if (!check_collision(data, new_x, new_y))
+		{
+			data->player.x = new_x;
+			data->player.y = new_y;
+		}
+	}
+	if (data->keys.a)
+	{
+		new_x = data->player.x - cos(data->player.angle + M_PI_2) * move_speed;
+		new_y = data->player.y - sin(data->player.angle + M_PI_2) * move_speed;
+		if (!check_collision(data, new_x, new_y))
+		{
+			data->player.x = new_x;
+			data->player.y = new_y;
+		}
+	}
 }
-
 
 //##########################################################3333
-int key_press(int keycode, void *param)
+int	key_press(int keycode, void *param)
 {
-    t_data *data = (t_data *)param;
-    if (keycode == KEY_ESC)
-    {
-        mlx_destroy_window(data->mlx, data->win);
-        exit(0);
-    }
-    else if (keycode == KEY_W)
-        data->keys.w = 1;
-    else if (keycode == KEY_A)
-        data->keys.a = 1;
-    else if (keycode == KEY_S)
-        data->keys.s = 1;
-    else if (keycode == KEY_D)
-        data->keys.d = 1;
-    else if (keycode == KEY_LEFT)
-        data->keys.left = 1;
-    else if (keycode == KEY_RIGHT)
-        data->keys.right = 1;
-    return (0);
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (keycode == KEY_ESC)
+	{
+		mlx_destroy_window(data->mlx, data->win);
+		exit(0);
+	}
+	else if (keycode == KEY_W)
+		data->keys.w = 1;
+	else if (keycode == KEY_A)
+		data->keys.a = 1;
+	else if (keycode == KEY_S)
+		data->keys.s = 1;
+	else if (keycode == KEY_D)
+		data->keys.d = 1;
+	else if (keycode == KEY_LEFT)
+		data->keys.left = 1;
+	else if (keycode == KEY_RIGHT)
+		data->keys.right = 1;
+	return (0);
 }
 
-int key_release(int keycode, void *param)
+int	key_release(int keycode, void *param)
 {
-    t_data *data = (t_data *)param;
-    if (keycode == KEY_W)
-        data->keys.w = 0;
-    else if (keycode == KEY_A)
-        data->keys.a = 0;
-    else if (keycode == KEY_S)
-        data->keys.s = 0;
-    else if (keycode == KEY_D)
-        data->keys.d = 0;
-    else if (keycode == KEY_LEFT)
-        data->keys.left = 0;
-    else if (keycode == KEY_RIGHT)
-        data->keys.right = 0;
-    return (0);
+	t_data	*data = (t_data *)param;
+
+	data = (t_data *)param;
+	if (keycode == KEY_W)
+		data->keys.w = 0;
+	else if (keycode == KEY_A)
+		data->keys.a = 0;
+	else if (keycode == KEY_S)
+		data->keys.s = 0;
+	else if (keycode == KEY_D)
+		data->keys.d = 0;
+	else if (keycode == KEY_LEFT)
+		data->keys.left = 0;
+	else if (keycode == KEY_RIGHT)
+		data->keys.right = 0;
+	return (0);
 }
 
-void desenhar_mapa(t_data *data)
+void	desenhar_mapa(t_data *data)
 {
-    int x, y, i, j;
+	int	x;
+	int	y;
+	int	i;
+	int	j;
 
-    for (y = 0; data->mapa[y] != NULL; y++)
-    {
-        for (x = 0; data->mapa[y][x] != '\0'; x++)
-        {
-            for (i = 0; i < TILE_SIZE; i++)
-            {
-                for (j = 0; j < TILE_SIZE; j++)
-                {
-                    if (x * TILE_SIZE + i >= 0 && x * TILE_SIZE + i < NOVA_LARGURA &&
-                        y * TILE_SIZE + j >= 0 && y * TILE_SIZE + j < NOVA_ALTURA)
-                    {
-                        if (data->mapa[y][x] == '1')
-                            my_mlx_pixel_put(data, x * TILE_SIZE + i, y * TILE_SIZE + j, 0xFFFFFF);
-                        else if (data->mapa[y][x] == '0')
-                            my_mlx_pixel_put(data, x * TILE_SIZE + i, y * TILE_SIZE + j, 0x808080);
-                    }
-                }
-            }
-        }
-    }
-    for (i = 0; i < TILE_SIZE / 2; i++)
-    {
-        for (j = 0; j < TILE_SIZE / 2; j++)
-        {
-            my_mlx_pixel_put(data, data->player.x * TILE_SIZE + i, data->player.y * TILE_SIZE + j, 0xFFA500);
-        }
-    }
+	y = 0;
+	while (data->mapa[y] != NULL)
+	{
+		x = 0;
+		while (data->mapa[y][x] != '\0')
+		{
+			i = 0;
+			while (i < TILE_SIZE)
+			{
+				j = 0;
+				while (j < TILE_SIZE)
+				{
+					if (x * TILE_SIZE + i >= 0 && x * TILE_SIZE + i < NOVA_LARGURA &&
+						y * TILE_SIZE + j >= 0 && y * TILE_SIZE + j < NOVA_ALTURA)
+					{
+						if (data->mapa[y][x] == '1')
+							my_mlx_pixel_put(data, x * TILE_SIZE + i, y * TILE_SIZE + j, 0xFFFFFF);
+						else if(data->mapa[y][x] == '0')
+							my_mlx_pixel_put(data, x * TILE_SIZE + i, y * TILE_SIZE + j, 0x808080);	
+					}
+					j++;
+				}
+				i++;
+			}
+			x++;
+		}
+		y++;
+	}
+	i = 0;
+	while (i < TILE_SIZE / 2)
+	{
+		j = 0;
+		while (j < TILE_SIZE / 2)
+		{
+			my_mlx_pixel_put(data, data->player.x * TILE_SIZE + i, data->player.y * TILE_SIZE + j, 0xFFA500);
+			j++;	
+		}
+		i++;
+	}
+}
+	
+int	render_scene(void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	pintar_chao_teto(data);
+	raycast(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	mover_jogador(data);
+	desenhar_mapa(data);
+	return 0;
 }
 
-int render_scene(void *param)
+
+
+void	debug_print_map(t_data *data)
 {
-    t_data *data = (t_data *)param;
+	int	y;
 
-    pintar_chao_teto(data);
-    raycast(data);
-    mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-    mover_jogador(data);
-
-    desenhar_mapa(data);
-
-    return 0;
+	printf("Imprimindo mapa:\n");
+	y = 0;
+	while (y < data->map_height)
+	{
+		printf("[%d] %s\n", y, data->mapa[y]);
+		y++;
+	}	
 }
 
-
-
-void debug_print_map(t_data *data)
+int	main(int argc, char **argv)
 {
-    printf("Imprimindo mapa:\n");
-    for (int y = 0; y < data->map_height; y++)
-    {
-        printf("[%d] %s\n", y, data->mapa[y]);
-    }
-}
-
-int main(int argc, char **argv)
-{
-    t_data data;
-    memset(&data, 0, sizeof(data));
-    
-    if (argc != 2)
-    {
-        fprintf(stderr, "Usage: ./cub3d <mapa>\n");
-        return 1;
-    }
-
-    data.mlx = mlx_init();
-    if (!data.mlx)
-    {
-        fprintf(stderr, "Erro ao iniciar o MLX\n");
-        return 1;
-    }
-    
-    data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
-    if (!data.win)
-    {
-        fprintf(stderr, "Erro ao criar a janela\n");
-        return 1;
-    }
-    
-    data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
-    if (!data.img)
-    {
-        fprintf(stderr, "Erro ao criar a imagem\n");
-        return 1;
-    }
-    
-    data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
+	t_data	data;
+	/*int	i;
+	int	y;
+	
+	i = 0;
+	y = 0;*/
+	
+	memset(&data, 0, sizeof(data));
+    	if (argc != 2)
+	{
+		printf("Usage: ./cub3d <mapa>\n");
+		return 1;
+	}
+	data.mlx = mlx_init();
+	if (!data.mlx)
+	{
+		printf("Erro ao iniciar o MLX\n");
+		return 1;
+	}
+	data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
+	if (!data.win)
+	{
+		printf("Erro ao criar a janela\n");
+		return 1;
+	}
+	data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
+	if (!data.img)
+	{
+		printf("Erro ao criar a imagem\n");
+		return 1;
+	}
+	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
                                   &data.line_length, &data.endian);
-    if (!data.addr)
-    {
-        fprintf(stderr, "Erro ao obter endereço da imagem\n");
-        return 1;
-    }
-    
-    printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
+	if (!data.addr)
+	{
+		printf("Erro ao obter endereço da imagem\n");
+		return 1;
+	}
+	printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
            data.bits_per_pixel, data.line_length, data.endian);
     
-    data.mapa = ler_mapa(argv[1], &data);
-    if (!data.mapa)
-    {
-        fprintf(stderr, "Erro ao carregar o mapa\n");
-        return 1;
-    }
-
+	data.mapa = ler_mapa(argv[1], &data);
+	if (!data.mapa)
+	{
+		printf("Erro ao carregar o mapa\n");
+		return 1;
+	}
+	/*while (i < 4)
+	{
+		carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
+		if (!data.textures[i].img || !data.textures[i].addr)
+		{
+			printf("Erro ao carregar textura %d\n", i);
+			return 1;
+		}
+		printf("Textura %d carregada: %dx%d\n", i, 
+			data.textures[i].width, data.textures[i].height);
+		i++;
+	}
+	printf("Cor do Chão (F): #%06X\n", data.floor_color);
+	printf("Cor do Teto (C): #%06X\n", data.ceiling_color);
+	i = 0;
+	while (i < 4)
+	{
+		carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
+		if (!data.textures[i].img || !data.textures[i].addr)
+		{
+			printf("Erro ao carregar textura %d\n", i);
+			return 1;
+		}
+		printf("Textura %d carregada: %dx%d\n", i, 
+			data.textures[i].width, data.textures[i].height);	
+	}
+	printf("Mapa carregado:\n");
+	while (y < data.map_height)
+	{
+		printf("%s\n", data.mapa[y]);
+		y++;
+	}
+	encontrar_jogador(&data);
+	printf("Jogador encontrado em: %.2f, %.2f, ângulo: %.2f\n",
+ 		data.player.x, data.player.y, data.player.angle);
+	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
+	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
+	mlx_hook(data.win, 17, 0, fechar_janela, &data);
+	mlx_loop_hook(data.mlx, render_scene, &data);
+	mlx_loop(data.mlx);
+	return 0;
+}
+	
+*/
     for (int i = 0; i < 4; i++)
     {
         if (!data.texture_paths[i])
         {
-            fprintf(stderr, "Erro: caminho da textura %d não definido!\n", i);
+            printf("Erro: caminho da textura %d não definido!\n", i);
             return 1;
         }
         printf("Textura %d lida do mapa: %s\n", i, data.texture_paths[i]);
@@ -976,7 +1132,7 @@ int main(int argc, char **argv)
         carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
         if (!data.textures[i].img || !data.textures[i].addr)
         {
-            fprintf(stderr, "Erro ao carregar textura %d\n", i);
+            printf("Erro ao carregar textura %d\n", i);
             return 1;
         }
         printf("Textura %d carregada: %dx%d\n", i, 
