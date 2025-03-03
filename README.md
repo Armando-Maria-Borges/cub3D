@@ -1,2 +1,3 @@
 # cub3D
-Projecto feito na liguagem C
+aborges
+Projecto feito na liguagem C.
