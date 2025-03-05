@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/02/13 14:19:54 by aborges          ###   ########.fr       */
+/*   Updated: 2025/03/05 15:56:14 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ void rotacionar_jogador(t_data *data)
 
 char *substituir_tabs(const char *linha)
 {
+    int mais_tab = 2;
     int j, tab_count = 0;
     size_t i, len = strlen(linha);
 
@@ -273,8 +274,9 @@ char *substituir_tabs(const char *linha)
     {
         if (linha[i] == '\t')
         {
-            for (int k = 0; k < TAB_SIZE; k++)
+            for (int k = 0; k < TAB_SIZE * mais_tab; k++)
                 nova_linha[j++] = ' ';
+            mais_tab = 1;
         }
         else
             nova_linha[j++] = linha[i];
