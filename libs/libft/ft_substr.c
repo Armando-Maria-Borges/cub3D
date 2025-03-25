@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 14:53:41 by mvidal            #+#    #+#             */
-/*   Updated: 2024/05/15 15:20:03 by mvidal           ###   ########.fr       */
+/*   Created: 2024/05/18 15:40:35 by aborges           #+#    #+#             */
+/*   Updated: 2024/05/19 02:42:47 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
@@ -20,13 +19,21 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	src = (char *)s;
 	if (!src)
 		return (NULL);
-	if (!s || start >= (unsigned int)ft_strlen(s))
-		return (ft_strdup(""));
-	if ((ft_strlen(s) - start) < len)
-		len = ft_strlen(s) - start;
-	str = (char *)malloc((sizeof(char) * len) + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, (char *)(s + start), len + 1);
+	if (start >= (unsigned int)ft_strlen(s))
+	{
+		str = (char *)malloc(sizeof(char));
+		if (!str)
+			return (NULL);
+		*str = '\0';
+	}
+	else
+	{
+		if ((ft_strlen(s) - start) < len)
+			len = ft_strlen(s) - start;
+		str = (char *)malloc((sizeof(char) * len) + 1);
+		if (!str)
+			return (NULL);
+		ft_strlcpy(str, (char *)(s + start), len + 1);
+	}
 	return (str);
 }

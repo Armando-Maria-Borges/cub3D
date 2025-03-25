@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 18:04:06 by lnzila            #+#    #+#             */
-/*   Updated: 2024/05/13 18:05:52 by lnzila           ###   ########.fr       */
+/*   Created: 2024/05/16 13:54:41 by aborges           #+#    #+#             */
+/*   Updated: 2024/05/16 13:54:43 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)

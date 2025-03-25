@@ -1,8 +1,19 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aborges <aborges@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/09 16:57:42 by aborges           #+#    #+#              #
+#    Updated: 2024/08/05 18:38:48 by aborges          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 NAME = libft.a
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = 	ft_isalpha.c	\
+SRCS = 	ft_isalpha.c	\
 	ft_isdigit.c 		\
 	ft_isalnum.c 		\
 	ft_isascii.c 		\
@@ -18,7 +29,6 @@ SRC = 	ft_isalpha.c	\
 	ft_tolower.c 		\
 	ft_strchr.c 		\
 	ft_strrchr.c 		\
-	ft_strcspn.c		\
 	ft_strncmp.c 		\
 	ft_memchr.c 		\
 	ft_memcmp.c 		\
@@ -29,16 +39,16 @@ SRC = 	ft_isalpha.c	\
 	ft_substr.c 		\
 	ft_strjoin.c 		\
 	ft_strtrim.c 		\
-	ft_split.c 			\
-	ft_itoa.c 			\
+	ft_split.c 		\
+	ft_itoa.c 		\
 	ft_strmapi.c 		\
 	ft_striteri.c 		\
 	ft_putchar_fd.c 	\
 	ft_putstr_fd.c 		\
-	ft_putendl_fd.c 		\
-	ft_putnbr_fd.c		\
-	ft_err.c		\
-	
+	ft_putendl_fd.c 	\
+	ft_putnbr_fd.c  	\
+	ft_very_digit.c
+
 BONUS = ft_lstnew.c 	\
 	ft_lstadd_front.c 	\
 	ft_lstsize.c 		\
@@ -47,9 +57,9 @@ BONUS = ft_lstnew.c 	\
 	ft_lstdelone.c 		\
 	ft_lstclear.c 		\
 	ft_lstiter.c 		\
-	ft_lstmap.c		\
+	ft_lstmap.c
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRCS:.c=.o)
 BONUS_OBJ = $(BONUS:.c=.o)
 
 all: $(NAME)
