@@ -6,7 +6,7 @@
 /*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/25 08:10:46 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/03/18 08:56:19 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <string.h>
 # include <math.h>
 # include <stdio.h>
-# include "libft.h" 
 
 # include <errno.h>
 # include <libgen.h>
@@ -103,6 +102,7 @@ void				mover_jogador(t_data *data);
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
 char				**ler_mapa(char *arquivo, t_data *data);
+int					check_collision(t_data *data, double new_x, double new_y);
 void				encontrar_jogador(t_data *data);
 int					fechar_janela(void *param);
 void				pintar_chao_teto(t_data *data);
@@ -113,20 +113,5 @@ void				carregar_textura(void *mlx, t_texture *texture,
 						const char *diretorio, const char *nome_textura);
 void				carregar_cor(char *linha, int *r, int *g, int *b);
 char				*substituir_tabs(const char *linha);
-int					check_collision(t_data *data, double new_x, double new_y);
-int					ft_read_line(int fd, char *buffer, int size);
-void				ft_trim_newline(char *str);
-
-int					contar_linhas_mapa(int fd, t_data *data, int *config_count);
-char				**alocar_mapa(int height);
-int     				eh_config_ou_vazio(char *linha);
-int     				carregar_linhas_mapa(int fd, char **mapa, int height);
-int					validar_config(char *linha, t_data *data, int *config_count);
-int					validar_cores(char *linha, t_data *data, int *config_count);
-int					validar_texturas(char *linha, t_data *data,
-						int 	*config_count);
-int					parse_color(const char *str, int *r, int *g, int *b);
-
-
 
 #endif

@@ -25,12 +25,8 @@ unsigned int cria_trgb(int t, int r, int g, int b)
     return (t << 24) | (r << 16) | (g << 8) | b;
 }
 
-
-
 //##########################################################
-// Função que verifica colisão: retorna 1 se houver colisão, 0 caso contrário.
 
-//##########################################################3333
 
 int main(int argc, char **argv)
 {

@@ -54,7 +54,7 @@ void	encontrar_jogador(t_data *data)
 		}
 		y++;
 	}
-	printf("Jogador não encontrado no mapa!\n");
+	printf("Jpgador não encontrado no mapa!\n");
 }
 
 void	rotacionar_jogador(t_data *data)
