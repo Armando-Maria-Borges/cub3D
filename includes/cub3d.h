@@ -114,4 +114,8 @@ void				carregar_textura(void *mlx, t_texture *texture,
 void				carregar_cor(char *linha, int *r, int *g, int *b);
 char				*substituir_tabs(const char *linha);
 
+
+int					check_number_position(t_data *data);
+int					check_other_cracter(t_data *data);
+
 #endif
