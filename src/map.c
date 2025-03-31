@@ -92,27 +92,60 @@ static int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
 
     // Voltar ao início do arquivo
     fseek(f, 0, SEEK_SET);
-
+    int z = 0;
+    int y = 0;
     // Loop para ler cada linha do arquivo
     while (fgets(linha, sizeof(linha), f))
     {
         // Remover caracteres de nova linha (\r\n)
-        linha[strcspn(linha, "\r\n")] = '\0';
+        if (linha[strlen(linha) - 1] == '\n')
+            linha[strlen(linha) - 1] = '\0';
+        // linha[strcspn(linha, "\r\n")] = '\0';
 
         // Ignorar linhas de configuração ou vazias
-        if (strncmp(linha, "NO ", 3) == 0 || strncmp(linha, "SO ", 3) == 0 ||
+        if (z != 6 && (strncmp(linha, "NO ", 3) == 0 || strncmp(linha, "SO ", 3) == 0 ||
             strncmp(linha, "WE ", 3) == 0 || strncmp(linha, "EA ", 3) == 0 ||
             strncmp(linha, "F ", 2) == 0 || strncmp(linha, "C ", 2) == 0 ||
-            linha[0] == '\0')
+            strlen(linha) == strspn(linha, " ")))
         {
+            if (strlen(linha) == strspn(linha, " "))
+                continue;
+            z++;
+            if (z > 6)
+            {
+                printf("\nError! EXISTE elementos a mais\n");
+                return (0);
+            }
             //check_space += 1;
             continue;
         }
+        else if (z != 6)
+        {
+            printf("\nError! EXISTE elemento invalido, %s\n", linha);
+            return (0);
+        }
 
+        if (strlen(linha) == strspn(linha, " "))
+        {
+            if (y == 1)
+            {
+                while (fgets(linha, sizeof(linha), f))
+                {
+                    if (strlen(linha) != strspn(linha, " "))
+                    {
+                        printf("\nError! EXISTE linha vazia dentro do mapa\n");
+                        return (0);
+                    }
+                }
+            }
+            continue;
+        }
+        else
+            y = 1;
+        if (strlen(linha) == strspn(linha, " "))
+            break;
         // Substituir tabs (exemplo)
         linha_corrigida = strdup(linha);
-
-
 
 
         //VERIFICAR ABERTURA NA PRIMEIRA LINHA
@@ -166,6 +199,18 @@ static int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
         }
         mapa[i++] = linha_corrigida;
     }
+
+    // if (strlen(linha) == strspn(linha, " "))
+    // {
+    //     while (fgets(linha, sizeof(linha), f))
+    //     {
+    //         if (strlen(linha) != strspn(linha, " "))
+    //         {
+    //             printf("\nError! o mapa deve ser o último elemento do ficheiro\n");
+    //             return (0);
+    //         }
+    //     }
+    // }
 
     //VERIFICAR ABERTURA NA ULTIMA LINHA
     j = 0;

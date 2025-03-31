@@ -81,21 +81,21 @@ int main(int argc, char **argv)
     if (!data.mlx)
     {
         fprintf(stderr, "Erro ao iniciar o MLX\n");
-        return 1;
+        return (1);
     }
 
     data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
     if (!data.win)
     {
         fprintf(stderr, "Erro ao criar a janela\n");
-        return 1;
+        return (1);
     }
 
     data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
     if (!data.img)
     {
         fprintf(stderr, "Erro ao criar a imagem\n");
-        return 1;
+        return (1);
     }
 
     data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     if (!data.addr)
     {
         fprintf(stderr, "Erro ao obter endereço da imagem\n");
-        return 1;
+        return (1);
     }
 
     printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
         if (!data.textures[i].img || !data.textures[i].addr)
         {
             fprintf(stderr, "Erro ao carregar textura %d\n", i);
-            return 1;
+            return (1);
         }
         printf("Textura %d carregada: %dx%d\n", i,
                data.textures[i].width, data.textures[i].height);
@@ -128,7 +128,8 @@ int main(int argc, char **argv)
         printf("%s\n", data.mapa[y]);
     }
 
-    encontrar_jogador(&data);
+    if (!encontrar_jogador(&data))
+        return (1);
     printf("Jogador encontrado em: %.2f, %.2f, ângulo: %.2f\n",
            data.player.x, data.player.y, data.player.angle);
 

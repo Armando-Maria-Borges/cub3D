@@ -103,7 +103,7 @@ int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
 char				**ler_mapa(char *arquivo, t_data *data);
 int					check_collision(t_data *data, double new_x, double new_y);
-void				encontrar_jogador(t_data *data);
+int				encontrar_jogador(t_data *data);
 int					fechar_janela(void *param);
 void				pintar_chao_teto(t_data *data);
 void				pintar_janela(t_data *data);

@@ -76,7 +76,7 @@ int	check_number_position(t_data *data)
 }
 //########################  REGRAS
 
-void	encontrar_jogador(t_data *data)
+int	encontrar_jogador(t_data *data)
 {
 	int	y;
 	int	x;
@@ -102,13 +102,14 @@ void	encontrar_jogador(t_data *data)
 					data->player.angle = 0;
 				else if (data->mapa[y][x] == 'W')
 					data->player.angle = M_PI;
-				return ;
+				return (1);
 			}
 			x++;
 		}
 		y++;
 	}
-	printf("Jpgador não encontrado no mapa!\n");
+	printf("Jogador não encontrado no mapa!\n");
+	return (0);
 }
 
 void	rotacionar_jogador(t_data *data)

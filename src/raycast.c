@@ -68,7 +68,8 @@ void raycast(t_data *data)
         }
 
         // Cálculo da altura da parede a ser desenhada
-        int wall_height = (int)(NOVA_ALTURA / perp_wall_dist);
+        // perp_wall_dist = perp_wall_dist * cos(data->player.angle - ray_angle);
+        int wall_height = (int)(NOVA_ALTURA / (perp_wall_dist * cos(data->player.angle - ray_angle)));
 
         // Determina os pontos de início e fim da linha da parede
         int start = (NOVA_ALTURA / 2) - (wall_height / 2);
