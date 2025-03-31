@@ -90,6 +90,29 @@ typedef struct s_data
 	t_key_state		keys;
 }	t_data;
 
+typedef struct s_ray
+{
+	double			ray_angle;
+	double			dir_x;
+	double			dir_y;
+	int				map_x;
+	int				map_y;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	int				step_x;
+	int				step_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	int				hit;
+	int				side;
+	t_texture	*texture;
+	double			perp_wall_dist;
+	int				wall_height;
+	int				start;
+	int				end;
+	int				tex_x;
+}	t_ray;
+
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);
 void				desenhar_mapa(t_data *data);
