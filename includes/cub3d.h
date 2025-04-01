@@ -25,9 +25,11 @@
 # include <libgen.h>
 # include <limits.h>
 
+#include "libft.h"
+
 # define TILE_SIZE 10
-# define NOVA_LARGURA 1920
-# define NOVA_ALTURA 1080
+# define NOVA_LARGURA 1400
+# define NOVA_ALTURA 1060
 # define FOV 1.309
 # define NUM_RAYS NOVA_LARGURA
 # define MAX_DEPTH 20
@@ -89,6 +91,29 @@ typedef struct s_data
 	t_player		player;
 	t_key_state		keys;
 }	t_data;
+
+
+typedef struct s_map_data
+{
+    FILE *f;
+    char **mapa;
+    int flags[6];
+    int config_count;
+    int map_iniciado;
+} t_map_data;
+
+/*
+void liberar_mapa(char **mapa, int altura);
+int processar_segunda_passagem(FILE *f, t_data *data, char **mapa);
+int processar_primeira_passagem(FILE *f, t_data *data, int *config_count, int *map_iniciado, int flags[6]);
+char **validar_e_alocar(FILE *f, t_data *data, int config_count, int map_iniciado);
+*/
+void liberar_mapa(char **mapa, int altura);
+int processar_primeira_passagem(t_data *data, t_map_data *map_data);
+char **validar_e_alocar(t_data *data, t_map_data *map_data);
+//int processar_segunda_passagem(t_data *data, t_map_data *map_data);
+int processar_segunda_passagem(FILE *f, t_data *data, char **mapa);
+
 
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);

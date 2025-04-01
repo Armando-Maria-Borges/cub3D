@@ -140,7 +140,7 @@ int main(int argc, char **argv)
     mlx_loop_hook(data.mlx, render_scene, &data);
     mlx_loop(data.mlx);
 
-    return 0;
+    return (0);
 }
 
 

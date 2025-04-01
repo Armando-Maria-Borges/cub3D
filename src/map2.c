@@ -12,67 +12,130 @@
 
 #include "../includes/cub3d.h"
 
-// Função auxiliar 1 (23 linhas)
-int processar_primeira_passagem(FILE *f, t_data *data, int *config_count, int *map_iniciado, int flags[6])
+// Função auxiliar 3 (24 linhas)
+int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
 {
     char linha[1024];
+    char *linha_corrigida;
+    int i = 0;
+    int j = 0; //um valor de checagem para me ajudar a verificar a primeira e ultima linha
+    //int check_space = 0;
 
+    // Voltar ao início do arquivo
+    //fseek(f, 0, SEEK_SET);
+    if (!f)
+    {
+        printf("Erro: Arquivo não pôde ser aberto na segunda passagem.\n");
+        return 1;  // Ou outro código de erro
+    }
+    fseek(f, 0, SEEK_SET);
+
+    int z = 0;
+    int y = 0;
     // Loop para ler cada linha do arquivo
-    while (fgets(linha, sizeof(linha), f)) // Corrigido: adicionado o parêntese final
+    while (fgets(linha, sizeof(linha), f))
     {
         // Remover caracteres de nova linha (\r\n)
-        linha[strcspn(linha, "\r\n")] = '\0';
+        if (linha[strlen(linha) - 1] == '\n')
+            linha[strlen(linha) - 1] = '\0';
+        // linha[strcspn(linha, "\r\n")] = '\0';
 
-        // Ignorar linhas vazias
-        if (linha[0] == '\0') continue;
+        // Ignorar linhas de configuração ou vazias
+        if (z != 6 && (strncmp(linha, "NO ", 3) == 0 || strncmp(linha, "SO ", 3) == 0 ||
+            strncmp(linha, "WE ", 3) == 0 || strncmp(linha, "EA ", 3) == 0 ||
+            strncmp(linha, "F ", 2) == 0 || strncmp(linha, "C ", 2) == 0 ||
+            strlen(linha) == strspn(linha, " ")))
+        {
+            if (strlen(linha) == strspn(linha, " "))
+                continue;
+            z++;
+            if (z > 6)
+            {
+                printf("\nError! EXISTE elementos a mais\n");
+                return (0);
+            }
+            //check_space += 1;
+            continue;
+        }
+        else if (z != 6)
+        {
+            printf("\nError! EXISTE elemento invalido, %s\n", linha);
+            return (0);
+        }
 
-        // Processar configurações
-        if (strncmp(linha, "NO ", 3) == 0) {
-            if (flags[0]++) { fprintf(stderr, "NO duplicado\n"); return 0; }
-            data->texture_paths[0] = strdup(linha + 3);
-        }
-        else if (strncmp(linha, "SO ", 3) == 0) {
-            if (flags[1]++) { fprintf(stderr, "SO duplicado\n"); return 0; }
-            data->texture_paths[1] = strdup(linha + 3);
-        }
-        else if (strncmp(linha, "WE ", 3) == 0) {
-            if (flags[2]++) { fprintf(stderr, "WE duplicado\n"); return 0; }
-            data->texture_paths[2] = strdup(linha + 3);
-        }
-        else if (strncmp(linha, "EA ", 3) == 0) {
-            if (flags[3]++) { fprintf(stderr, "EA duplicado\n"); return 0; }
-            data->texture_paths[3] = strdup(linha + 3);
-        }
-        else if (strncmp(linha, "F ", 2) == 0) {
-            if (flags[4]++) { fprintf(stderr, "F duplicado\n"); return 0; }
-            int r, g, b;
-            if (sscanf(linha + 2, "%d,%d,%d", &r, &g, &b) != 3 || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
-                fprintf(stderr, "Cor F inválida\n"); return 0;
+        if (strlen(linha) == strspn(linha, " "))
+        {
+            if (y == 1)
+            {
+                while (fgets(linha, sizeof(linha), f))
+                {
+                    if (strlen(linha) != strspn(linha, " "))
+                    {
+                        printf("\nError! EXISTE linha vazia dentro do mapa\n");
+                        return (0);
+                    }
+                }
             }
-            data->floor_color = (r << 16) | (g << 8) | b;
+            continue;
         }
-        else if (strncmp(linha, "C ", 2) == 0) {
-            if (flags[5]++) { fprintf(stderr, "C duplicado\n"); return 0; }
-            int r, g, b;
-            if (sscanf(linha + 2, "%d,%d,%d", &r, &g, &b) != 3 || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
-                fprintf(stderr, "Cor C inválida\n"); return 0;
+        else
+            y = 1;
+        if (strlen(linha) == strspn(linha, " "))
+            break;
+
+        // Substituir tabs (exemplo)
+        linha_corrigida = strdup(linha);
+
+
+        //VERIFICAR ABERTURA NA PRIMEIRA LINHA
+        if (j == 0)
+        {
+            while (linha_corrigida[j])
+            {
+                if (linha_corrigida[j] == '0')
+                {
+                    printf("\nError! EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n");
+                    return (0);
+                }
+                j++;
             }
-            data->ceiling_color = (r << 16) | (g << 8) | b;
         }
-        else {
-            // Verificar se todas as configurações foram processadas antes de iniciar o mapa
-            if (*config_count < 6) {
-                fprintf(stderr, "Mapa prematuro\n"); return 0;
-            }
-            (*map_iniciado) = 1;
-            data->map_height++;
+        int k = 0;
+        while (linha_corrigida[k] == 32 || linha_corrigida[k] == 39) 
+            k++;
+        if (linha_corrigida[k] == '0' || linha_corrigida[strlen(linha_corrigida) - 1] == '0')
+        {    
+            printf("\nError! INICIO OU FIM SEM PAREDE\n");
+            return (0);
         }
-        (*config_count)++;
+        if (!linha_corrigida) {
+            write(2, "Erro de processamento\n", 22);
+            for (int j = 0; j < i; j++)
+                free(mapa[j]);
+            return 0;
+        }
+        mapa[i++] = linha_corrigida;
     }
+    //VERIFICAR ABERTURA NA ULTIMA LINHA
+    j = 0;
+    while (linha_corrigida[j])
+    {
+        if (linha_corrigida[j] == '0')
+        {
+            printf("\nError! EXISTE CAMINHO ABERTO NA ULTIMA LINHA\n");
+            return (0);
+        }
+        j++;
+    }
+    // Marcar o final do mapa
+    mapa[i] = NULL;
 
+    // Verificar consistência do mapa
+    if (i != data->map_height) {
+        fprintf(stderr, "Inconsistência no mapa\n");
+        return 0;
+    }
     // Retorno obrigatório para evitar warnings
-    return 1;
+    return (1);
 }
-
-
 
