@@ -31,6 +31,7 @@ unsigned int cria_trgb(int t, int r, int g, int b)
 int main(int argc, char **argv)
 {
     t_data data;
+    t_map_data map_data;
     memset(&data, 0, sizeof(data));
 
     if (argc != 2)
@@ -40,7 +41,7 @@ int main(int argc, char **argv)
     }
 
     // Carrega e valida o mapa antes de inicializar o MLX
-    data.mapa = ler_mapa(argv[1], &data);
+    data.mapa = ler_mapa(argv[1], &data, &map_data);
     if (!data.mapa)
     {
         fprintf(stderr, "Erro ao carregar o mapa\n");

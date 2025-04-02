@@ -95,7 +95,7 @@ typedef struct s_data
 
 typedef struct s_map_data
 {
-    FILE *f;
+    int f;
     char **mapa;
     int flags[6];
     int config_count;
@@ -112,8 +112,12 @@ void liberar_mapa(char **mapa, int altura);
 int processar_primeira_passagem(t_data *data, t_map_data *map_data);
 char **validar_e_alocar(t_data *data, t_map_data *map_data);
 //int processar_segunda_passagem(t_data *data, t_map_data *map_data);
-int processar_segunda_passagem(t_data *data, t_map_data *map_data);
+int processar_segunda_passagem(t_data *data, t_map_data *map_data, char *arquivo);
 
+char **ler_mapa(char *arquivo, t_data *data, t_map_data *map_data);
+
+
+int	read_line(int fd, char *linha, int max_len);
 
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);
@@ -126,7 +130,6 @@ void				raycast(t_data *data);
 void				mover_jogador(t_data *data);
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
-char				**ler_mapa(char *arquivo, t_data *data);
 int					check_collision(t_data *data, double new_x, double new_y);
 int				encontrar_jogador(t_data *data);
 int					fechar_janela(void *param);
