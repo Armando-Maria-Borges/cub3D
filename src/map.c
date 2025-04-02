@@ -15,53 +15,43 @@
 char **ler_mapa(char *arquivo, t_data *data)
 {
     t_map_data map_data_struct;
-    t_map_data *map_data = &map_data_struct;  // Agora map_data aponta para uma estrutura válida
+    t_map_data *map_data;
+    
+    map_data = &map_data_struct;  // Agora map_data aponta para uma estrutura válida
     
     map_data->f = fopen(arquivo, "r");  // Agora é seguro acessar seus membros
-    
     map_data->mapa = NULL;
     ft_memset(map_data->flags, 0, sizeof(map_data->flags));
-
 
     if (!map_data->f) {
         write(2, "Erro ao abrir o mapa\n", 22);
         return NULL;
     }
-
-    // Primeira passagem: processar configurações
     if (!processar_primeira_passagem(data, map_data))
     {
         fclose(map_data->f);
         return NULL;
     }
-
-    // Validação e alocação de memória
     if (!(map_data->mapa = validar_e_alocar(data, map_data)))
     {
         fclose(map_data->f);
         return NULL;
     }
-
-    // Segunda passagem: carregar mapa
-    if (!processar_segunda_passagem(map_data->f, data, map_data->mapa))
+    if (!processar_segunda_passagem(data, map_data))
     {
         liberar_mapa(map_data->mapa, data->map_height);
         fclose(map_data->f);
         return NULL;
     }
-
-    // Definir largura do mapa
     if (data->map_height > 0)
     {
         data->map_width = strlen(map_data->mapa[0]);
     }
-
     printf("Mapa carregado com %d linhas e largura %d\n", data->map_height, data->map_width);
     fclose(map_data->f);
     return (map_data->mapa);
 }
 
-// Função auxiliar 2 (22 linhas)
 char **validar_e_alocar(t_data *data, t_map_data *map_data)
 {
     if (map_data->config_count < 6)
@@ -86,11 +76,23 @@ char **validar_e_alocar(t_data *data, t_map_data *map_data)
     }
     return (mapa);
 }
+void liberar_mapa(char **mapa, int altura)
+{
+    int i;
 
-// Função auxiliar para limpeza
+    i = 0;
+    while (i < altura)
+    {
+        free(mapa[i]);
+        i++;
+    }
+    free(mapa);
+}
+/*
 void liberar_mapa(char **mapa, int altura)
 {
     for (int i = 0; i < altura; i++) 
         free(mapa[i]);
     free(mapa);
 }
+*/

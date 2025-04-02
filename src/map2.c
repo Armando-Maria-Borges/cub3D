@@ -13,7 +13,7 @@
 #include "../includes/cub3d.h"
 
 // Função auxiliar 3 (24 linhas)
-int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
+int processar_segunda_passagem(t_data *data, t_map_data *map_data)
 {
     char linha[1024];
     char *linha_corrigida;
@@ -23,17 +23,17 @@ int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
 
     // Voltar ao início do arquivo
     //fseek(f, 0, SEEK_SET);
-    if (!f)
+    if (!map_data->f)
     {
         printf("Erro: Arquivo não pôde ser aberto na segunda passagem.\n");
         return 1;  // Ou outro código de erro
     }
-    fseek(f, 0, SEEK_SET);
+    fseek(map_data->f, 0, SEEK_SET);
 
     int z = 0;
     int y = 0;
     // Loop para ler cada linha do arquivo
-    while (fgets(linha, sizeof(linha), f))
+    while (fgets(linha, sizeof(linha), map_data->f))
     {
         // Remover caracteres de nova linha (\r\n)
         if (linha[strlen(linha) - 1] == '\n')
@@ -67,7 +67,7 @@ int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
         {
             if (y == 1)
             {
-                while (fgets(linha, sizeof(linha), f))
+                while (fgets(linha, sizeof(linha), map_data->f))
                 {
                     if (strlen(linha) != strspn(linha, " "))
                     {
@@ -111,10 +111,10 @@ int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
         if (!linha_corrigida) {
             write(2, "Erro de processamento\n", 22);
             for (int j = 0; j < i; j++)
-                free(mapa[j]);
+                free(map_data->mapa[j]);
             return 0;
         }
-        mapa[i++] = linha_corrigida;
+        map_data->mapa[i++] = linha_corrigida;
     }
     //VERIFICAR ABERTURA NA ULTIMA LINHA
     j = 0;
@@ -128,7 +128,7 @@ int processar_segunda_passagem(FILE *f, t_data *data, char **mapa)
         j++;
     }
     // Marcar o final do mapa
-    mapa[i] = NULL;
+    map_data->mapa[i] = NULL;
 
     // Verificar consistência do mapa
     if (i != data->map_height) {

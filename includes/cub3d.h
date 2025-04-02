@@ -112,7 +112,7 @@ void liberar_mapa(char **mapa, int altura);
 int processar_primeira_passagem(t_data *data, t_map_data *map_data);
 char **validar_e_alocar(t_data *data, t_map_data *map_data);
 //int processar_segunda_passagem(t_data *data, t_map_data *map_data);
-int processar_segunda_passagem(FILE *f, t_data *data, char **mapa);
+int processar_segunda_passagem(t_data *data, t_map_data *map_data);
 
 
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
