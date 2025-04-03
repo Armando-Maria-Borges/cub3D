@@ -13,19 +13,17 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "libft.h"
 # include "mlx.h"
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <string.h>
-# include <math.h>
-# include <stdio.h>
-
 # include <errno.h>
+# include <fcntl.h>
 # include <libgen.h>
 # include <limits.h>
-
-#include "libft.h"
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 # define TILE_SIZE 10
 # define NOVA_LARGURA 1400
@@ -45,32 +43,32 @@
 
 typedef struct s_player
 {
-	double	x;
-	double	y;
-	double	angle;
-}	t_player;
+	double			x;
+	double			y;
+	double			angle;
+}					t_player;
 
 typedef struct s_key_state
 {
-	int	w;
-	int	a;
-	int	s;
-	int	d;
-	int	left;
-	int	right;
-}	t_key_state;
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				left;
+	int				right;
+}					t_key_state;
 
 typedef struct s_texture
 {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		width;
-	int		height;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_texture;
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				width;
+	int				height;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+}					t_texture;
 
 typedef struct s_data
 {
@@ -90,34 +88,28 @@ typedef struct s_data
 	t_texture		textures[4];
 	t_player		player;
 	t_key_state		keys;
-}	t_data;
-
+}					t_data;
 
 typedef struct s_map_data
 {
-    int f;
-    char **mapa;
-    int flags[6];
-    int config_count;
-    int map_iniciado;
-} t_map_data;
+	int				f;
+	char			**mapa;
+	int				flags[6];
+	int				config_count;
+	int				map_iniciado;
+}					t_map_data;
 
-/*
-void liberar_mapa(char **mapa, int altura);
-int processar_segunda_passagem(FILE *f, t_data *data, char **mapa);
-int processar_primeira_passagem(FILE *f, t_data *data, int *config_count, int *map_iniciado, int flags[6]);
-char **validar_e_alocar(FILE *f, t_data *data, int config_count, int map_iniciado);
-*/
-void liberar_mapa(char **mapa, int altura);
-int processar_primeira_passagem(t_data *data, t_map_data *map_data);
-char **validar_e_alocar(t_data *data, t_map_data *map_data);
-//int processar_segunda_passagem(t_data *data, t_map_data *map_data);
-int processar_segunda_passagem(t_data *data, t_map_data *map_data, char *arquivo);
+void				liberar_mapa(char **mapa, int altura);
+int					processar_primeira_passagem(t_data *data,
+						t_map_data *map_data);
+char				**validar_e_alocar(t_data *data, t_map_data *map_data);
+int					processar_segunda_passagem(t_data *data,
+						t_map_data *map_data, char *arquivo);
 
-char **ler_mapa(char *arquivo, t_data *data, t_map_data *map_data);
+char				**ler_mapa(char *arquivo, t_data *data,
+						t_map_data *map_data);
 
-
-int	read_line(int fd, char *linha, int max_len);
+int					read_line(int fd, char *linha, int max_len);
 
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);
@@ -131,7 +123,7 @@ void				mover_jogador(t_data *data);
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
 int					check_collision(t_data *data, double new_x, double new_y);
-int				encontrar_jogador(t_data *data);
+int					encontrar_jogador(t_data *data);
 int					fechar_janela(void *param);
 void				pintar_chao_teto(t_data *data);
 void				pintar_janela(t_data *data);
@@ -141,7 +133,6 @@ void				carregar_textura(void *mlx, t_texture *texture,
 						const char *diretorio, const char *nome_textura);
 void				carregar_cor(char *linha, int *r, int *g, int *b);
 char				*substituir_tabs(const char *linha);
-
 
 int					check_number_position(t_data *data);
 int					check_other_cracter(t_data *data);
