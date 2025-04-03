@@ -6,28 +6,28 @@
 /*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:21:23 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/02 14:43:49 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/03 09:22:38 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 // Inicializa distâncias delta
-void init_delta_dist(t_ray *ray)
+void	init_delta_dist(t_ray *ray)
 {
-    double  div_x;
-    double  div_y;
+	double	div_x;
+	double	div_y;
 
-    div_x = 1 / ray->dir_x;
-    div_y = 1 / ray->dir_y;
-    if (ray->dir_x == 0)
-        ray->delta_dist_x = 1e30;
-    else
-        ray->delta_dist_x = fabs(div_x);
-    if (ray->dir_y == 0)
-        ray->delta_dist_y = 1e30;
-    else
-        ray->delta_dist_y = fabs(div_y);
+	div_x = 1 / ray->dir_x;
+	div_y = 1 / ray->dir_y;
+	if (ray->dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	else
+		ray->delta_dist_x = fabs(div_x);
+	if (ray->dir_y == 0)
+		ray->delta_dist_y = 1e30;
+	else
+		ray->delta_dist_y = fabs(div_y);
 }
 
 // Calcula distâncias laterais iniciais

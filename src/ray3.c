@@ -6,11 +6,21 @@
 /*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:21:43 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/03 08:11:03 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/03 09:23:15 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	calc_raio(t_data *data, int x, t_ray *ray)
+{
+	double	delta_angle;
+
+	delta_angle = FOV / (double)NUM_RAYS;
+	ray->ray_angle = data->player.angle - (FOV / 2) + x * delta_angle;
+	ray->dir_x = cos(ray->ray_angle);
+	ray->dir_y = sin(ray->ray_angle);
+}
 
 // Calcula a altura da parede corrigida
 void	calc_wall_height(t_data *data, t_ray *ray)

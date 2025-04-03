@@ -6,7 +6,7 @@
 /*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/02 09:02:33 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/03 14:16:44 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_CIMA 38
+# define KEY_BAIXO 40
 # define TAB_SIZE 4
 
 typedef struct s_player
@@ -139,6 +141,8 @@ char				*substituir_tabs(const char *linha);
 
 int					check_number_position(t_data *data);
 int					check_other_cracter(t_data *data);
+
+// Funções de raycasting
 void				calc_side_dist(t_data *data, t_ray *ray);
 void				calc_distancias_iniciais(t_data *data, t_ray *ray);
 void				calc_wall_height(t_data *data, t_ray *ray);
