@@ -34,10 +34,6 @@ int	key_press(int keycode, void *param)
 		data->keys.left = 1;
 	else if (keycode == KEY_RIGHT)
 		data->keys.right = 1;
-	else if (keycode == KEY_CIMA)
-		data->keys.cima = 1;
-	else if (keycode == KEY_BAIXO)
-		data->keys.baixo = 1;
 	return (0);
 }
 
@@ -58,9 +54,5 @@ int	key_release(int keycode, void *param)
 		data->keys.left = 0;
 	else if (keycode == KEY_RIGHT)
 		data->keys.right = 0;
-	else if (keycode == KEY_CIMA)
-		data->keys.cima = 0;
-	else if (keycode == KEY_BAIXO)
-		data->keys.baixo = 0;
 	return (0);
 }

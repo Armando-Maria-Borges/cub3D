@@ -24,10 +24,10 @@
 # include <string.h>
 # include <unistd.h>
 
-# define TILE_SIZE 10
+# define TILE_SIZE 7
 # define NOVA_LARGURA 1600
 # define NOVA_ALTURA 1080
-# define FOV 1.309
+# define FOV 1.0
 # define NUM_RAYS NOVA_LARGURA
 # define MAX_DEPTH 20
 
