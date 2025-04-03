@@ -40,7 +40,7 @@ void	pintar_janela(t_data *data)
 			if (y < NOVA_ALTURA / 2)
 				cor = 0xFFD700;
 			else
-				cor = 0x00008B;
+				cor = 0x00008C;
 			mlx_pixel_put(data->mlx, data->win, x, y, cor);
 			x++;
 		}

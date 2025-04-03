@@ -49,7 +49,7 @@ int processar_primeira_passagem(FILE *f, t_data *data, int *config_count, int *m
             if (sscanf(linha + 2, "%d,%d,%d", &r, &g, &b) != 3 || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
                 fprintf(stderr, "Cor F inválida\n"); return 0;
             }
-            data->floor_color = (r << 16) | (g << 8) | b;
+            data->floor_color = (r << 14) | (g << 6) | b;
         }
         else if (strncmp(linha, "C ", 2) == 0) {
             if (flags[5]++) { fprintf(stderr, "C duplicado\n"); return 0; }
@@ -62,7 +62,7 @@ int processar_primeira_passagem(FILE *f, t_data *data, int *config_count, int *m
         else {
             // Verificar se todas as configurações foram processadas antes de iniciar o mapa
             if (*config_count < 6) {
-                fprintf(stderr, "Mapa prematuro\n"); return 0;
+                fprintf(stderr, "Mapa incompleto\n"); return 0;
             }
             (*map_iniciado) = 1;
             data->map_height++;

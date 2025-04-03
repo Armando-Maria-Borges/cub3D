@@ -47,7 +47,23 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // Verifica se todas as texturas foram definidas
+    //VERIFICAR SE EXISTE POSICOES REPETIDAS
+    int number_position = check_number_position(&data);
+    if (number_position > 1)
+    {
+        printf("\n\nError!. there is %d position for player.\n\n", number_position);
+        return (1);
+    }
+
+    //VERIFICAR SE EXISTE CARACTER DESCONHECIDO
+    int number_caracter = check_other_cracter(&data);
+    if (number_caracter > 0)
+    {
+        printf("\n\nError!. there is %d caracter not found.\n\n", number_caracter);
+        return (1); 
+    }
+
+    // VERIFICAR se todas as texturas foram definidas
     for (int i = 0; i < 4; i++)
     {
         if (!data.texture_paths[i])
@@ -65,21 +81,21 @@ int main(int argc, char **argv)
     if (!data.mlx)
     {
         fprintf(stderr, "Erro ao iniciar o MLX\n");
-        return 1;
+        return (1);
     }
 
     data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
     if (!data.win)
     {
         fprintf(stderr, "Erro ao criar a janela\n");
-        return 1;
+        return (1);
     }
 
     data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
     if (!data.img)
     {
         fprintf(stderr, "Erro ao criar a imagem\n");
-        return 1;
+        return (1);
     }
 
     data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
@@ -87,7 +103,7 @@ int main(int argc, char **argv)
     if (!data.addr)
     {
         fprintf(stderr, "Erro ao obter endereço da imagem\n");
-        return 1;
+        return (1);
     }
 
     printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
@@ -100,7 +116,7 @@ int main(int argc, char **argv)
         if (!data.textures[i].img || !data.textures[i].addr)
         {
             fprintf(stderr, "Erro ao carregar textura %d\n", i);
-            return 1;
+            return (1);
         }
         printf("Textura %d carregada: %dx%d\n", i,
                data.textures[i].width, data.textures[i].height);
@@ -112,7 +128,8 @@ int main(int argc, char **argv)
         printf("%s\n", data.mapa[y]);
     }
 
-    encontrar_jogador(&data);
+    if (!encontrar_jogador(&data))
+        return (1);
     printf("Jogador encontrado em: %.2f, %.2f, ângulo: %.2f\n",
            data.player.x, data.player.y, data.player.angle);
 

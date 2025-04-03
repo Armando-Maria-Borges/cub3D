@@ -1,0 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   configuracoes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/03 09:03:23 by lnzila            #+#    #+#             */
+/*   Updated: 2025/04/03 09:03:30 by lnzila           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/cub3d.h"
+
+// Configuração inicial do raio
+void setup_ray_1(t_data *data, int x, t_ray *ray)
+{
+    calc_raio(data, x, ray);
+    init_mapa(data, ray);
+    init_delta_dist(ray);
+    init_passos(ray);
+}
+
+// Configuração da parede e textura
+void setup_ray_3(t_data *data, t_ray *ray)
+{
+    calc_wall_height(data, ray);
+    calc_wall_x(data, ray);
+    calc_tex_x(data, ray);
+    select_texture(data, ray);
+}

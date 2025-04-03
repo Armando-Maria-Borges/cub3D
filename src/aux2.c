@@ -24,11 +24,65 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-void	encontrar_jogador(t_data *data)
+//######################## REGRAS
+int	check_other_cracter(t_data *data)
+{
+	int	y;
+	int	x;
+	int	type_caracter = 0;
+
+	y = 0;
+	while (data->mapa[y] != NULL)
+	{
+		x = 0;
+		while (data->mapa[y][x] != '\0')
+		{
+			if (data->mapa[y][x] != 'N' && data->mapa[y][x] != 'W' &&
+				data->mapa[y][x] != 'S' && data->mapa[y][x] != 'E' &&
+				data->mapa[y][x] != '0' && data->mapa[y][x] != '1' &&
+				data->mapa[y][x] != 32 && data->mapa[y][x] != 39)
+			{
+				type_caracter += 1;
+			}
+			x++;
+		}
+		y++;
+	}
+	return (type_caracter);
+}
+
+int	check_number_position(t_data *data)
+{
+	int	y;
+	int	x;
+	int	count_position = 0;
+
+	y = 0;
+	while (data->mapa[y] != NULL)
+	{
+		x = 0;
+		while (data->mapa[y][x] != '\0')
+		{
+			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' ||
+				data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
+			{
+				count_position += 1;
+			}
+			x++;
+		}
+		y++;
+	}
+	return (count_position);
+}
+//########################  REGRAS
+
+int	encontrar_jogador(t_data *data)
 {
 	int	y;
 	int	x;
 
+	/*if (check_number_position(data))
+		return ;*/
 	y = 0;
 	while (data->mapa[y] != NULL)
 	{
@@ -48,13 +102,14 @@ void	encontrar_jogador(t_data *data)
 					data->player.angle = 0;
 				else if (data->mapa[y][x] == 'W')
 					data->player.angle = M_PI;
-				return ;
+				return (1);
 			}
 			x++;
 		}
 		y++;
 	}
-	printf("Jpgador não encontrado no mapa!\n");
+	printf("Jogador não encontrado no mapa!\n");
+	return (0);
 }
 
 void	rotacionar_jogador(t_data *data)
