@@ -56,3 +56,12 @@ int	key_release(int keycode, void *param)
 		data->keys.right = 0;
 	return (0);
 }
+
+// Configura os hooks do MLX
+void	setup_hooks(t_data *data)
+{
+	mlx_hook(data->win, 2, 1L << 0, key_press, data);
+	mlx_hook(data->win, 3, 1L << 1, key_release, data);
+	mlx_hook(data->win, 17, 0, fechar_janela, data);
+	mlx_loop_hook(data->mlx, render_scene, data);
+}

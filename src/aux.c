@@ -12,6 +12,18 @@
 
 #include "../includes/cub3d.h"
 
+// Cria a janela
+int	create_window(t_data *data)
+{
+	data->win = mlx_new_window(data->mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
+	if (!data->win)
+	{
+		printf("Error!\nAo criar a janela\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	fechar_janela(void *param)
 {
 	t_data	*data;

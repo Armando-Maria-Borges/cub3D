@@ -119,23 +119,38 @@ void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);
 void				desenhar_mapa(t_data *data);
 int					render_scene(void *param);
-void				carregar_texturas(void *mlx, t_texture *textures,
-						char *cub_file_path, char **paths);
 void				carregar_cor(char *linha, int *r, int *g, int *b);
 void				raycast(t_data *data);
 void				mover_jogador(t_data *data);
+
+// Funções para as teclas
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
+void				setup_hooks(t_data *data);
+
 char				**ler_mapa(char *arquivo, t_data *data);
 int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
+
+// Funções para janela
+int					create_window(t_data *data);
 int					fechar_janela(void *param);
-void				pintar_chao_teto(t_data *data);
 void				pintar_janela(t_data *data);
+void				pintar_chao_teto(t_data *data);
+
+// Funções para imagem
+int					create_image(t_data *data);
+int					get_image_addr(t_data *data);
+
+// Funções para validações
+int					check_args(int ac, char **av);
+int					load_map(t_data *data, char *map_file);
+int					validate_positions(t_data *data);
+int					validate_characters(t_data *data);
+int					validate_textures(t_data *data);
+
 unsigned int		cria_trgb(int t, int r, int g, int b);
 void				rotacionar_jogador(t_data *data);
-void				carregar_textura(void *mlx, t_texture *texture,
-						const char *diretorio, const char *nome_textura);
 void				carregar_cor(char *linha, int *r, int *g, int *b);
 char				*substituir_tabs(const char *linha);
 
@@ -165,5 +180,12 @@ void				process_ray(t_data *data, int x);
 void				select_texture(t_data *data, t_ray *ray);
 void				init_passos(t_ray *ray);
 void				init_mapa(t_data *data, t_ray *ray);
+
+//	Funções de Texturas
+int					load_textures(t_data *data);
+void				carregar_textura(void *mlx, t_texture *texture,
+						const char *diretorio, const char *nome_textura);
+void				carregar_texturas(void *mlx, t_texture *textures,
+						char *cub_file_path, char **paths);
 
 #endif
