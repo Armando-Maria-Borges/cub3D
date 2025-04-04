@@ -24,7 +24,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-//######################## REGRAS
 int	check_other_cracter(t_data *data)
 {
 	int	y;
@@ -74,7 +73,7 @@ int	check_number_position(t_data *data)
 	}
 	return (count_position);
 }
-//########################  REGRAS
+
 
 int	encontrar_jogador(t_data *data)
 {

@@ -22,7 +22,19 @@ unsigned int get_pixel(t_texture *texture, int x, int y)
 
 unsigned int cria_trgb(int t, int r, int g, int b)
 {
-    return (t << 24) | (r << 16) | (g << 8) | b;
+   /* if (r + 60 > 255)
+    	r = 255;
+    else
+    	r = r + 50;
+    if (g > 24)
+    	g = g - 24;
+    else
+    	g = 0;
+    if (b > 24)
+    	b = b - 24;
+    else
+    	b = 0;*/
+    return (t << 0) | (r << 0) | (g << 0) | b;
 }
 
 //##########################################################

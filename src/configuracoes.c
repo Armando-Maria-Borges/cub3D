@@ -21,6 +21,15 @@ void	setup_ray_1(t_data *data, int x, t_ray *ray)
 	init_passos(ray);
 }
 
+// Configuração do DDA e distância
+void	setup_ray_2(t_data *data, t_ray *ray)
+{
+	calc_side_dist(data, ray);
+	ray->hit = 0;
+	exec_dda(data, ray);
+	calc_perp_dist(data, ray);
+}
+
 // Configuração da parede e textura
 void	setup_ray_3(t_data *data, t_ray *ray)
 {

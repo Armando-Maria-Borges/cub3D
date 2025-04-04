@@ -47,3 +47,21 @@ void	calc_wall_x(t_data *data, t_ray *ray)
 		ray->wall_x = data->player.x + ray->perp_wall_dist * ray->dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 }
+
+// Calcula a distância perpendicular
+void	calc_perp_dist(t_data *data, t_ray *ray)
+{
+	double	px;
+	double	py;
+
+	px = data->player.x;
+	py = data->player.y;
+	if (ray->side == 0)
+		ray->perp_wall_dist = (ray->map_x - px + (1 - ray->step_x) / 2.0)
+			/ ray->dir_x;
+	else
+		ray->perp_wall_dist = (ray->map_y - py + (1 - ray->step_y) / 2.0)
+			/ ray->dir_y;
+	if (ray->perp_wall_dist < 0.1)
+		ray->perp_wall_dist = 0.1;
+}
