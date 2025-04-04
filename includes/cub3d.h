@@ -108,6 +108,14 @@ int					processar_segunda_passagem(t_data *data,
 
 char				**ler_mapa(char *arquivo, t_data *data,
 						t_map_data *map_data);
+int					ler_mapa1(char *arquivo, t_data *data,
+						t_map_data *map_data);
+
+
+int	parse_rgb(const char *str, int *r, int *g, int *b);
+size_t	ft_strcspn(const char *s, const char *reject);
+
+
 
 int					read_line(int fd, char *linha, int max_len);
 

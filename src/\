@@ -201,7 +201,7 @@ void carregar_textura(void *mlx, t_texture *texture, const char *base_dir, const
     texture->img = mlx_xpm_file_to_image(mlx, caminho_completo, &texture->width, &texture->height);
     if (!texture->img)
     {
-        fprintf(stderr, "Erro ao carregar a textura: %s\n", caminho_completo);
+        printf("Erro ao carregar a textura: %s\n", caminho_completo);
     }
     else
     {
@@ -332,7 +332,7 @@ char **ler_mapa(char *arquivo, t_data *data)
 
         if (strncmp(linha, "NO ", 3) == 0)
         {
-            if (flags[0]) { fprintf(stderr, "Erro: NO duplicado\n"); fclose(f); return NULL; }
+            if (flags[0]) { printf("Erro: NO duplicado\n"); fclose(f); return NULL; }
             flags[0] = 1;
             data->texture_paths[0] = strdup(linha + 3);
             config_count++;
@@ -340,7 +340,7 @@ char **ler_mapa(char *arquivo, t_data *data)
         }
         else if (strncmp(linha, "SO ", 3) == 0)
         {
-            if (flags[1]) { fprintf(stderr, "Erro: SO duplicado\n"); fclose(f); return NULL; }
+            if (flags[1]) { printf("Erro: SO duplicado\n"); fclose(f); return NULL; }
             flags[1] = 1;
             data->texture_paths[1] = strdup(linha + 3);
             config_count++;
@@ -348,7 +348,7 @@ char **ler_mapa(char *arquivo, t_data *data)
         }
         else if (strncmp(linha, "WE ", 3) == 0)
         {
-            if (flags[2]) { fprintf(stderr, "Erro: WE duplicado\n"); fclose(f); return NULL; }
+            if (flags[2]) { printf("Erro: WE duplicado\n"); fclose(f); return NULL; }
             flags[2] = 1;
             data->texture_paths[2] = strdup(linha + 3);
             config_count++;
@@ -356,7 +356,7 @@ char **ler_mapa(char *arquivo, t_data *data)
         }
         else if (strncmp(linha, "EA ", 3) == 0)
         {
-            if (flags[3]) { fprintf(stderr, "Erro: EA duplicado\n"); fclose(f); return NULL; }
+            if (flags[3]) { printf("Erro: EA duplicado\n"); fclose(f); return NULL; }
             flags[3] = 1;
             data->texture_paths[3] = strdup(linha + 3);
             config_count++;
@@ -364,13 +364,13 @@ char **ler_mapa(char *arquivo, t_data *data)
         }
         else if (strncmp(linha, "F ", 2) == 0)
         {
-            if (flags[4]) { fprintf(stderr, "Erro: F duplicado\n"); fclose(f); return NULL; }
+            if (flags[4]) { printf("Erro: F duplicado\n"); fclose(f); return NULL; }
             flags[4] = 1;
             int r, g, b;
             sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
             if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
             {
-                fprintf(stderr, "Erro: Cor F fora do intervalo (0-255)\n");
+                printf("Erro: Cor F fora do intervalo (0-255)\n");
                 fclose(f);
                 return NULL;
             }
@@ -380,13 +380,13 @@ char **ler_mapa(char *arquivo, t_data *data)
         }
         else if (strncmp(linha, "C ", 2) == 0)
         {
-            if (flags[5]) { fprintf(stderr, "Erro: C duplicado\n"); fclose(f); return NULL; }
+            if (flags[5]) { printf("Erro: C duplicado\n"); fclose(f); return NULL; }
             flags[5] = 1;
             int r, g, b;
             sscanf(linha + 2, "%d,%d,%d", &r, &g, &b);
             if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
             {
-                fprintf(stderr, "Erro: Cor C fora do intervalo (0-255)\n");
+                printf("Erro: Cor C fora do intervalo (0-255)\n");
                 fclose(f);
                 return NULL;
             }
@@ -398,7 +398,7 @@ char **ler_mapa(char *arquivo, t_data *data)
         // Se ainda não temos todas as configurações, não podemos começar o mapa
         if (config_count < 6)
         {
-            fprintf(stderr, "Erro: Mapa encontrado antes de todas as configurações\n");
+            printf("Erro: Mapa encontrado antes de todas as configurações\n");
             fclose(f);
             return NULL;
         }
@@ -410,13 +410,13 @@ char **ler_mapa(char *arquivo, t_data *data)
 
     if (config_count < 6)
     {
-        fprintf(stderr, "Erro: Configurações incompletas no mapa\n");
+        printf("Erro: Configurações incompletas no mapa\n");
         fclose(f);
         return NULL;
     }
     if (!map_started)
     {
-        fprintf(stderr, "Erro: Mapa não encontrado\n");
+        printf("Erro: Mapa não encontrado\n");
         fclose(f);
         return NULL;
     }
@@ -823,7 +823,7 @@ int main(int argc, char **argv)
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: ./cub3d <mapa>\n");
+        printf("Usage: ./cub3d <mapa>\n");
         return 1;
     }
 
@@ -831,7 +831,7 @@ int main(int argc, char **argv)
     data.mapa = ler_mapa(argv[1], &data);
     if (!data.mapa)
     {
-        fprintf(stderr, "Erro ao carregar o mapa\n");
+        printf("Erro ao carregar o mapa\n");
         return 1;
     }
 
@@ -840,7 +840,7 @@ int main(int argc, char **argv)
     {
         if (!data.texture_paths[i])
         {
-            fprintf(stderr, "Erro: caminho da textura %d não definido!\n", i);
+            printf("Erro: caminho da textura %d não definido!\n", i);
             return 1;
         }
         printf("Textura %d lida do mapa: %s\n", i, data.texture_paths[i]);
@@ -852,21 +852,21 @@ int main(int argc, char **argv)
     data.mlx = mlx_init();
     if (!data.mlx)
     {
-        fprintf(stderr, "Erro ao iniciar o MLX\n");
+        printf("Erro ao iniciar o MLX\n");
         return 1;
     }
 
     data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
     if (!data.win)
     {
-        fprintf(stderr, "Erro ao criar a janela\n");
+        printf("Erro ao criar a janela\n");
         return 1;
     }
 
     data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
     if (!data.img)
     {
-        fprintf(stderr, "Erro ao criar a imagem\n");
+        printf("Erro ao criar a imagem\n");
         return 1;
     }
 
@@ -874,7 +874,7 @@ int main(int argc, char **argv)
                                   &data.line_length, &data.endian);
     if (!data.addr)
     {
-        fprintf(stderr, "Erro ao obter endereço da imagem\n");
+        printf("Erro ao obter endereço da imagem\n");
         return 1;
     }
 
@@ -887,7 +887,7 @@ int main(int argc, char **argv)
         carregar_textura(data.mlx, &data.textures[i], "", data.texture_paths[i]);
         if (!data.textures[i].img || !data.textures[i].addr)
         {
-            fprintf(stderr, "Erro ao carregar textura %d\n", i);
+            printf("Erro ao carregar textura %d\n", i);
             return 1;
         }
         printf("Textura %d carregada: %dx%d\n", i,

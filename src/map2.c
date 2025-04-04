@@ -15,16 +15,16 @@
 int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		char *arquivo)
 {
-	char	linha[1024];
-	char	*linha_corrigida;
-	int		i;
-	int		z;
-	int		y;
-	int		k;
+	char linha[1024];
+	char *linha_corrigida;
+	int i;
+	int j;
+	int z;
+	int y;
+	int k;
 
 	i = 0;
-	int j = 0;
-		// um valor de checagem para me ajudar a verificar a primeira e ultima linha
+	j = 0;
 	z = 0;
 	y = 0;
 	if (!map_data->f)
@@ -36,15 +36,12 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 	map_data->f = open(arquivo, O_RDONLY);
 	while (read_line(map_data->f, linha, sizeof(linha)))
 	{
-		// Remover caracteres de nova linha (\r\n), substituindo por null
 		if (linha[strlen(linha) - 1] == '\n')
 			linha[strlen(linha) - 1] = '\0';
-		// Ignorar linhas de configuração ou vazias
-		if (z != 6 && (strncmp(linha, "NO ", 3) == 0 || strncmp(linha, "SO ",
-					3) == 0 || strncmp(linha, "WE ", 3) == 0 || strncmp(linha,
-					"EA ", 3) == 0 || strncmp(linha, "F ", 2) == 0
-				|| strncmp(linha, "C ", 2) == 0
-				|| strlen(linha) == strspn(linha, " ")))
+		if (z != 6 && (strncmp(linha, "NO ", 3) == 0
+                || strncmp(linha, "SO ", 3) == 0 || strncmp(linha, "WE ", 3) == 0
+                || strncmp(linha, "EA ", 3) == 0 || strncmp(linha, "F ", 2) == 0
+				|| strncmp(linha, "C ", 2) == 0 || strlen(linha) == strspn(linha, " ")))
 		{
 			if (strlen(linha) == strspn(linha, " "))
 				continue ;
@@ -81,7 +78,6 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		if (strlen(linha) == strspn(linha, " "))
 			break ;
 		linha_corrigida = strdup(linha);
-		// VERIFICAR ABERTURA NA PRIMEIRA LINHA
 		if (j == 0)
 		{
 			while (linha_corrigida[j])

@@ -37,14 +37,14 @@ int	main(int argc, char **argv)
 	memset(&data, 0, sizeof(data));
 	if (argc != 2)
 	{
-		fprintf(stderr, "Usage: ./cub3d <mapa>\n");
+		printf("Usage: ./cub3d <mapa>\n");
 		return (1);
 	}
 	// Carrega e valida o mapa antes de inicializar o MLX
 	data.mapa = ler_mapa(argv[1], &data, &map_data);
 	if (!data.mapa)
 	{
-		fprintf(stderr, "Erro ao carregar o mapa\n");
+		printf("Erro ao carregar o mapa\n");
 		return (1);
 	}
 	// VERIFICAR SE EXISTE POSICOES REPETIDAS
@@ -68,7 +68,7 @@ int	main(int argc, char **argv)
 	{
 		if (!data.texture_paths[i])
 		{
-			fprintf(stderr, "Erro: caminho da textura %d não definido!\n", i);
+			printf("Erro: caminho da textura %d não definido!\n", i);
 			return (1);
 		}
 		printf("Textura %d lida do mapa: %s\n", i, data.texture_paths[i]);
@@ -79,26 +79,26 @@ int	main(int argc, char **argv)
 	data.mlx = mlx_init();
 	if (!data.mlx)
 	{
-		fprintf(stderr, "Erro ao iniciar o MLX\n");
+		printf("Erro ao iniciar o MLX\n");
 		return (1);
 	}
 	data.win = mlx_new_window(data.mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");
 	if (!data.win)
 	{
-		fprintf(stderr, "Erro ao criar a janela\n");
+		printf("Erro ao criar a janela\n");
 		return (1);
 	}
 	data.img = mlx_new_image(data.mlx, NOVA_LARGURA, NOVA_ALTURA);
 	if (!data.img)
 	{
-		fprintf(stderr, "Erro ao criar a imagem\n");
+		printf("Erro ao criar a imagem\n");
 		return (1);
 	}
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
 			&data.line_length, &data.endian);
 	if (!data.addr)
 	{
-		fprintf(stderr, "Erro ao obter endereço da imagem\n");
+		printf("Erro ao obter endereço da imagem\n");
 		return (1);
 	}
 	printf("Image created: bpp=%d, line_length=%d, endian=%d\n",
@@ -110,7 +110,7 @@ int	main(int argc, char **argv)
 			data.texture_paths[i]);
 		if (!data.textures[i].img || !data.textures[i].addr)
 		{
-			fprintf(stderr, "Erro ao carregar textura %d\n", i);
+			printf("Erro ao carregar textura %d\n", i);
 			return (1);
 		}
 		printf("Textura %d carregada: %dx%d\n", i, data.textures[i].width,

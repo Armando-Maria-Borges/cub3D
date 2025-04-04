@@ -29,97 +29,176 @@ int	read_line(int fd, char *linha, int max_len)
 	return (bytes_read > 0 || i > 0);
 }
 
-// Função auxiliar 1 (23 linhas)
+int	we_ea(t_data *data, t_map_data *map_data, char *linha)
+{
+	if (ft_strncmp(linha, "WE ", 3) == 0)
+	{
+		if (map_data->flags[2]++)
+		{
+			printf("WE duplicado\n");
+			return (-1);
+		}
+		data->texture_paths[2] = strdup(linha + 3);
+	}
+	else if (ft_strncmp(linha, "EA ", 3) == 0)
+	{
+		if (map_data->flags[3]++)
+		{
+			printf("EA duplicado\n");
+			return (-1);
+		}
+		data->texture_paths[3] = strdup(linha + 3);
+	}
+	else
+		return (0);
+	return (1);
+}
+
+int	no_so(t_data *data, t_map_data *map_data, char *linha)
+{
+	if (ft_strncmp(linha, "NO ", 3) == 0)
+	{
+		if (map_data->flags[0]++)
+		{
+			printf("NO duplicado\n");
+			return (-1);
+		}
+		data->texture_paths[0] = strdup(linha + 3);
+	}
+	else if (ft_strncmp(linha, "SO ", 3) == 0)
+	{
+		if (map_data->flags[1]++)
+		{
+			printf("SO duplicado\n");
+			return (-1);
+		}
+		data->texture_paths[1] = strdup(linha + 3);
+	}
+	else
+		return (0);
+	return (1);
+}
+
+int	ft_chao(t_data *data, t_map_data *map_data, char *linha)
+{
+	int r;
+	int	g;
+	int	b;
+
+	if (ft_strncmp(linha, "F ", 2) == 0)
+	{
+		if (map_data->flags[4]++)
+		{
+			printf("F duplicado\n");
+			return (-1);
+		}
+		if (!parse_rgb(linha + 2, &r, &g, &b))
+		{
+			printf("Cor F inválida\n");
+			return (-1);
+		}
+		data->floor_color = (r << 16) | (g << 8) | b;
+	}
+	else
+		return (0);
+	return (1);
+}
+
+int	ft_teto(t_data *data, t_map_data *map_data, char *linha)
+{
+	int r;
+	int	g;
+	int	b;
+
+	if (ft_strncmp(linha, "C ", 2) == 0)
+	{
+		if (map_data->flags[5]++)
+		{
+			printf("C duplicado\n");
+			return (-1);
+		}
+		if (!parse_rgb(linha + 2, &r, &g, &b))
+		{
+			printf("Cor F inválida\n");
+			return (-1);
+		}
+		data->ceiling_color = (r << 16) | (g << 8) | b;
+	}
+	else
+		return (0);
+	return (1);
+}
+
+int	ft_processar_cordenadas(int *valor_return)
+{
+	if (valor_return[0])
+	{
+		if (valor_return[0] == -1)
+			return (-1);
+	}
+	else if (valor_return[1])
+	{
+		if (valor_return[1] == -1)
+			return (-1);
+	}
+	else if (valor_return[2])
+	{
+		if (valor_return[2] == -1)
+			return (-1);
+	}
+	else if (valor_return[3])
+	{
+		if (valor_return[3] == -1)
+			return (-1);
+	}
+	else
+		return (0);
+	return (1);
+}
+
+int	ft_return_cordenadas(t_data *data, t_map_data *map_data, char *linha)
+{
+	int	valor_return[5];
+
+	valor_return[0] = no_so(data, map_data, linha);
+	valor_return[1] = we_ea(data, map_data, linha);
+	valor_return[2] = ft_chao(data, map_data, linha);
+	valor_return[3] = ft_teto(data, map_data, linha);
+	return (ft_processar_cordenadas(valor_return));
+}
+
+int	chekagem_map_concluido(t_map_data *map_data, t_data *data)
+{
+	if (map_data->config_count < 6)
+	{
+		printf("Error\nMapa prematuro\n");
+		return (0);
+	}
+	(map_data->map_iniciado) = 1;
+	data->map_height++;
+	return (1);
+}
+
 int	processar_primeira_passagem(t_data *data, t_map_data *map_data)
 {
 	char	linha[1024];
+	int		return_cordenadas;
 
-	// Loop para ler cada linha do arquivo
-	// while (fgets(linha, sizeof(linha), map_data->f))
-	// Corrigido: adicionado o parêntese final
 	while (read_line(map_data->f, linha, 1024))
 	{
-		// Remover caracteres de nova linha (\r\n)
-		linha[strcspn(linha, "\r\n")] = '\0';
+		linha[ft_strcspn(linha, "\r\n")] = '\0';
 		if (linha[0] == '\0')
 			continue ;
-		if (strncmp(linha, "NO ", 3) == 0)
+		return_cordenadas = ft_return_cordenadas(data, map_data, linha);
+		if (return_cordenadas)
 		{
-			if (map_data->flags[0]++)
-			{
-				fprintf(stderr, "NO duplicado\n");
+			if (return_cordenadas == -1)
 				return (0);
-			}
-			data->texture_paths[0] = strdup(linha + 3);
-		}
-		else if (strncmp(linha, "SO ", 3) == 0)
-		{
-			if (map_data->flags[1]++)
-			{
-				fprintf(stderr, "SO duplicado\n");
-				return (0);
-			}
-			data->texture_paths[1] = strdup(linha + 3);
-		}
-		else if (strncmp(linha, "WE ", 3) == 0)
-		{
-			if (map_data->flags[2]++)
-			{
-				fprintf(stderr, "WE duplicado\n");
-				return (0);
-			}
-			data->texture_paths[2] = strdup(linha + 3);
-		}
-		else if (strncmp(linha, "EA ", 3) == 0)
-		{
-			if (map_data->flags[3]++)
-			{
-				fprintf(stderr, "EA duplicado\n");
-				return (0);
-			}
-			data->texture_paths[3] = strdup(linha + 3);
-		}
-		else if (strncmp(linha, "F ", 2) == 0)
-		{
-			if (map_data->flags[4]++)
-			{
-				fprintf(stderr, "F duplicado\n");
-				return (0);
-			}
-			int r, g, b;
-			if (sscanf(linha + 2, "%d,%d,%d", &r, &g, &b) != 3 || r < 0
-				|| r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-			{
-				fprintf(stderr, "Cor F inválida\n");
-				return (0);
-			}
-			data->floor_color = (r << 16) | (g << 8) | b;
-		}
-		else if (strncmp(linha, "C ", 2) == 0)
-		{
-			if (map_data->flags[5]++)
-			{
-				fprintf(stderr, "C duplicado\n");
-				return (0);
-			}
-			int r, g, b;
-			if (sscanf(linha + 2, "%d,%d,%d", &r, &g, &b) != 3 || r < 0
-				|| r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-			{
-				fprintf(stderr, "Cor C inválida\n");
-				return (0);
-			}
-			data->ceiling_color = (r << 16) | (g << 8) | b;
 		}
 		else
 		{
-			if (map_data->config_count < 6)
-			{
-				fprintf(stderr, "Mapa prematuro\n");
+			if (chekagem_map_concluido(map_data, data) == 0)
 				return (0);
-			}
-			(map_data->map_iniciado) = 1;
-			data->map_height++;
 		}
 		(map_data->config_count)++;
 	}
