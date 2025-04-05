@@ -37,87 +37,10 @@ unsigned int	cria_trgb(int t, int r, int g, int b)
 	return ((t << 0) | (r << 0) | (g << 0) | b);
 }
 
-//##########################################################
-
-#include "cub3d.h"
-
 // Inicializa a estrutura t_data
 static void	init_data(t_data *data)
 {
 	memset(data, 0, sizeof(t_data));
-}
-
-// Verifica os argumentos da linha de comando
-static int	check_args(int ac, char **av)
-{
-    (void)av;
-	if (ac != 2)
-	{
-		printf("Error\nUsage: ./cub3d <mapa>\n");
-		return (1);
-	}
-	return (0);
-}
-
-// Carrega e valida o mapa
-static int	load_map(t_data *data, char *map_file)
-{
-	data->mapa = ler_mapa(map_file, data);
-	if (!data->mapa)
-	{
-		printf("Error\n ao carregar o mapa\n");
-		return (1);
-	}
-	return (0);
-}
-
-// Verifica número de posições do jogador
-static int	validate_positions(t_data *data)
-{
-	int	number_position;
-
-	number_position = check_number_position(data);
-	if (number_position > 1)
-	{
-		printf("\n\nError!. there is %d position for player.\n\n",
-			number_position);
-		return (1);
-	}
-	return (0);
-}
-
-// Verifica caracteres desconhecidos
-static int	validate_characters(t_data *data)
-{
-	int	number_caracter;
-
-	number_caracter = check_other_cracter(data);
-	if (number_caracter > 0)
-	{
-		printf("\n\nError!\nThere is %d caracter not found.\n\n",
-			number_caracter);
-		return (1);
-	}
-	return (0);
-}
-
-// Valida caminhos das texturas
-static int	validate_textures(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (!data->texture_paths[i])
-		{
-			printf("Error!\nCaminho da textura %d não definido!\n", i);
-			return (1);
-		}
-		printf("Textura %d lida do mapa: %s\n", i, data->texture_paths[i]);
-		i++;
-	}
-	return (0);
 }
 
 // Exibe informações de cores
