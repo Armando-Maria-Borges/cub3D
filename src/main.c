@@ -25,9 +25,7 @@ unsigned int	cria_trgb(int t, int r, int g, int b)
 	return ((t << 24) | (r << 16) | (g << 8) | b);
 }
 
-//##########################################################
-
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	t_data		data;
 	t_map_data	map_data;

@@ -1,12 +1,5 @@
 {
     "files.associations": {
-        "array": "c",
-        "string": "c",
-        "string_view": "c",
-        "span": "c",
-        "cub3d.h": "c",
-        "map": "c",
-        "format": "c",
-        "sstream": "c"
+        "cub3d.h": "c"
     }
 }
