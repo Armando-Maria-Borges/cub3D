@@ -111,11 +111,8 @@ char				**ler_mapa(char *arquivo, t_data *data,
 int					ler_mapa1(char *arquivo, t_data *data,
 						t_map_data *map_data);
 
-
-int	parse_rgb(const char *str, int *r, int *g, int *b);
-size_t	ft_strcspn(const char *s, const char *reject);
-
-
+int					verifica_linha_cor(const char *str, int *r, int *g, int *b);
+size_t				ft_strcspn(const char *s, const char *reject);
 
 int					read_line(int fd, char *linha, int max_len);
 

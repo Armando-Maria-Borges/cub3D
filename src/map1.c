@@ -92,7 +92,7 @@ int	ft_chao(t_data *data, t_map_data *map_data, char *linha)
 			printf("F duplicado\n");
 			return (-1);
 		}
-		if (!parse_rgb(linha + 2, &r, &g, &b))
+		if (!verifica_linha_cor(linha + 2, &r, &g, &b))
 		{
 			printf("Cor F inválida\n");
 			return (-1);
@@ -117,7 +117,7 @@ int	ft_teto(t_data *data, t_map_data *map_data, char *linha)
 			printf("C duplicado\n");
 			return (-1);
 		}
-		if (!parse_rgb(linha + 2, &r, &g, &b))
+		if (!verifica_linha_cor(linha + 2, &r, &g, &b))
 		{
 			printf("Cor F inválida\n");
 			return (-1);

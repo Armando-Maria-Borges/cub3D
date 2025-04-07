@@ -12,41 +12,45 @@
 
 #include "../includes/cub3d.h"
 
-int	parse_rgb(const char *str, int *r, int *g, int *b)
+int	ciclo_verifica_linha_cor(const char *str, int *val, int *i)
 {
-	int	i;
-	int	num[3];
-	int	n;
-	int	val;
-
-	i = 0;
-	n = 0;
-	while (n < 3)
+	*val = 0;
+	while (str[*i] == ' ')
+		(*i)++;
+	if (!ft_isdigit(str[*i]))
+		return (0);
+	while (ft_isdigit(str[*i]))
 	{
-		val = 0;
-		while (str[i] == ' ')
-			i++;
-		if (!ft_isdigit(str[i]))
+		*val = (*val) * 10 + (str[*i] - '0');
+		(*i)++;
+	}
+	if (*val < 0 || *val > 255)
+		return (0);
+	return (1);
+}
+
+int	verifica_linha_cor(const char *str, int *r, int *g, int *b)
+{
+	int	num[3];
+	int var[3];
+
+	var[0] = 0;
+	var[1] = 0;
+	while (var[1] < 3)
+	{
+		if (!ciclo_verifica_linha_cor(str, &var[2], &var[0]))
 			return (0);
-		while (ft_isdigit(str[i]))
+		num[var[1]++] = var[2];
+		if (var[1] < 3)
 		{
-			val = val * 10 + (str[i] - '0');
-			i++;
-		}
-		if (val < 0 || val > 255)
-			return (0);
-		num[n++] = val;
-		if (n < 3)
-		{
-			if (str[i] != ',')
+			if (str[var[0]] != ',')
 				return (0);
-			i++;
+			var[0]++;
 		}
 	}
-	while (str[i] == ' ')
-		i++;
-	// Se ainda houver conteúdo inválido depois
-	if (str[i] != '\0' && str[i] != '\n')
+	while (str[var[0]] == ' ')
+		var[0]++;
+	if (str[var[0]] != '\0' && str[var[0]] != '\n')
 		return (0);
 	*r = num[0];
 	*g = num[1];
