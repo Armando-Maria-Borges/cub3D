@@ -19,11 +19,13 @@ int	read_line(int fd, char *linha, int max_len)
 	int		bytes_read;
 
 	i = 0;
-	while ((bytes_read = read(fd, &c, 1)) > 0)
+	bytes_read = read(fd, &c, 1);
+	while (bytes_read > 0)
 	{
 		if (c == '\n' || i >= max_len - 1)
 			break ;
 		linha[i++] = c;
+		bytes_read = read(fd, &c, 1);
 	}
 	linha[i] = '\0';
 	return (bytes_read > 0 || i > 0);
@@ -81,7 +83,7 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 
 int	ft_chao(t_data *data, t_map_data *map_data, char *linha)
 {
-	int r;
+	int	r;
 	int	g;
 	int	b;
 
@@ -106,7 +108,7 @@ int	ft_chao(t_data *data, t_map_data *map_data, char *linha)
 
 int	ft_teto(t_data *data, t_map_data *map_data, char *linha)
 {
-	int r;
+	int	r;
 	int	g;
 	int	b;
 

@@ -32,7 +32,7 @@ int	ciclo_verifica_linha_cor(const char *str, int *val, int *i)
 int	verifica_linha_cor(const char *str, int *r, int *g, int *b)
 {
 	int	num[3];
-	int var[3];
+	int	var[3];
 
 	var[0] = 0;
 	var[1] = 0;
@@ -60,7 +60,9 @@ int	verifica_linha_cor(const char *str, int *r, int *g, int *b)
 
 size_t	ft_strcspn(const char *s, const char *reject)
 {
-	size_t i, j;
+	size_t	i;
+	size_t	j;
+
 	i = 0;
 	while (s[i])
 	{

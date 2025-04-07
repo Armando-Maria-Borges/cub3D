@@ -71,7 +71,7 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 	while (linha_corrigida[k] == 32 || linha_corrigida[k] == 39)
 		k++;
 	if (linha_corrigida[k] == '0' || linha_corrigida[strlen(linha_corrigida)
-		- 1] == '0')
+			- 1] == '0')
 	{
 		printf("Error\n INICIO OU FIM SEM PAREDE\n");
 		return (0);
@@ -180,24 +180,26 @@ int	abrir_arquivo(t_map_data *map_data, char *arquivo)
 	return (0);
 }
 
-int segunda_passagem_ciclo(t_map_data *map_data,
-	int *var, char *linha, char *linha_corrigida)
+int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
+		char *linha_corrigida)
 {
+	int	result;
+	int	result1;
+
 	if (linha[strlen(linha) - 1] == '\n')
-	linha[strlen(linha) - 1] = '\0';
-	int result = processar_segunda(linha, var, map_data);
+		linha[strlen(linha) - 1] = '\0';
+	result = processar_segunda(linha, var, map_data);
 	if (result)
 	{
 		if (result == 2)
-			return (2) ;
+			return (2);
 		else if (result == -1)
-			return (-1) ;
+			return (-1);
 		else if (result == 0)
 			return (0);
 	}
 	linha_corrigida = ft_strdup(linha);
-	int result1 = nova_linha_corrigida(linha_corrigida, linha, map_data,
-			var);
+	result1 = nova_linha_corrigida(linha_corrigida, linha, map_data, var);
 	if (result1)
 	{
 		if (result1 == 0)
@@ -206,7 +208,8 @@ int segunda_passagem_ciclo(t_map_data *map_data,
 	return (1);
 }
 
-int	processar_segunda_passagem(t_data *data, t_map_data *map_data, char *arquivo)
+int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
+		char *arquivo)
 {
 	char	linha[1024];
 	char	*linha_corrigida;

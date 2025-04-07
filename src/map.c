@@ -17,14 +17,14 @@ char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 	map_data->f = open(arquivo, O_RDONLY);
 	if (map_data->f == -1)
 	{
-		perror("Erro ao abrir o arquivo");
+		perror("Error\n Erro ao abrir o arquivo");
 		return (NULL);
 	}
 	map_data->mapa = NULL;
 	ft_memset(map_data->flags, 0, sizeof(map_data->flags));
 	if (!map_data->f)
 	{
-        printf("Error\nErro ao abrir o mapa");
+		printf("Error\nErro ao abrir o mapa");
 		return (NULL);
 	}
 	if (!processar_primeira_passagem(data, map_data))
@@ -39,7 +39,8 @@ char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 
 int	ler_mapa1(char *arquivo, t_data *data, t_map_data *map_data)
 {
-	if (!(map_data->mapa = validar_e_alocar(data, map_data)))
+	map_data->mapa = validar_e_alocar(data, map_data);
+	if (!map_data->mapa)
 	{
 		close(map_data->f);
 		return (0);
@@ -79,7 +80,7 @@ char	**validar_e_alocar(t_data *data, t_map_data *map_data)
 	mapa = malloc(sizeof(char *) * (data->map_height + 1));
 	if (!mapa)
 	{
-        printf("Error, Erro de alocação");
+		printf("Error, Erro de alocação");
 		close(map_data->f);
 		return (NULL);
 	}
