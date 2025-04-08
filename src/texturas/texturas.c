@@ -10,77 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
-/*
-static size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size > 0)
-	{
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	while (src[i])
-		i++;
-	return (i);
-}
-
-static size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	dst_len;
-	size_t	src_len;
-	size_t	i;
-
-	dst_len = 0;
-	while (dst[dst_len] && dst_len < size)
-		dst_len++;
-	src_len = 0;
-	while (src[src_len])
-		src_len++;
-	if (dst_len >= size)
-		return (dst_len + src_len);
-	i = 0;
-	while (src[i] && (dst_len + i) < (size - 1))
-	{
-		dst[dst_len + i] = src[i];
-		i++;
-	}
-	dst[dst_len + i] = '\0';
-	return (dst_len + src_len);
-}
-
-static int	ft_atoi(const char *str)
-{
-	int	result;
-	int	sign;
-
-	result = 0;
-	sign = 1;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	else if (*str == '+')
-		str++;
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + (*str - '0');
-		str++;
-	}
-	return (sign * result);
-}
-*/
-// Carrega textura
 void	carregar_textura(void *mlx, t_texture *texture, const char *base_dir,
 		const char *nome_textura)
 {
@@ -104,7 +35,6 @@ void	carregar_textura(void *mlx, t_texture *texture, const char *base_dir,
 				&texture->line_length, &texture->endian);
 }
 
-// Carrega cor
 void	carregar_cor(char *linha, int *r, int *g, int *b)
 {
 	char	*ptr;
@@ -135,7 +65,6 @@ void	carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path,
 	}
 }
 
-// Carrega as texturas
 int	load_textures(t_data *data)
 {
 	int	i;

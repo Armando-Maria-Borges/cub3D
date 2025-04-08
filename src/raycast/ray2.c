@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 // Inicializa distâncias delta
 void	init_delta_dist(t_ray *ray)

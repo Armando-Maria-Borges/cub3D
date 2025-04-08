@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 {

@@ -15,32 +15,50 @@ NAME = cub3D
 
 # Compilador e flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Iincludes
+MLX_FLAGS = -L$(MLXDIR) -lmlx -lX11 -lXext -lm -lGL
+LIBFT_FLAGS = -L$(LIBFTDIR) -lft
 
 # Diretórios
-SRCDIR = src
+SRCS =	src/main/main.c					\
+		src/main/imagens.c				\
+		src/main/teclas.c				\
+		src/main/validacao.c			\
+		src/ler_mapa/map.c				\
+		src/ler_mapa/map1.c				\
+		src/ler_mapa/map2.c				\
+		src/ler_mapa/map_aux1.c			\
+		src/aux/tratar_tabs.c			\
+		src/desenhar/desenhar_mapa.c	\
+		src/desenhar/desenhar.c			\
+		src/jogador/posicionamento.c	\
+		src/jogador/mover_jogador.c		\
+		src/jogador/checar_colisao.c	\
+		src/raycast/algdda.c			\
+		src/raycast/configuracoes.c		\
+		src/raycast/ray2.c				\
+		src/raycast/ray3.c				\
+		src/raycast/raycast.c			\
+		src/texturas/aux.c				\
+		src/texturas/texturas.c
+
 OBJDIR = obj
-INCDIR = includes
 LIBFTDIR = libs/libft
 MLXDIR = libs/minilibx-linux
+INCDIR = includes
 
-# Arquivos
-SRCS = $(wildcard $(SRCDIR)/*.c)
-OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+# Gerar a lista de objetos a partir dos arquivos SRCS
+OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
+
 
 # Bibliotecas
 LIBFT = $(LIBFTDIR)/libft.a
 MLX = $(MLXDIR)/libmlx.a
 
-# Flags para as bibliotecas (no Linux usa X11, OpenGL e outras dependências)
-MLX_FLAGS = -L$(MLXDIR) -lmlx -lX11 -lXext -lm -lGL
-LIBFT_FLAGS = -L$(LIBFTDIR) -lft
-
-# Regras
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -I$(INCDIR) -I$(LIBFTDIR) -I$(MLXDIR) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME)
 	@echo "✅ Projeto compilado com sucesso!"
 
 $(LIBFT):
@@ -49,14 +67,15 @@ $(LIBFT):
 $(MLX):
 	@$(MAKE) -C $(MLXDIR)
 
-# Compilar os objetos no diretório obj
-$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+# Compilar os arquivos de origem para objetos, criando os subdiretórios necessários
+$(OBJDIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I$(INCDIR) -I$(LIBFTDIR) -I$(MLXDIR) -c $< -o $@
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+# Criar o diretório obj e seus subdiretórios
+$(OBJDIR)/%:
+	@mkdir -p $(dir $@)
 
-# Limpeza
 clean:
 	@$(MAKE) -C $(LIBFTDIR) clean
 	@$(MAKE) -C $(MLXDIR) clean
@@ -70,5 +89,4 @@ fclean: clean
 
 re: fclean all
 
-# Para evitar conflitos de nomes de arquivos
 .PHONY: all clean fclean re

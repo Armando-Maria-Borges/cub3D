@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 // Executa o algoritmo DDA
 void	exec_dda(t_data *data, t_ray *ray)

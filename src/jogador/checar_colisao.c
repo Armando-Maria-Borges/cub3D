@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 static double	clamp(double value, double min, double max)
 {
@@ -27,14 +27,12 @@ static void	calcular_minimos(double new_x, double new_y, int *min_x, int *min_y)
 	*min_y = (int)floor(new_y) - 1;
 }
 
-// Calcula os limites máximos das células
 static void	calcular_maximos(double new_x, double new_y, int *max_x, int *max_y)
 {
 	*max_x = (int)floor(new_x) + 1;
 	*max_y = (int)floor(new_y) + 1;
 }
 
-// Calcula a distância até a parede
 static double	calcular_distancia(double new_x, double new_y, int i, int j)
 {
 	double	nearest_x;
@@ -49,8 +47,8 @@ static double	calcular_distancia(double new_x, double new_y, int i, int j)
 	return (sqrt(dx * dx + dy * dy));
 }
 
-// Verifica se há colisão em uma célula específica
-static int	verificar_colisao_celula(t_data *data, double new_x, double new_y, int i, int j)
+static int	verificar_colisao_celula(t_data *data, double new_x, double new_y,
+		int i, int j)
 {
 	double	collision_radius;
 	double	distance;
@@ -65,14 +63,13 @@ static int	verificar_colisao_celula(t_data *data, double new_x, double new_y, in
 	return (0);
 }
 
-// Função principal de verificação de colisão
 int	check_collision(t_data *data, double new_x, double new_y)
 {
-	int	min_x, min_y;
-	int	max_x, max_y;
 	int	i;
 	int	j;
 
+	int min_x, min_y;
+	int max_x, max_y;
 	calcular_minimos(new_x, new_y, &min_x, &min_y);
 	calcular_maximos(new_x, new_y, &max_x, &max_y);
 	i = min_y;
@@ -83,10 +80,10 @@ int	check_collision(t_data *data, double new_x, double new_y)
 		{
 			if (i >= 0 && j >= 0 && i < data->map_height && j < data->map_width)
 				if (verificar_colisao_celula(data, new_x, new_y, i, j))
-					return 1;
+					return (1);
 			j++;
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }

@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
-// Cria a imagem
 int	create_image(t_data *data)
 {
 	data->img = mlx_new_image(data->mlx, NOVA_LARGURA, NOVA_ALTURA);
@@ -24,7 +23,6 @@ int	create_image(t_data *data)
 	return (0);
 }
 
-// Obtém o endereço da imagem
 int	get_image_addr(t_data *data)
 {
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel,

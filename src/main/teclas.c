@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 int	key_press(int keycode, void *param)
 {
@@ -57,7 +57,6 @@ int	key_release(int keycode, void *param)
 	return (0);
 }
 
-// Configura os hooks do MLX
 void	setup_hooks(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, key_press, data);

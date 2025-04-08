@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 int	processar_segunda_passagem1(char *linha, int *var)
 {
@@ -71,7 +71,7 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 	while (linha_corrigida[k] == 32 || linha_corrigida[k] == 39)
 		k++;
 	if (linha_corrigida[k] == '0' || linha_corrigida[strlen(linha_corrigida)
-			- 1] == '0')
+		- 1] == '0')
 	{
 		printf("Error\n INICIO OU FIM SEM PAREDE\n");
 		return (0);

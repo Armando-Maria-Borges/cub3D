@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
-// Cria a janela
 int	create_window(t_data *data)
 {
 	data->win = mlx_new_window(data->mlx, NOVA_LARGURA, NOVA_ALTURA, "Cub3D");

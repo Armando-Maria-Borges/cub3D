@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 void	desenhar_mapa(t_data *data)
 {
@@ -25,6 +25,7 @@ void	desenhar_mapa(t_data *data)
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
+			//ciclo_desenhar_mapa(data, &j, &x, &y);
 			i = 0;
 			while (i < TILE_SIZE)
 			{
