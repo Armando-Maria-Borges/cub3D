@@ -1,7 +1,7 @@
-WE maps/good/north.xpm
-EA maps/good/north.xpm
-NO maps/good/east.xpm
-SO maps/good/east.xpm
+WE maps/north.xpm
+EA maps/north.xpm
+NO maps/east.xpm
+SO maps/east.xpm
 
 C 10,25,25
 F 0,0,0
