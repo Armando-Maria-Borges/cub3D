@@ -200,12 +200,10 @@ void				setup_ray_2(t_data *data, t_ray *ray);
 void				exec_dda(t_data *data, t_ray *ray);
 void				init_delta_dist(t_ray *ray);
 
-
 void				draw_wall(t_data *data, int x, t_ray *ray);
 void				draw_ceiling(t_data *data, int x, int start);
 void				draw_floor(t_data *data, int x, int end);
 void				draw_ray(t_data *data, int x, t_ray *ray);
-
 
 void				setup_ray_1(t_data *data, int x, t_ray *ray);
 void				setup_ray_3(t_data *data, t_ray *ray);

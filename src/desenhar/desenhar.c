@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 // Desenha a parede com textura
 void	draw_wall(t_data *data, int x, t_ray *ray)
 {
 	int	y;
 	int	tex_y;
-		int d;
+	int	d;
 
 	y = ray->start;
 	while (y < ray->end)
@@ -34,7 +34,6 @@ void	draw_wall(t_data *data, int x, t_ray *ray)
 	}
 }
 
-// Desenha o teto
 void	draw_ceiling(t_data *data, int x, int start)
 {
 	int	y;
@@ -47,7 +46,6 @@ void	draw_ceiling(t_data *data, int x, int start)
 	}
 }
 
-// Desenha o chão
 void	draw_floor(t_data *data, int x, int end)
 {
 	int				y;

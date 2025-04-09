@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 static double	clamp(double value, double min, double max)
 {
@@ -27,14 +27,12 @@ static void	calcular_minimos(double new_x, double new_y, int *min_x, int *min_y)
 	*min_y = (int)floor(new_y) - 1;
 }
 
-// Calcula os limites máximos das células
 static void	calcular_maximos(double new_x, double new_y, int *max_x, int *max_y)
 {
 	*max_x = (int)floor(new_x) + 1;
 	*max_y = (int)floor(new_y) + 1;
 }
 
-// Calcula a distância até a parede
 static double	calcular_distancia(double new_x, double new_y, int i, int j)
 {
 	double	nearest_x;
@@ -49,12 +47,16 @@ static double	calcular_distancia(double new_x, double new_y, int i, int j)
 	return (sqrt(dx * dx + dy * dy));
 }
 
-// Verifica se há colisão em uma célula específica
-static int	verificar_colisao_celula(t_data *data, double new_x, double new_y, int i, int j)
+static int	verificar_colisao_celula(t_data *data, double new_x, double new_y,
+		int *var)
 {
+	int		i;
+	int		j;
 	double	collision_radius;
 	double	distance;
 
+	i = var[0];
+	j = var[1];
 	collision_radius = 0.2;
 	if (data->mapa[i][j] == '1')
 	{
@@ -65,28 +67,27 @@ static int	verificar_colisao_celula(t_data *data, double new_x, double new_y, in
 	return (0);
 }
 
-// Função principal de verificação de colisão
 int	check_collision(t_data *data, double new_x, double new_y)
 {
-	int	min_x, min_y;
-	int	max_x, max_y;
-	int	i;
-	int	j;
+	int	var[2];
 
+	int min_x, min_y;
+	int max_x, max_y;
 	calcular_minimos(new_x, new_y, &min_x, &min_y);
 	calcular_maximos(new_x, new_y, &max_x, &max_y);
-	i = min_y;
-	while (i <= max_y)
+	var[0] = min_y;
+	while (var[0] <= max_y)
 	{
-		j = min_x;
-		while (j <= max_x)
+		var[1] = min_x;
+		while (var[1] <= max_x)
 		{
-			if (i >= 0 && j >= 0 && i < data->map_height && j < data->map_width)
-				if (verificar_colisao_celula(data, new_x, new_y, i, j))
-					return 1;
-			j++;
+			if (var[0] >= 0 && var[1] >= 0 && var[0] < data->map_height
+				&& var[1] < data->map_width)
+				if (verificar_colisao_celula(data, new_x, new_y, var))
+					return (1);
+			var[1]++;
 		}
-		i++;
+		var[0]++;
 	}
-	return 0;
+	return (0);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 // Configuração inicial do raio
 /*void	setup_ray_1(t_data *data, int x, t_ray *ray)
@@ -47,7 +47,6 @@ void	setup_ray_3(t_data *data, t_ray *ray)
 	select_texture(data, ray);
 }
 
-// Seleciona a textura correta
 void	select_texture(t_data *data, t_ray *ray)
 {
 	if (ray->side == 0 && ray->step_x < 0)

@@ -10,13 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "cub3d.h"
 
-#include "../includes/cub3d.h"
-
-// Verifica os argumentos da linha de comando
 int	check_args(int ac, char **av)
 {
-    (void)av;
+	(void)av;
 	if (ac != 2)
 	{
 		printf("Error\nUsage: ./cub3d <mapa>\n");
@@ -25,10 +23,9 @@ int	check_args(int ac, char **av)
 	return (0);
 }
 
-// Carrega e valida o mapa
-int	load_map(t_data *data, char *map_file)
+int	load_map(char *arquivo, t_data *data, t_map_data *map_data)
 {
-	data->mapa = ler_mapa(map_file, data);
+	data->mapa = ler_mapa(arquivo, data, map_data);
 	if (!data->mapa)
 	{
 		printf("Error\n ao carregar o mapa\n");
@@ -37,7 +34,6 @@ int	load_map(t_data *data, char *map_file)
 	return (0);
 }
 
-// Verifica número de posições do jogador
 int	validate_positions(t_data *data)
 {
 	int	number_position;
@@ -52,7 +48,6 @@ int	validate_positions(t_data *data)
 	return (0);
 }
 
-// Verifica caracteres desconhecidos
 int	validate_characters(t_data *data)
 {
 	int	number_caracter;
@@ -67,7 +62,6 @@ int	validate_characters(t_data *data)
 	return (0);
 }
 
-// Valida caminhos das texturas
 int	validate_textures(t_data *data)
 {
 	int	i;

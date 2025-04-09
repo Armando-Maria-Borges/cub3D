@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -18,8 +18,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	if (x >= 0 && x < NOVA_LARGURA && y >= 0 && y < NOVA_ALTURA)
 	{
-		dst = data->addr + (y * data->line_length + x
-				* (data->bits_per_pixel / 8));
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel
+					/ 8));
 		*(unsigned int *)dst = color;
 	}
 }
@@ -28,18 +28,19 @@ int	check_other_cracter(t_data *data)
 {
 	int	y;
 	int	x;
-	int	type_caracter = 0;
+	int	type_caracter;
 
+	type_caracter = 0;
 	y = 0;
 	while (data->mapa[y] != NULL)
 	{
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			if (data->mapa[y][x] != 'N' && data->mapa[y][x] != 'W' &&
-				data->mapa[y][x] != 'S' && data->mapa[y][x] != 'E' &&
-				data->mapa[y][x] != '0' && data->mapa[y][x] != '1' &&
-				data->mapa[y][x] != 32 && data->mapa[y][x] != 39)
+			if (data->mapa[y][x] != 'N' && data->mapa[y][x] != 'W'
+				&& data->mapa[y][x] != 'S' && data->mapa[y][x] != 'E'
+				&& data->mapa[y][x] != '0' && data->mapa[y][x] != '1'
+				&& data->mapa[y][x] != 32 && data->mapa[y][x] != 39)
 			{
 				type_caracter += 1;
 			}
@@ -54,16 +55,17 @@ int	check_number_position(t_data *data)
 {
 	int	y;
 	int	x;
-	int	count_position = 0;
+	int	count_position;
 
+	count_position = 0;
 	y = 0;
 	while (data->mapa[y] != NULL)
 	{
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' ||
-				data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
+			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W'
+				|| data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
 			{
 				count_position += 1;
 			}
@@ -74,22 +76,19 @@ int	check_number_position(t_data *data)
 	return (count_position);
 }
 
-
 int	encontrar_jogador(t_data *data)
 {
 	int	y;
 	int	x;
 
-	/*if (check_number_position(data))
-		return ;*/
 	y = 0;
 	while (data->mapa[y] != NULL)
 	{
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W' ||
-				data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
+			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W'
+				|| data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
 			{
 				data->player.x = x + 0.5;
 				data->player.y = y + 0.5;

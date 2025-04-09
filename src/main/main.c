@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 unsigned int	get_pixel(t_texture *texture, int x, int y)
 {
@@ -22,25 +22,27 @@ unsigned int	get_pixel(t_texture *texture, int x, int y)
 
 unsigned int	cria_trgb(int t, int r, int g, int b)
 {
-	/* if (r + 60 > 255)
-			r = 255;
-		else
-			r = r + 50;
-		if (g > 24)
-			g = g - 24;
-		else
-			g = 0;
-		if (b > 24)
-			b = b - 24;
-		else
-			b = 0;*/
-	return ((t << 0) | (r << 0) | (g << 0) | b);
+	t = t;
+	if (r + 60 > 255)
+		r = 24;
+	else
+		r = r + 50;
+	if (g > 24)
+		g = g - 16;
+	else
+		g = 0;
+	if (b > 24)
+		b = b - 8;
+	else
+		b = 0;
+	// return ((t << 24) | (r << 16) | (g << 8) | b);
+	return (t | r | g | b);
 }
 
 // Inicializa a estrutura t_data
 static void	init_data(t_data *data)
 {
-	memset(data, 0, sizeof(t_data));
+	ft_memset(data, 0, sizeof(t_data));
 }
 
 // Exibe informações de cores
@@ -76,8 +78,7 @@ static void	print_map(t_data *data)
 	}
 }
 
-// Encontra a posição do jogador
-static int	find_player(t_data *data)
+static int	encontrar_player(t_data *data)
 {
 	if (!encontrar_jogador(data))
 		return (1);
@@ -86,19 +87,18 @@ static int	find_player(t_data *data)
 	return (0);
 }
 
-// Inicia o loop principal do MLX
 static void	start_loop(t_data *data)
 {
 	mlx_loop(data->mlx);
 }
 
-// Função principal
 int	main(int argc, char **argv)
 {
-	t_data data;
+	t_data		data;
+	t_map_data	map_data;
 
 	init_data(&data);
-	if (check_args(argc, argv) || load_map(&data, argv[1]))
+	if (check_args(argc, argv) || load_map(argv[1], &data, &map_data))
 		return (1);
 	if (validate_positions(&data) || validate_characters(&data))
 		return (1);
@@ -112,7 +112,7 @@ int	main(int argc, char **argv)
 	if (load_textures(&data))
 		return (1);
 	print_map(&data);
-	if (find_player(&data))
+	if (encontrar_player(&data))
 		return (1);
 	setup_hooks(&data);
 	start_loop(&data);
