@@ -10,16 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Nome do executável
 NAME = cub3D
-
-# Compilador e flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
 MLX_FLAGS = -L$(MLXDIR) -lmlx -lX11 -lXext -lm -lGL
 LIBFT_FLAGS = -L$(LIBFTDIR) -lft
 
-# Diretórios
 SRCS =	src/main/main.c					\
 		src/main/imagens.c				\
 		src/main/teclas.c				\
@@ -47,32 +43,26 @@ LIBFTDIR = libs/libft
 MLXDIR = libs/minilibx-linux
 INCDIR = includes
 
-# Gerar a lista de objetos a partir dos arquivos SRCS
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 
-
-# Bibliotecas
 LIBFT = $(LIBFTDIR)/libft.a
 MLX = $(MLXDIR)/libmlx.a
 
 all: $(NAME)
 
+$(LIBFT):
+	@$(MAKE) -C $(LIBFTDIR)
+$(MLX):
+	@$(MAKE) -C $(MLXDIR)
+
 $(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -I$(INCDIR) -I$(LIBFTDIR) -I$(MLXDIR) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME)
 	@echo "✅ Projeto compilado com sucesso!"
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFTDIR)
-
-$(MLX):
-	@$(MAKE) -C $(MLXDIR)
-
-# Compilar os arquivos de origem para objetos, criando os subdiretórios necessários
 $(OBJDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I$(INCDIR) -I$(LIBFTDIR) -I$(MLXDIR) -c $< -o $@
 
-# Criar o diretório obj e seus subdiretórios
 $(OBJDIR)/%:
 	@mkdir -p $(dir $@)
 
