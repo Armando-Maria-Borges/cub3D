@@ -24,6 +24,8 @@ SRCS =	src/main/main.c					\
 		src/ler_mapa/map1.c				\
 		src/ler_mapa/map2.c				\
 		src/ler_mapa/map_aux1.c			\
+		src/ler_mapa/cordenadas.c		\
+		src/ler_mapa/checar_passagens.c	\
 		src/aux/tratar_tabs.c			\
 		src/desenhar/desenhar_mapa.c	\
 		src/desenhar/desenhar.c			\
@@ -37,6 +39,7 @@ SRCS =	src/main/main.c					\
 		src/raycast/raycast.c			\
 		src/texturas/aux.c				\
 		src/texturas/texturas.c
+
 
 OBJDIR = obj
 LIBFTDIR = libs/libft
