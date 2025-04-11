@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 // Desenha a parede com textura
 void	draw_wall(t_data *data, int x, t_ray *ray)

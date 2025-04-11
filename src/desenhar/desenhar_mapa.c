@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   desenhar_mapa.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:56:36 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/27 17:05:23 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/11 08:25:00 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 void	desenhar_mapa(t_data *data)
 {
@@ -25,7 +25,6 @@ void	desenhar_mapa(t_data *data)
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			//ciclo_desenhar_mapa(data, &j, &x, &y);
 			i = 0;
 			while (i < TILE_SIZE)
 			{

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 // Configuração inicial do raio
 /*void	setup_ray_1(t_data *data, int x, t_ray *ray)

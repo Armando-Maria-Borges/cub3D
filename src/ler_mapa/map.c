@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:38:18 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/18 09:38:23 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/11 08:36:21 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 {
@@ -22,6 +22,7 @@ char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 	}
 	map_data->mapa = NULL;
 	ft_memset(map_data->flags, 0, sizeof(map_data->flags));
+	//obs
 	if (!map_data->f)
 	{
 		printf("Error\nErro ao abrir o mapa");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/03 14:16:44 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/11 08:56:59 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,22 +103,6 @@ typedef struct s_map_data
 	int				map_iniciado;
 }					t_map_data;
 
-void				liberar_mapa(char **mapa, int altura);
-int					processar_primeira_passagem(t_data *data,
-						t_map_data *map_data);
-char				**validar_e_alocar(t_data *data, t_map_data *map_data);
-int					processar_segunda_passagem(t_data *data,
-						t_map_data *map_data, char *arquivo);
-
-char				**ler_mapa(char *arquivo, t_data *data,
-						t_map_data *map_data);
-int					ler_mapa1(char *arquivo, t_data *data,
-						t_map_data *map_data);
-
-int					verifica_linha_cor(const char *str, int *r, int *g, int *b);
-size_t				ft_strcspn(const char *s, const char *reject);
-
-int					read_line(int fd, char *linha, int max_len);
 typedef struct s_ray
 {
 	int				map_x;
@@ -221,5 +205,20 @@ void				carregar_textura(void *mlx, t_texture *texture,
 						const char *diretorio, const char *nome_textura);
 void				carregar_texturas(void *mlx, t_texture *textures,
 						char *cub_file_path, char **paths);
+
+//	Funções para o mapa
+void				liberar_mapa(char **mapa, int altura);
+int					processar_primeira_passagem(t_data *data,
+						t_map_data *map_data);
+char				**validar_e_alocar(t_data *data, t_map_data *map_data);
+int					processar_segunda_passagem(t_data *data,
+						t_map_data *map_data, char *arquivo);
+char				**ler_mapa(char *arquivo, t_data *data,
+						t_map_data *map_data);
+int					ler_mapa1(char *arquivo, t_data *data,
+						t_map_data *map_data);
+int					verifica_linha_cor(const char *str, int *r, int *g, int *b);
+size_t				ft_strcspn(const char *s, const char *reject);
+int					read_line(int fd, char *linha, int max_len);
 
 #endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 // Inicializa variáveis de mapa
 void	init_mapa(t_data *data, t_ray *ray)

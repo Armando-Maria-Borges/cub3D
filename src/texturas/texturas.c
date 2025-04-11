@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 void	carregar_textura(void *mlx, t_texture *texture, const char *base_dir,
 		const char *nome_textura)
