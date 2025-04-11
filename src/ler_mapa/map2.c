@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/18 10:09:03 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/11 15:48:32 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	processar_segunda_passagem1(char *linha, int *var)
 {
-	if ((var[3]) != 6 && (strncmp(linha, "NO ", 3) == 0 || strncmp(linha, "SO ",
-				3) == 0 || strncmp(linha, "WE ", 3) == 0 || strncmp(linha,
-				"EA ", 3) == 0 || strncmp(linha, "F ", 2) == 0 || strncmp(linha,
-				"C ", 2) == 0 || strlen(linha) == strspn(linha, " ")))
+	if ((var[3]) != 6 && (ft_strncmp(linha, "NO ", 3) == 0 || ft_strncmp(linha, "SO ",
+				3) == 0 || ft_strncmp(linha, "WE ", 3) == 0 || ft_strncmp(linha,
+				"EA ", 3) == 0 || ft_strncmp(linha, "F ", 2) == 0 || ft_strncmp(linha,
+				"C ", 2) == 0 || ft_strlen(linha) == strspn(linha, " ")))
 	{
-		if (strlen(linha) == strspn(linha, " "))
+		if (ft_strlen(linha) == strspn(linha, " "))
 			return (-1);
 		(var[3])++;
 		if ((var[3]) > 6)

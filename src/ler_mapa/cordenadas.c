@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cordenadas.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:43:10 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/10 08:43:13 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/11 15:48:34 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	we_ea(t_data *data, t_map_data *map_data, char *linha)
 			printf("WE duplicado\n");
 			return (-1);
 		}
-		data->texture_paths[2] = strdup(linha + 3);
+		data->texture_paths[2] = ft_strdup(linha + 3);
 	}
 	else if (ft_strncmp(linha, "EA ", 3) == 0)
 	{
@@ -30,7 +30,7 @@ int	we_ea(t_data *data, t_map_data *map_data, char *linha)
 			printf("EA duplicado\n");
 			return (-1);
 		}
-		data->texture_paths[3] = strdup(linha + 3);
+		data->texture_paths[3] = ft_strdup(linha + 3);
 	}
 	else
 		return (0);
@@ -46,7 +46,7 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 			printf("NO duplicado\n");
 			return (-1);
 		}
-		data->texture_paths[0] = strdup(linha + 3);
+		data->texture_paths[0] = ft_strdup(linha + 3);
 	}
 	else if (ft_strncmp(linha, "SO ", 3) == 0)
 	{
@@ -55,7 +55,7 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 			printf("SO duplicado\n");
 			return (-1);
 		}
-		data->texture_paths[1] = strdup(linha + 3);
+		data->texture_paths[1] = ft_strdup(linha + 3);
 	}
 	else
 		return (0);

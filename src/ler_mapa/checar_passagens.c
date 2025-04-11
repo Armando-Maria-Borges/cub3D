@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checar_passagens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/10 08:58:49 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/11 15:49:30 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 {
-	if (strlen(linha) == strspn(linha, " "))
+	if (ft_strlen(linha) == strspn(linha, " "))
 	{
 		if ((var[2]) == 1)
 		{
 			while (read_line(map_data->f, linha, sizeof(linha)) > 0)
 			{
-				if (strlen(linha) != strspn(linha, " "))
+				if (ft_strlen(linha) != strspn(linha, " "))
 				{
 					printf("\nError! EXISTE linha vazia dentro do mapa\n");
 					return (0);
@@ -31,7 +31,7 @@ int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 	}
 	else
 		(var[2]) = 1;
-	if (strlen(linha) == strspn(linha, " "))
+	if (ft_strlen(linha) == strspn(linha, " "))
 		return (2);
 	return (1);
 }
