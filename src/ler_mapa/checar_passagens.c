@@ -3,24 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   checar_passagens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/10 08:58:49 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:54:29 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+size_t	ft_strspn(const char *s, const char *accept)
+{
+	size_t	i;
+	size_t	j;
+	int		found;
+
+	i = 0;
+	while (s[i])
+	{
+		j = 0;
+		found = 0;
+		while (accept[j])
+		{
+			if (s[i] == accept[j])
+			{
+				found = 1;
+				break ;
+			}
+			j++;
+		}
+		if (!found)
+			break ;
+		i++;
+	}
+	return (i);
+}
+
 int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 {
-	if (ft_strlen(linha) == strspn(linha, " "))
+	if (ft_strlen(linha) == ft_strspn(linha, " "))
 	{
 		if ((var[2]) == 1)
 		{
 			while (read_line(map_data->f, linha, sizeof(linha)) > 0)
 			{
-				if (ft_strlen(linha) != strspn(linha, " "))
+				if (ft_strlen(linha) != ft_strspn(linha, " "))
 				{
 					printf("\nError! EXISTE linha vazia dentro do mapa\n");
 					return (0);
@@ -31,7 +58,7 @@ int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 	}
 	else
 		(var[2]) = 1;
-	if (ft_strlen(linha) == strspn(linha, " "))
+	if (ft_strlen(linha) == ft_strspn(linha, " "))
 		return (2);
 	return (1);
 }

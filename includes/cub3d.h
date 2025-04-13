@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/13 20:56:32 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:52:14 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 //# define TILE_SIZE 10
 # define NOVA_LARGURA 1400
 # define NOVA_ALTURA 1060
-//# define FOV 1.309
 # define TILE_SIZE 7
 # define FOV 1.0
 # define NUM_RAYS NOVA_LARGURA
@@ -227,6 +226,9 @@ char				*substituir_tabs(const char *linha);
 
 int					check_number_position(t_data *data);
 int					check_other_cracter(t_data *data);
+
+// AUX
+size_t				ft_strspn(const char *s, const char *accept);
 
 // Funções de raycasting
 void				calc_side_dist(t_data *data, t_ray *ray);
