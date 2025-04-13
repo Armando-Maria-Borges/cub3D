@@ -14,13 +14,13 @@
 
 int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 {
-	if (strlen(linha) == strspn(linha, " "))
+	if (ft_strlen(linha) == strspn(linha, " "))
 	{
 		if ((var[2]) == 1)
 		{
 			while (read_line(map_data->f, linha, sizeof(linha)) > 0)
 			{
-				if (strlen(linha) != strspn(linha, " "))
+				if (ft_strlen(linha) != strspn(linha, " "))
 				{
 					printf("\nError! EXISTE linha vazia dentro do mapa\n");
 					return (0);
@@ -31,7 +31,7 @@ int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 	}
 	else
 		(var[2]) = 1;
-	if (strlen(linha) == strspn(linha, " "))
+	if (ft_strlen(linha) == strspn(linha, " "))
 		return (2);
 	return (1);
 }
@@ -72,7 +72,7 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 	k = 0;
 	while (linha_corrigida[k] == 32 || linha_corrigida[k] == 39)
 		k++;
-	if (linha_corrigida[k] == '0' || linha_corrigida[strlen(linha_corrigida)
+	if (linha_corrigida[k] == '0' || linha_corrigida[ft_strlen(linha_corrigida)
 			- 1] == '0')
 	{
 		printf("Error\n INICIO OU FIM SEM PAREDE\n");

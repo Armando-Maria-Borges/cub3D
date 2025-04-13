@@ -76,6 +76,21 @@ int	check_number_position(t_data *data)
 	return (count_position);
 }
 
+int	encontrar_jogador_aux(t_data *data, int *x, int *y)
+{
+	data->player.x = (*x) + 0.5;
+	data->player.y = (*y) + 0.5;
+	if (data->mapa[(*y)][(*x)] == 'N')
+		data->player.angle = 3 * M_PI / 2;
+	else if (data->mapa[(*y)][(*x)] == 'S')
+		data->player.angle = M_PI / 2;
+	else if (data->mapa[(*y)][(*x)] == 'E')
+		data->player.angle = 0;
+	else if (data->mapa[(*y)][(*x)] == 'W')
+		data->player.angle = M_PI;
+	return (1);
+}
+
 int	encontrar_jogador(t_data *data)
 {
 	int	y;
@@ -90,16 +105,7 @@ int	encontrar_jogador(t_data *data)
 			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W'
 				|| data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
 			{
-				data->player.x = x + 0.5;
-				data->player.y = y + 0.5;
-				if (data->mapa[y][x] == 'N')
-					data->player.angle = 3 * M_PI / 2;
-				else if (data->mapa[y][x] == 'S')
-					data->player.angle = M_PI / 2;
-				else if (data->mapa[y][x] == 'E')
-					data->player.angle = 0;
-				else if (data->mapa[y][x] == 'W')
-					data->player.angle = M_PI;
+				encontrar_jogador_aux(data, &x, &y);
 				return (1);
 			}
 			x++;
@@ -108,19 +114,4 @@ int	encontrar_jogador(t_data *data)
 	}
 	printf("Jogador não encontrado no mapa!\n");
 	return (0);
-}
-
-void	rotacionar_jogador(t_data *data)
-{
-	double	rotation_speed;
-
-	rotation_speed = 0.05;
-	if (data->keys.left)
-		data->player.angle -= rotation_speed;
-	if (data->keys.right)
-		data->player.angle += rotation_speed;
-	if (data->player.angle < 0)
-		data->player.angle += 2 * M_PI;
-	if (data->player.angle > 2 * M_PI)
-		data->player.angle -= 2 * M_PI;
 }

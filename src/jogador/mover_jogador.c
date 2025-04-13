@@ -89,3 +89,18 @@ void	mover_jogador(t_data *data)
 	mover_frente_tras(data, move_speed);
 	mover_lados(data, move_speed);
 }
+
+void	rotacionar_jogador(t_data *data)
+{
+	double	rotation_speed;
+
+	rotation_speed = 0.05;
+	if (data->keys.left)
+		data->player.angle -= rotation_speed;
+	if (data->keys.right)
+		data->player.angle += rotation_speed;
+	if (data->player.angle < 0)
+		data->player.angle += 2 * M_PI;
+	if (data->player.angle > 2 * M_PI)
+		data->player.angle -= 2 * M_PI;
+}

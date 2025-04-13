@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/03 14:16:44 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:56:32 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,24 @@ typedef struct s_ray
 	t_texture		*texture;
 }					t_ray;
 
+// Main
+int					init_mlx(t_data *data);
+void				print_map(t_data *data);
+void				start_loop(t_data *data);
+void				init_data(t_data *data);
+
+// Player
+int					check_collision(t_data *data, double new_x, double new_y);
+double				clamp(double value, double min, double max);
+void				calcular_minimos(double new_x, double new_y, int *min_x,
+						int *min_y);
+void				calcular_maximos(double new_x, double new_y, int *max_x,
+						int *max_y);
+double				calcular_distancia(double new_x, double new_y, int i,
+						int j);
+int					verificar_colisao_celula(t_data *data, double new_x,
+						double new_y, int *var);
+
 // Ler mapa
 void				liberar_mapa(char **mapa, int altura);
 char				**validar_e_alocar(t_data *data, t_map_data *map_data);
@@ -180,11 +198,8 @@ void				mover_jogador(t_data *data);
 // Funções para as teclas
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
-int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
 void				setup_hooks(t_data *data);
-
-int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
 
 // Funções para janela
@@ -199,7 +214,6 @@ int					get_image_addr(t_data *data);
 
 // Funções para validações
 int					check_args(int ac, char **av);
-// int					load_map(t_data *data, char *map_file);
 int					load_map(char *arquivo, t_data *data, t_map_data *map_data);
 
 int					validate_positions(t_data *data);

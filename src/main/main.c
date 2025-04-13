@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/03/17 18:14:31 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:52:03 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,47 +35,13 @@ unsigned int	cria_trgb(int t, int r, int g, int b)
 		b = b - 8;
 	else
 		b = 0;
-	// return ((t << 24) | (r << 16) | (g << 8) | b);
 	return (t | r | g | b);
 }
 
-// Inicializa a estrutura t_data
-static void	init_data(t_data *data)
-{
-	ft_memset(data, 0, sizeof(t_data));
-}
-
-// Exibe informações de cores
 static void	print_colors(t_data *data)
 {
 	printf("Cor do Chão (F): #%06X\n", data->floor_color);
 	printf("Cor do Teto (C): #%06X\n", data->ceiling_color);
-}
-
-// Inicializa o MLX
-static int	init_mlx(t_data *data)
-{
-	data->mlx = mlx_init();
-	if (!data->mlx)
-	{
-		printf("Error!\nAo iniciar o MLX\n");
-		return (1);
-	}
-	return (0);
-}
-
-// Exibe o mapa carregado
-static void	print_map(t_data *data)
-{
-	int	y;
-
-	printf("Mapa carregado:\n");
-	y = 0;
-	while (y < data->map_height)
-	{
-		printf("%s\n", data->mapa[y]);
-		y++;
-	}
 }
 
 static int	encontrar_player(t_data *data)
@@ -85,11 +51,6 @@ static int	encontrar_player(t_data *data)
 	printf("Jogador encontrado em: %.2f, %.2f, ângulo: %.2f\n", data->player.x,
 		data->player.y, data->player.angle);
 	return (0);
-}
-
-static void	start_loop(t_data *data)
-{
-	mlx_loop(data->mlx);
 }
 
 int	main(int argc, char **argv)

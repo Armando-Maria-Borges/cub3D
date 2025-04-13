@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   desenhar_mapa.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:56:36 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/27 17:05:23 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:58:23 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	desenhar_mapa(t_data *data)
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			//ciclo_desenhar_mapa(data, &j, &x, &y);
 			i = 0;
 			while (i < TILE_SIZE)
 			{

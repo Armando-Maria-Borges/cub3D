@@ -52,6 +52,7 @@ void	carregar_cor(char *linha, int *r, int *g, int *b)
 		ptr++;
 	*b = ft_atoi(ptr);
 }
+
 void	carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path,
 		char **paths)
 {

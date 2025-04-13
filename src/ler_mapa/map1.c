@@ -12,25 +12,6 @@
 
 #include "cub3d.h"
 
-int	read_line(int fd, char *linha, int max_len)
-{
-	int		i;
-	char	c;
-	int		bytes_read;
-
-	i = 0;
-	bytes_read = read(fd, &c, 1);
-	while (bytes_read > 0)
-	{
-		if (c == '\n' || i >= max_len - 1)
-			break ;
-		linha[i++] = c;
-		bytes_read = read(fd, &c, 1);
-	}
-	linha[i] = '\0';
-	return (bytes_read > 0 || i > 0);
-}
-
 int	ft_chao(t_data *data, t_map_data *map_data, char *linha)
 {
 	int	r;
@@ -91,6 +72,25 @@ int	chekagem_map_concluido(t_map_data *map_data, t_data *data)
 	(map_data->map_iniciado) = 1;
 	data->map_height++;
 	return (1);
+}
+
+int	read_line(int fd, char *linha, int max_len)
+{
+	int		i;
+	char	c;
+	int		bytes_read;
+
+	i = 0;
+	bytes_read = read(fd, &c, 1);
+	while (bytes_read > 0)
+	{
+		if (c == '\n' || i >= max_len - 1)
+			break ;
+		linha[i++] = c;
+		bytes_read = read(fd, &c, 1);
+	}
+	linha[i] = '\0';
+	return (bytes_read > 0 || i > 0);
 }
 
 int	processar_primeira_passagem(t_data *data, t_map_data *map_data)

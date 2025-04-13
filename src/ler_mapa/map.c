@@ -22,11 +22,6 @@ char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 	}
 	map_data->mapa = NULL;
 	ft_memset(map_data->flags, 0, sizeof(map_data->flags));
-	if (!map_data->f)
-	{
-		printf("Error\nErro ao abrir o mapa");
-		return (NULL);
-	}
 	if (!processar_primeira_passagem(data, map_data))
 	{
 		close(map_data->f);

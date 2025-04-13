@@ -38,21 +38,14 @@ static int	contar_tabs(const char *linha)
 	return (tab_count);
 }
 
-char	*substituir_tabs(const char *linha)
+char	*substituir_tabs_aux(const char *linha, char *nova_linha)
 {
+	int		k;
 	size_t	i;
 	size_t	j;
-	size_t	len;
-	int		k;
-	char	*nova_linha;
 
-	len = ft_strlen(linha);
 	i = 0;
 	j = 0;
-	nova_linha = malloc(sizeof(char) * (len + (TAB_SIZE - 1)
-				* contar_tabs(linha) + 1));
-	if (!nova_linha)
-		return (NULL);
 	while (linha[i])
 	{
 		if (linha[i] == '\t')
@@ -70,4 +63,17 @@ char	*substituir_tabs(const char *linha)
 	}
 	nova_linha[j] = '\0';
 	return (nova_linha);
+}
+
+char	*substituir_tabs(const char *linha)
+{
+	size_t	len;
+	char	*nova_linha;
+
+	len = ft_strlen(linha);
+	nova_linha = malloc(sizeof(char) * (len + (TAB_SIZE - 1)
+				* contar_tabs(linha) + 1));
+	if (!nova_linha)
+		return (NULL);
+	return (substituir_tabs_aux(linha, nova_linha));
 }
