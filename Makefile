@@ -6,7 +6,7 @@
 #    By: aborges <aborges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 12:16:34 by aborges           #+#    #+#              #
-#    Updated: 2025/04/13 20:57:43 by aborges          ###   ########.fr        #
+#    Updated: 2025/04/14 07:32:03 by aborges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS =	src/main/main.c					\
 		src/main/imagens.c				\
 		src/main/teclas.c				\
 		src/main/validacao.c			\
+		src/main/validacao_map.c		\
 		src/ler_mapa/map.c				\
 		src/ler_mapa/map1.c				\
 		src/ler_mapa/map2.c				\

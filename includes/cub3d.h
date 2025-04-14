@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/13 21:52:14 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/14 07:33:13 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <string.h>
 # include <unistd.h>
 
-//# define TILE_SIZE 10
 # define NOVA_LARGURA 1400
 # define NOVA_ALTURA 1060
 # define TILE_SIZE 7
@@ -126,9 +125,16 @@ typedef struct s_ray
 	t_texture		*texture;
 }					t_ray;
 
+// VALIDACAO
+char				**criar_nova_matriz(t_data *data, size_t maior_linha);
+void				substituir_espacos_por_x(char **nova);
+void				completar_linhas_com_x(char **nova, size_t maior_linha);
+int					validar_conexoes_mapa(char **nova);
+void				print_nova_matriz(char **nova);
+
 // Main
 int					init_mlx(t_data *data);
-void				print_map(t_data *data);
+int					print_map(t_data *data);
 void				start_loop(t_data *data);
 void				init_data(t_data *data);
 
