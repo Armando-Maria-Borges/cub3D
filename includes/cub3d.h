@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/14 07:33:13 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/25 17:30:30 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void				substituir_espacos_por_x(char **nova);
 void				completar_linhas_com_x(char **nova, size_t maior_linha);
 int					validar_conexoes_mapa(char **nova);
 void				print_nova_matriz(char **nova);
+void				free_linha(char *str);
 
 // Main
 int					init_mlx(t_data *data);
@@ -238,7 +239,6 @@ size_t				ft_strspn(const char *s, const char *accept);
 
 // Funções de raycasting
 void				calc_side_dist(t_data *data, t_ray *ray);
-void				calc_distancias_iniciais(t_data *data, t_ray *ray);
 void				calc_wall_height(t_data *data, t_ray *ray);
 void				calc_wall_x(t_data *data, t_ray *ray);
 void				calc_perp_dist(t_data *data, t_ray *ray);
@@ -261,10 +261,9 @@ void				init_passos(t_ray *ray);
 void				init_mapa(t_data *data, t_ray *ray);
 
 //	Funções de Texturas
+void				select_texture(t_data *data, t_ray *ray);
 int					load_textures(t_data *data);
 void				carregar_textura(void *mlx, t_texture *texture,
 						const char *diretorio, const char *nome_textura);
-void				carregar_texturas(void *mlx, t_texture *textures,
-						char *cub_file_path, char **paths);
 
 #endif

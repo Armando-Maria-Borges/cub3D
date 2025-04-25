@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aux2.c                                             :+:      :+:    :+:   */
+/*   posicionamento.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:33:02 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/18 09:33:07 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/25 22:43:16 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	check_other_cracter(t_data *data)
 {
 	int	y;
 	int	x;
+	char c;
 	int	type_caracter;
 
 	type_caracter = 0;
@@ -37,10 +38,9 @@ int	check_other_cracter(t_data *data)
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			if (data->mapa[y][x] != 'N' && data->mapa[y][x] != 'W'
-				&& data->mapa[y][x] != 'S' && data->mapa[y][x] != 'E'
-				&& data->mapa[y][x] != '0' && data->mapa[y][x] != '1'
-				&& data->mapa[y][x] != 32 && data->mapa[y][x] != 39)
+			c = data->mapa[y][x];
+			if (c != 'N' && c != 'W' && c != 'S' && c != 'E'
+				&& c != '0' && c != '1' && c != 32 && c != 39)
 			{
 				type_caracter += 1;
 			}
@@ -55,6 +55,7 @@ int	check_number_position(t_data *data)
 {
 	int	y;
 	int	x;
+	int	c;
 	int	count_position;
 
 	count_position = 0;
@@ -64,11 +65,9 @@ int	check_number_position(t_data *data)
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W'
-				|| data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
-			{
+			c = data->mapa[y][x];
+			if (c == 'N' || c == 'W' || c == 'S' || c == 'E')
 				count_position += 1;
-			}
 			x++;
 		}
 		y++;
@@ -95,6 +94,7 @@ int	encontrar_jogador(t_data *data)
 {
 	int	y;
 	int	x;
+	int c;
 
 	y = 0;
 	while (data->mapa[y] != NULL)
@@ -102,8 +102,8 @@ int	encontrar_jogador(t_data *data)
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{
-			if (data->mapa[y][x] == 'N' || data->mapa[y][x] == 'W'
-				|| data->mapa[y][x] == 'S' || data->mapa[y][x] == 'E')
+			c = data->mapa[y][x];
+			if (c == 'N' || c == 'W' || c == 'S' || c == 'E')
 			{
 				encontrar_jogador_aux(data, &x, &y);
 				return (1);

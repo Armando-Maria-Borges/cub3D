@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mover_jogador.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:55:17 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/24 13:49:27 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/25 14:59:58 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	mover_jogador(t_data *data)
 	double	move_speed;
 	double	rotation_speed;
 
-	move_speed = 0.05;
+	move_speed = 0.04;
 	rotation_speed = 0.04;
 	rotate_player(data, rotation_speed);
 	mover_frente_tras(data, move_speed);

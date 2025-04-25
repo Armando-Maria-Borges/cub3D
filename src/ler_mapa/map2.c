@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/14 00:24:18 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/25 20:07:41 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,17 @@ int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
 		if (result1 == 0)
 			return (0);
 	}
+	free_linha(linha_corrigida);
 	return (1);
 }
+
+void	free_linha(char *str)
+{
+	if (!str)
+		return ;
+	free(str);
+}
+
 
 int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		char *arquivo)
@@ -112,6 +121,7 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 	int		var[4];
 	int		result;
 
+	data = data;
 	ft_memset(var, 0, sizeof(var));
 	if (abrir_arquivo(map_data, arquivo))
 		return (1);
@@ -120,15 +130,30 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		linha_corrigida = ft_strdup(linha);
 		result = segunda_passagem_ciclo(map_data, var, linha, linha_corrigida);
 		if (result == 2)
+		{
+			free_linha(linha_corrigida);
 			break ;
+		}
 		else if (result == -1)
+		{
+			free_linha(linha_corrigida);
 			continue ;
+		}
 		else if (result == 0)
+		{
+			free_linha(linha_corrigida);
 			return (0);
+		}
+		free_linha(linha_corrigida);
 	}
+	/*
 	result = processar_segunda_passagem4(data, linha_corrigida, map_data, var);
 	if (result == 0)
+	{
+
 		return (0);
-	free(linha_corrigida);
+	}
+	free_linha(linha_corrigida);
+	*/
 	return (1);
 }

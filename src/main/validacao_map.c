@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:29:35 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/14 07:39:01 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/25 23:10:40 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	**criar_nova_matriz(t_data *data, size_t maior_linha)
 	char	**nova;
 
 	nova = malloc(sizeof(char *) * (data->map_height + 1));
+	if (!nova)
+		return (NULL);
 	y = 0;
 	while (data->mapa[y])
 	{

@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   desenhar.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 08:56:01 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/03 08:56:04 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:54:15 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+unsigned int	get_pixel(t_texture *texture, int x, int y)
+{
+	char	*dst;
+
+	dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
+	return (*(unsigned int *)dst);
+}
 
 // Desenha a parede com textura
 void	draw_wall(t_data *data, int x, t_ray *ray)
@@ -53,9 +61,9 @@ void	draw_floor(t_data *data, int x, int end)
 	unsigned int	g;
 	unsigned int	b;
 
-	r = (data->floor_color >> 16) & 0xFF;
-	g = (data->floor_color >> 8) & 0xFF;
-	b = data->floor_color & 0xFF;
+	r = (data->floor_color >> 16);
+	g = (data->floor_color >> 8);
+	b = data->floor_color;
 	y = end;
 	while (y < NOVA_ALTURA)
 	{

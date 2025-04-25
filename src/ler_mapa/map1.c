@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:15:59 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/01 15:16:00 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/25 21:58:04 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	processar_primeira_passagem(t_data *data, t_map_data *map_data)
 {
 	char	linha[1024];
 	int		return_cordenadas;
+	(map_data->config_count) = 0;
 
 	while (read_line(map_data->f, linha, 1024))
 	{

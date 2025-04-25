@@ -6,37 +6,11 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/14 01:47:58 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/25 22:44:58 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-unsigned int	get_pixel(t_texture *texture, int x, int y)
-{
-	char	*dst;
-
-	dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
-	return (*(unsigned int *)dst);
-}
-
-unsigned int	cria_trgb(int t, int r, int g, int b)
-{
-	t = t;
-	if (r + 60 > 255)
-		r = 24;
-	else
-		r = r + 50;
-	if (g > 24)
-		g = g - 16;
-	else
-		g = 0;
-	if (b > 24)
-		b = b - 8;
-	else
-		b = 0;
-	return (t | r | g | b);
-}
 
 static void	print_colors(t_data *data)
 {
