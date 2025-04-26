@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tratar_tabs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:07:06 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/24 12:04:51 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/23 08:21:07 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 
 static int	contar_tabs(const char *linha)
 {

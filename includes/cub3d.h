@@ -127,6 +127,48 @@ typedef struct s_ray
 	t_texture		*texture;
 }					t_ray;
 
+// Ler mapa
+void				liberar_mapa(char **mapa, int altura);
+char				**validar_e_alocar(t_data *data, t_map_data *map_data);
+int					processar_segunda_passagem(t_data *data,
+						t_map_data *map_data, char *arquivo);
+char				**ler_mapa(char *arquivo, t_data *data,
+						t_map_data *map_data);
+int					ler_mapa1(char *arquivo, t_data *data,
+						t_map_data *map_data);
+int					verifica_linha_cor(const char *str, int *r, int *g, int *b);
+size_t				ft_strcspn(const char *s, const char *reject);
+
+int					processar_segunda_passagem1(char *linha, int *var);
+int					processar_segunda(char *linha, int *var,
+						t_map_data *map_data);
+int					abrir_arquivo(t_map_data *map_data, char *arquivo);
+int					segunda_passagem_ciclo(t_map_data *map_data, int *var,
+						char *linha, char *linha_corrigida);
+int					processar_segunda_passagem(t_data *data,
+						t_map_data *map_data, char *arquivo);
+int					processar_segunda_passagem2(char *linha, int *var,
+						t_map_data *map_data);
+int					nova_linha_corrigida(char *linha_corrigida, char *linha,
+						t_map_data *map_data, int *var);
+int					processar_segunda_passagem3(char *linha_corrigida,
+						t_map_data *map_data, int *var);
+int					processar_segunda_passagem4(t_data *data,
+						char *linha_corrigida, t_map_data *map_data, int *var);
+
+int					read_line(int fd, char *linha, int max_len);
+int					ft_chao(t_data *data, t_map_data *map_data, char *linha);
+int					ft_teto(t_data *data, t_map_data *map_data, char *linha);
+int					chekagem_map_concluido(t_map_data *map_data, t_data *data);
+int					processar_primeira_passagem(t_data *data,
+						t_map_data *map_data);
+
+int					we_ea(t_data *data, t_map_data *map_data, char *linha);
+int					no_so(t_data *data, t_map_data *map_data, char *linha);
+int					ft_processar_cordenadas(int *valor_return);
+int					ft_return_cordenadas(t_data *data, t_map_data *map_data,
+						char *linha);
+
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);
 void				desenhar_mapa(t_data *data);
@@ -142,7 +184,6 @@ int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
 void				setup_hooks(t_data *data);
 
-// char				**ler_mapa(char *arquivo, t_data *data);
 int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
 
@@ -184,12 +225,10 @@ void				setup_ray_2(t_data *data, t_ray *ray);
 void				exec_dda(t_data *data, t_ray *ray);
 void				init_delta_dist(t_ray *ray);
 
-
 void				draw_wall(t_data *data, int x, t_ray *ray);
 void				draw_ceiling(t_data *data, int x, int start);
 void				draw_floor(t_data *data, int x, int end);
 void				draw_ray(t_data *data, int x, t_ray *ray);
-
 
 void				setup_ray_1(t_data *data, int x, t_ray *ray);
 void				setup_ray_3(t_data *data, t_ray *ray);
