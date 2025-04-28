@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/25 22:44:58 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/28 12:42:00 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,53 @@ static int	encontrar_player(t_data *data)
 		data->player.y, data->player.angle);
 	return (0);
 }
+
+/*
+void	free_data(t_data *data)
+{
+	int	i;
+
+	// Liberar texturas da MLX (se tiver imagens carregadas)
+	for (i = 0; i < 4; i++)
+	{
+		if (data->textures[i].img)
+			mlx_destroy_image(data->mlx, data->textures[i].img);
+	}
+
+	// Destruir imagem principal (se existir)
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
+
+	// Destruir janela (se existir)
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+
+	// Destruir display (Linux)
+	if (data->mlx)
+		mlx_destroy_display(data->mlx);
+
+	// Liberar mlx (Linux)
+	free(data->mlx);
+
+	// Liberar caminhos das texturas (se alocados dinamicamente)
+	for (i = 0; i < 4; i++)
+	{
+		if (data->texture_paths[i])
+			free(data->texture_paths[i]);
+	}
+
+	// Liberar mapa (char **mapa)
+	if (data->mapa)
+	{
+		i = 0;
+		while (data->mapa[i])
+			free(data->mapa[i++]);
+		free(data->mapa);
+	}
+	free(data->mlx);
+}
+*/
+
 
 int	main(int argc, char **argv)
 {
@@ -52,5 +99,7 @@ int	main(int argc, char **argv)
 		return (1);
 	setup_hooks(&data);
 	start_loop(&data);
+
+	//free_data(&data);
 	return (0);
 }

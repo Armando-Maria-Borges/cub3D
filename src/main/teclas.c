@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:24:01 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/25 17:55:56 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/28 12:16:18 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	key_press(int keycode, void *param)
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
 		exit(0);
 	}
 	else if (keycode == KEY_W)

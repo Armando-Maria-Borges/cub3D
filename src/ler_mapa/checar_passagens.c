@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/25 18:50:40 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/28 12:05:59 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,7 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 		k++;
 	if (linha_corrigida[k] == '0' || linha_corrigida[ft_strlen(linha_corrigida)
 			- 1] == '0')
-	{
-		printf("Error\n INICIO OU FIM SEM PAREDE\n");
-		return (0);
-	}
+		return (printf("Error\n INICIO OU FIM SEM PAREDE\n"), 0);
 	if (!linha_corrigida)
 	{
 		printf("Error\n Erro de processamento\n");
@@ -117,6 +114,7 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 		return (0);
 	}
 	map_data->mapa[(var[0])++] = linha_corrigida;
+	map_data->mapa[(var[0])] = '\0';
 	return (1);
 }
 
