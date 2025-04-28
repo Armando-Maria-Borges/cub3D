@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   texturas.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:09:39 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/24 12:10:25 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/28 12:31:20 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	select_texture(t_data *data, t_ray *ray)
+{
+	if (ray->side == 0 && ray->step_x < 0)
+		ray->texture = &data->textures[0];
+	else if (ray->side == 0 && ray->step_x > 0)
+		ray->texture = &data->textures[1];
+	else if (ray->side == 1 && ray->step_y < 0)
+		ray->texture = &data->textures[2];
+	else
+		ray->texture = &data->textures[3];
+}
 
 void	carregar_textura(void *mlx, t_texture *texture, const char *base_dir,
 		const char *nome_textura)
@@ -51,18 +63,6 @@ void	carregar_cor(char *linha, int *r, int *g, int *b)
 	if (*ptr == ',')
 		ptr++;
 	*b = ft_atoi(ptr);
-}
-void	carregar_texturas(void *mlx, t_texture *textures, char *cub_file_path,
-		char **paths)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		carregar_textura(mlx, &textures[i], cub_file_path, paths[i]);
-		i++;
-	}
 }
 
 int	load_textures(t_data *data)

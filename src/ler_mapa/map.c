@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:38:18 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/11 08:36:21 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/28 14:45:45 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 	}
 	map_data->mapa = NULL;
 	ft_memset(map_data->flags, 0, sizeof(map_data->flags));
-	//obs
-	if (!map_data->f)
-	{
-		printf("Error\nErro ao abrir o mapa");
-		return (NULL);
-	}
 	if (!processar_primeira_passagem(data, map_data))
 	{
 		close(map_data->f);

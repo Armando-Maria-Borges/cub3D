@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/11 08:56:59 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/28 14:39:20 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@
 # include <string.h>
 # include <unistd.h>
 
-//# define TILE_SIZE 10
 # define NOVA_LARGURA 1400
 # define NOVA_ALTURA 1060
-//# define FOV 1.309
 # define TILE_SIZE 7
 # define FOV 1.0
 # define NUM_RAYS NOVA_LARGURA
@@ -127,6 +125,32 @@ typedef struct s_ray
 	t_texture		*texture;
 }					t_ray;
 
+// VALIDACAO
+char				**criar_nova_matriz(t_data *data, size_t maior_linha);
+void				substituir_espacos_por_x(char **nova);
+void				completar_linhas_com_x(char **nova, size_t maior_linha);
+int					validar_conexoes_mapa(char **nova);
+void				print_nova_matriz(char **nova);
+void				free_linha(char *str);
+
+// Main
+int					init_mlx(t_data *data);
+int					print_map(t_data *data);
+void				start_loop(t_data *data);
+void				init_data(t_data *data);
+
+// Player
+int					check_collision(t_data *data, double new_x, double new_y);
+double				clamp(double value, double min, double max);
+void				calcular_minimos(double new_x, double new_y, int *min_x,
+						int *min_y);
+void				calcular_maximos(double new_x, double new_y, int *max_x,
+						int *max_y);
+double				calcular_distancia(double new_x, double new_y, int i,
+						int j);
+int					verificar_colisao_celula(t_data *data, double new_x,
+						double new_y, int *var);
+
 // Ler mapa
 void				liberar_mapa(char **mapa, int altura);
 char				**validar_e_alocar(t_data *data, t_map_data *map_data);
@@ -180,11 +204,8 @@ void				mover_jogador(t_data *data);
 // Funções para as teclas
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
-int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
 void				setup_hooks(t_data *data);
-
-int					check_collision(t_data *data, double new_x, double new_y);
 int					encontrar_jogador(t_data *data);
 
 // Funções para janela
@@ -199,7 +220,6 @@ int					get_image_addr(t_data *data);
 
 // Funções para validações
 int					check_args(int ac, char **av);
-// int					load_map(t_data *data, char *map_file);
 int					load_map(char *arquivo, t_data *data, t_map_data *map_data);
 
 int					validate_positions(t_data *data);
@@ -214,9 +234,11 @@ char				*substituir_tabs(const char *linha);
 int					check_number_position(t_data *data);
 int					check_other_cracter(t_data *data);
 
+// AUX
+size_t				ft_strspn(const char *s, const char *accept);
+
 // Funções de raycasting
 void				calc_side_dist(t_data *data, t_ray *ray);
-void				calc_distancias_iniciais(t_data *data, t_ray *ray);
 void				calc_wall_height(t_data *data, t_ray *ray);
 void				calc_wall_x(t_data *data, t_ray *ray);
 void				calc_perp_dist(t_data *data, t_ray *ray);
@@ -239,11 +261,10 @@ void				init_passos(t_ray *ray);
 void				init_mapa(t_data *data, t_ray *ray);
 
 //	Funções de Texturas
+void				select_texture(t_data *data, t_ray *ray);
 int					load_textures(t_data *data);
 void				carregar_textura(void *mlx, t_texture *texture,
 						const char *diretorio, const char *nome_textura);
-void				carregar_texturas(void *mlx, t_texture *textures,
-						char *cub_file_path, char **paths);
 
 //	Funções para o mapa
 void				liberar_mapa(char **mapa, int altura);

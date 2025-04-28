@@ -6,76 +6,16 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/03/17 18:14:31 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/28 12:42:00 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-unsigned int	get_pixel(t_texture *texture, int x, int y)
-{
-	char	*dst;
-
-	dst = texture->addr + (y * texture->line_length + x * (texture->bpp / 8));
-	return (*(unsigned int *)dst);
-}
-
-unsigned int	cria_trgb(int t, int r, int g, int b)
-{
-	t = t;
-	if (r + 60 > 255)
-		r = 24;
-	else
-		r = r + 50;
-	if (g > 24)
-		g = g - 16;
-	else
-		g = 0;
-	if (b > 24)
-		b = b - 8;
-	else
-		b = 0;
-	// return ((t << 24) | (r << 16) | (g << 8) | b);
-	return (t | r | g | b);
-}
-
-// Inicializa a estrutura t_data
-static void	init_data(t_data *data)
-{
-	ft_memset(data, 0, sizeof(t_data));
-}
-
-// Exibe informações de cores
 static void	print_colors(t_data *data)
 {
 	printf("Cor do Chão (F): #%06X\n", data->floor_color);
 	printf("Cor do Teto (C): #%06X\n", data->ceiling_color);
-}
-
-// Inicializa o MLX
-static int	init_mlx(t_data *data)
-{
-	data->mlx = mlx_init();
-	if (!data->mlx)
-	{
-		printf("Error!\nAo iniciar o MLX\n");
-		return (1);
-	}
-	return (0);
-}
-
-// Exibe o mapa carregado
-static void	print_map(t_data *data)
-{
-	int	y;
-
-	printf("Mapa carregado:\n");
-	y = 0;
-	while (y < data->map_height)
-	{
-		printf("%s\n", data->mapa[y]);
-		y++;
-	}
 }
 
 static int	encontrar_player(t_data *data)
@@ -87,10 +27,52 @@ static int	encontrar_player(t_data *data)
 	return (0);
 }
 
-static void	start_loop(t_data *data)
+/*
+void	free_data(t_data *data)
 {
-	mlx_loop(data->mlx);
+	int	i;
+
+	// Liberar texturas da MLX (se tiver imagens carregadas)
+	for (i = 0; i < 4; i++)
+	{
+		if (data->textures[i].img)
+			mlx_destroy_image(data->mlx, data->textures[i].img);
+	}
+
+	// Destruir imagem principal (se existir)
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
+
+	// Destruir janela (se existir)
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+
+	// Destruir display (Linux)
+	if (data->mlx)
+		mlx_destroy_display(data->mlx);
+
+	// Liberar mlx (Linux)
+	free(data->mlx);
+
+	// Liberar caminhos das texturas (se alocados dinamicamente)
+	for (i = 0; i < 4; i++)
+	{
+		if (data->texture_paths[i])
+			free(data->texture_paths[i]);
+	}
+
+	// Liberar mapa (char **mapa)
+	if (data->mapa)
+	{
+		i = 0;
+		while (data->mapa[i])
+			free(data->mapa[i++]);
+		free(data->mapa);
+	}
+	free(data->mlx);
 }
+*/
+
 
 int	main(int argc, char **argv)
 {
@@ -111,10 +93,13 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_textures(&data))
 		return (1);
-	print_map(&data);
+	if (!print_map(&data))
+		return (1);
 	if (encontrar_player(&data))
 		return (1);
 	setup_hooks(&data);
 	start_loop(&data);
+
+	//free_data(&data);
 	return (0);
 }

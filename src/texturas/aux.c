@@ -59,6 +59,20 @@ void	pintar_janela(t_data *data)
 	}
 }
 
+void	pintar_chao_teto_aux(t_data *data, int *x, int *y, int *floor_color)
+{
+	while ((*y) < NOVA_ALTURA)
+	{
+		(*x) = 0;
+		while ((*x) < NOVA_LARGURA)
+		{
+			my_mlx_pixel_put(data, (*x), (*y), (*floor_color));
+			(*x)++;
+		}
+		(*y)++;
+	}
+}
+
 void	pintar_chao_teto(t_data *data)
 {
 	int	x;
@@ -80,14 +94,5 @@ void	pintar_chao_teto(t_data *data)
 		y++;
 	}
 	y = NOVA_ALTURA / 2;
-	while (y < NOVA_ALTURA)
-	{
-		x = 0;
-		while (x < NOVA_LARGURA)
-		{
-			my_mlx_pixel_put(data, x, y, floor_color);
-			x++;
-		}
-		y++;
-	}
+	pintar_chao_teto_aux(data, &x, &y, &floor_color);
 }

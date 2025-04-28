@@ -6,13 +6,13 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:56:36 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/11 08:25:00 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/28 14:49:06 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	desenhar_mapa(t_data *data)
+void	desenhar_minimapa(t_data *data)
 {
 	int	x;
 	int	y;
@@ -73,10 +73,10 @@ int	render_scene(void *param)
 
 	data = (t_data *)param;
 	pintar_chao_teto(data);
+	mover_jogador(data);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	mover_jogador(data);
-	desenhar_mapa(data);
+	desenhar_minimapa(data);
 	return (0);
 }
 
