@@ -75,7 +75,7 @@ char	**validar_e_alocar(t_data *data, t_map_data *map_data)
 	mapa = malloc(sizeof(char *) * (data->map_height + 1));
 	if (!mapa)
 	{
-		printf("Error, Erro de alocação");
+		write("Error\nErro de alocação", 22);
 		close(map_data->f);
 		return (NULL);
 	}

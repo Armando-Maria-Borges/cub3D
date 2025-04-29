@@ -18,7 +18,7 @@ int	we_ea(t_data *data, t_map_data *map_data, char *linha)
 	{
 		if (map_data->flags[2]++)
 		{
-			printf("WE duplicado\n");
+			write(2, "WE duplicado\n", 13);
 			return (-1);
 		}
 		data->texture_paths[2] = ft_strdup(linha + 3);
@@ -27,7 +27,7 @@ int	we_ea(t_data *data, t_map_data *map_data, char *linha)
 	{
 		if (map_data->flags[3]++)
 		{
-			printf("EA duplicado\n");
+			write(2, "EA duplicado\n", 13);
 			return (-1);
 		}
 		data->texture_paths[3] = ft_strdup(linha + 3);
@@ -43,7 +43,7 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 	{
 		if (map_data->flags[0]++)
 		{
-			printf("NO duplicado\n");
+			write(2, "NO duplicado\n", 13);
 			return (-1);
 		}
 		data->texture_paths[0] = ft_strdup(linha + 3);
@@ -52,7 +52,7 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 	{
 		if (map_data->flags[1]++)
 		{
-			printf("SO duplicado\n");
+			write(2, "SO duplicado\n", 13);
 			return (-1);
 		}
 		data->texture_paths[1] = ft_strdup(linha + 3);

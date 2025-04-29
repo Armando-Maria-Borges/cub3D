@@ -76,7 +76,7 @@ int	render_scene(void *param)
 	mover_jogador(data);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	desenhar_minimapa(data);
+	//desenhar_minimapa(data);
 	return (0);
 }
 

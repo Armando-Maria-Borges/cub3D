@@ -49,7 +49,7 @@ int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 			{
 				if (ft_strlen(linha) != ft_strspn(linha, " "))
 				{
-					printf("\nError! EXISTE linha vazia dentro do mapa\n");
+					write(2, "\nError! EXISTE linha vazia dentro do mapa\n", 43);
 					return (0);
 				}
 			}
@@ -75,7 +75,7 @@ int	nova_linha_corrigida(char *linha_corrigida, char *linha,
 		{
 			if (linha_corrigida[(var[1])] == '0')
 			{
-				printf("Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n");
+				write(2, "Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n", 47);
 				return (0);
 			}
 			(var[1])++;
@@ -101,10 +101,10 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 		k++;
 	if (linha_corrigida[k] == '0' || linha_corrigida[ft_strlen(linha_corrigida)
 			- 1] == '0')
-		return (printf("Error\n INICIO OU FIM SEM PAREDE\n"), 0);
+		return (write(2, "Error\n INICIO OU FIM SEM PAREDE\n", 31), 0);
 	if (!linha_corrigida)
 	{
-		printf("Error\n Erro de processamento\n");
+		write(2, "Error\n Erro de processamento\n", 29);
 		j = 0;
 		while (j < (var[0]))
 		{
@@ -128,7 +128,7 @@ int	processar_segunda_passagem4(t_data *data, char *linha_corrigida,
 	{
 		if (linha_corrigida[j] == '0')
 		{
-			printf("Error\nExiste caminho aberto na ultima linha\n");
+			write(2, "Error\nExiste caminho aberto na ultima linha\n", 44);
 			return (0);
 		}
 		j++;
@@ -136,7 +136,7 @@ int	processar_segunda_passagem4(t_data *data, char *linha_corrigida,
 	map_data->mapa[(var[0])] = NULL;
 	if ((var[0]) != data->map_height)
 	{
-		printf("Error\nInconsistência no mapa\n");
+		write(2, "Error\nInconsistência no mapa\n", 29);
 		return (0);
 	}
 	return (1);
