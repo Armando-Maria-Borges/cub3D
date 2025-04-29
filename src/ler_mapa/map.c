@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:38:18 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/28 14:45:45 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/29 20:40:45 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**validar_e_alocar(t_data *data, t_map_data *map_data)
 	mapa = malloc(sizeof(char *) * (data->map_height + 1));
 	if (!mapa)
 	{
-		write("Error\nErro de alocação", 22);
+		write(2, "Error\nErro de alocação", 22);
 		close(map_data->f);
 		return (NULL);
 	}
