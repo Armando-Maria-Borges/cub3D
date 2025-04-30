@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iniciar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:50:08 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 00:04:23 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:17:04 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ size_t	print_original_map(t_data *data)
 	printf("Mapa carregado:\n");
 	while (y < data->map_height)
 	{
+		if (!data->mapa[y])
+			return(0);
 		printf("%s\n", data->mapa[y]);
 		if (maior_linha < ft_strlen(data->mapa[y]))
 			maior_linha = ft_strlen(data->mapa[y]);
@@ -40,21 +42,6 @@ size_t	print_original_map(t_data *data)
 	}
 	return (maior_linha);
 }
-
-/*void	liberar_matriz(char **mat)
-{
-	int	i;
-
-	if (!mat)
-		return ;
-	i = 0;
-	while (mat[i])
-	{
-		free(mat[i]);
-		i++;
-	}
-	free(mat);
-}*/
 
 int	print_map(t_data *data)
 {
@@ -76,7 +63,8 @@ void	start_loop(t_data *data)
 	mlx_loop(data->mlx);
 }
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, t_map_data *data_mapa)
 {
+	data_mapa->map_iniciado = 0;
 	ft_memset(data, 0, sizeof(t_data));
 }

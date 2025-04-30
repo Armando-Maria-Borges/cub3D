@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 00:09:13 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:12:37 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	t_data		data;
 	t_map_data	map_data;
 
-	init_data(&data);
+	init_data(&data, &map_data);
 	if (check_args(argc, argv) || load_map(argv[1], &data, &map_data))
 		return (1);
 	if (validate_positions(&data) || validate_characters(&data))

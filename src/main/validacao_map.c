@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:29:35 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/25 23:10:40 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:30:33 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	validar_conexoes_mapa(char **nova)
 			if ((nova[y][i] == 'x' && nova[y + 1][i] == '0')
 				|| (nova[y][i] == '0' && nova[y + 1][i] == 'x')
 				|| (nova[y][i] == '0' && nova[y][i + 1] == 'x')
-				|| (nova[y][i] == 'x' && nova[y][i + 1] == '0'))
+				|| (nova[y][i] == 'x' && nova[y][i + 1] == '0')
+				|| (nova[y + 1][i] == '0' && nova[y + 2] == NULL))
 			{
 				printf("\n\nError\n-->Deve existir alguma ligacao entre 0 e x\n");
 				return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 00:33:02 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:08:40 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
 	if (result1)
 	{
 		if (result1 == 0)
+		{
+			map_data->mapa = 0;
 			return (0);
+		}
 	}
 	free_linha(linha_corrigida);
 	return (1);

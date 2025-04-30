@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validacao.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:31:07 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/04 16:31:18 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:10:21 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	load_map(char *arquivo, t_data *data, t_map_data *map_data)
 		printf("Error\n ao carregar o mapa\n");
 		return (1);
 	}
+	if (!map_data->map_iniciado)
+		return (1);
 	return (0);
 }
 

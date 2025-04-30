@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 00:22:54 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:12:30 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void				free_linha(char *str);
 int					init_mlx(t_data *data);
 int					print_map(t_data *data);
 void				start_loop(t_data *data);
-void				init_data(t_data *data);
+void				init_data(t_data *data, t_map_data *map_data);
 
 // Player
 int					check_collision(t_data *data, double new_x, double new_y);
