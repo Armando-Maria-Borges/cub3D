@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   posicionamento.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:33:02 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/25 22:43:16 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/29 23:52:12 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	check_other_cracter(t_data *data)
 {
-	int	y;
-	int	x;
-	char c;
-	int	type_caracter;
+	int		y;
+	int		x;
+	char	c;
+	int		type_caracter;
 
 	type_caracter = 0;
 	y = 0;
@@ -39,8 +39,8 @@ int	check_other_cracter(t_data *data)
 		while (data->mapa[y][x] != '\0')
 		{
 			c = data->mapa[y][x];
-			if (c != 'N' && c != 'W' && c != 'S' && c != 'E'
-				&& c != '0' && c != '1' && c != 32 && c != 39)
+			if (c != 'N' && c != 'W' && c != 'S' && c != 'E' && c != '0'
+				&& c != '1' && c != 32 && c != 39)
 			{
 				type_caracter += 1;
 			}
@@ -94,7 +94,7 @@ int	encontrar_jogador(t_data *data)
 {
 	int	y;
 	int	x;
-	int c;
+	int	c;
 
 	y = 0;
 	while (data->mapa[y] != NULL)

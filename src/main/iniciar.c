@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iniciar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:50:08 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/25 22:47:48 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 00:04:23 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ size_t	print_original_map(t_data *data)
 	return (maior_linha);
 }
 
-void liberar_matriz(char **mat)
+/*void	liberar_matriz(char **mat)
 {
 	int	i;
-	
+
 	if (!mat)
 		return ;
 	i = 0;
@@ -54,7 +54,7 @@ void liberar_matriz(char **mat)
 		i++;
 	}
 	free(mat);
-}
+}*/
 
 int	print_map(t_data *data)
 {

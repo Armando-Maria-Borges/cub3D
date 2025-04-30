@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:15:59 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/28 14:41:35 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/29 23:53:26 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	processar_primeira_passagem(t_data *data, t_map_data *map_data)
 {
 	char	linha[1024];
 	int		return_cordenadas;
-	(map_data->config_count) = 0;
 
+	(map_data->config_count) = 0;
 	while (read_line(map_data->f, linha, 1024))
 	{
 		linha[ft_strcspn(linha, "\r\n")] = '\0';

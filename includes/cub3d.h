@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/28 14:39:20 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 00:22:54 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ int					check_other_cracter(t_data *data);
 
 // AUX
 size_t				ft_strspn(const char *s, const char *accept);
+void				liberar_matriz(char **mat);
 
 // Funções de raycasting
 void				calc_side_dist(t_data *data, t_ray *ray);

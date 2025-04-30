@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/28 14:46:11 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 00:33:02 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,21 +105,13 @@ int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
 	return (1);
 }
 
-void	free_linha(char *str)
-{
-	if (!str)
-		return ;
-	free(str);
-}
-
-
 int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		char *arquivo)
 {
-	char	linha[1024];
-	char	*linha_corrigida;
 	int		var[4];
 	int		result;
+	char	linha[1024];
+	char	*linha_corrigida;
 
 	data = data;
 	ft_memset(var, 0, sizeof(var));
@@ -129,31 +121,13 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 	{
 		linha_corrigida = ft_strdup(linha);
 		result = segunda_passagem_ciclo(map_data, var, linha, linha_corrigida);
-		if (result == 2)
-		{
-			free_linha(linha_corrigida);
-			break ;
-		}
-		else if (result == -1)
-		{
-			free_linha(linha_corrigida);
-			continue ;
-		}
-		else if (result == 0)
-		{
-			free_linha(linha_corrigida);
-			return (0);
-		}
 		free_linha(linha_corrigida);
+		if (result == 2)
+			break ;
+		else if (result == -1)
+			continue ;
+		else if (result == 0)
+			return (0);
 	}
-	/*
-	result = processar_segunda_passagem4(data, linha_corrigida, map_data, var);
-	if (result == 0)
-	{
-
-		return (0);
-	}
-	free_linha(linha_corrigida);
-	*/
 	return (1);
 }
