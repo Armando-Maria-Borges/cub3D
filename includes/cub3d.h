@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 00:22:54 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 13:18:19 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,15 +129,16 @@ typedef struct s_ray
 char				**criar_nova_matriz(t_data *data, size_t maior_linha);
 void				substituir_espacos_por_x(char **nova);
 void				completar_linhas_com_x(char **nova, size_t maior_linha);
-int					validar_conexoes_mapa(char **nova);
+int					validar_conexoes_mapa(char **nova, t_map_data *map_data);
 void				print_nova_matriz(char **nova);
 void				free_linha(char *str);
+int					ft_count(char **mat);
 
 // Main
 int					init_mlx(t_data *data);
-int					print_map(t_data *data);
+int					print_map(t_data *data, t_map_data *map_data);
 void				start_loop(t_data *data);
-void				init_data(t_data *data);
+void				init_data(t_data *data, t_map_data *map_data);
 
 // Player
 int					check_collision(t_data *data, double new_x, double new_y);

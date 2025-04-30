@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iniciar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:50:08 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 00:04:23 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 12:22:41 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ size_t	print_original_map(t_data *data)
 	printf("Mapa carregado:\n");
 	while (y < data->map_height)
 	{
+		if (!data->mapa[y])
+			break;
 		printf("%s\n", data->mapa[y]);
 		if (maior_linha < ft_strlen(data->mapa[y]))
 			maior_linha = ft_strlen(data->mapa[y]);
@@ -41,22 +43,7 @@ size_t	print_original_map(t_data *data)
 	return (maior_linha);
 }
 
-/*void	liberar_matriz(char **mat)
-{
-	int	i;
-
-	if (!mat)
-		return ;
-	i = 0;
-	while (mat[i])
-	{
-		free(mat[i]);
-		i++;
-	}
-	free(mat);
-}*/
-
-int	print_map(t_data *data)
+int	print_map(t_data *data, t_map_data *map_data)
 {
 	size_t	maior_linha;
 	char	**nova;
@@ -65,8 +52,13 @@ int	print_map(t_data *data)
 	nova = criar_nova_matriz(data, maior_linha);
 	substituir_espacos_por_x(nova);
 	completar_linhas_com_x(nova, maior_linha);
-	if (!validar_conexoes_mapa(nova))
+	if (!validar_conexoes_mapa(nova, map_data))
 		return (0);
+	if (!map_data->map_iniciado)
+	{
+		printf("Error\nErro ao carregar o mapa!");
+		return (0);
+	}
 	liberar_matriz(nova);
 	return (1);
 }
@@ -76,7 +68,8 @@ void	start_loop(t_data *data)
 	mlx_loop(data->mlx);
 }
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, t_map_data *map_data)
 {
+	map_data->map_iniciado = 1;
 	ft_memset(data, 0, sizeof(t_data));
 }
