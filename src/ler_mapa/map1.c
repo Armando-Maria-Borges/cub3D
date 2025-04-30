@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:15:59 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 13:21:54 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 17:18:19 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,6 @@ int	read_line(int fd, char *linha, int max_len)
 	linha[i] = '\0';
 	return (bytes_read > 0 || i > 0);
 }
-
-/*
-void	free_textures(char **texture)
-{
-	int i;
-
-	if (!texture)
-		return ;
-	i = 0;
-	while (i < 4)
-	{
-		free(texture[i]);
-		i++;
-	}
-}
-	*/
 
 int	processar_primeira_passagem(t_data *data, t_map_data *map_data)
 {

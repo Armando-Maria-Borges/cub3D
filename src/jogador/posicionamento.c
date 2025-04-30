@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   posicionamento.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:33:02 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/29 23:52:12 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:59:01 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	check_other_cracter(t_data *data)
 	y = 0;
 	while (data->mapa[y] != NULL)
 	{
+		printf("---------------------> : %s\n", data->mapa[y]);
 		x = 0;
 		while (data->mapa[y][x] != '\0')
 		{

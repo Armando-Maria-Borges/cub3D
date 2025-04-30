@@ -2,6 +2,10 @@
     "files.associations": {
         "cub3d.h": "c",
         "\\": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "libft.h": "c",
+        "limits.h": "c",
+        "stdlib.h": "c",
+        "string.h": "c"
     }
 }

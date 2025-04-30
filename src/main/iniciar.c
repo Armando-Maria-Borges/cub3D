@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:50:08 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 12:22:41 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 16:23:17 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	print_map(t_data *data, t_map_data *map_data)
 		printf("Error\nErro ao carregar o mapa!");
 		return (0);
 	}
-	liberar_matriz(nova);
+	//liberar_matriz(nova);
 	return (1);
 }
 
