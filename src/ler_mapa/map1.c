@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:15:59 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 17:18:19 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/29 23:53:26 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,14 @@ int	processar_primeira_passagem(t_data *data, t_map_data *map_data)
 		if (return_cordenadas)
 		{
 			if (return_cordenadas == -1)
-			{
-				//liberar_mapa(data->texture_paths, ft_count(data->texture_paths));
 				return (0);
-			}
 		}
 		else
 		{
 			if (chekagem_map_concluido(map_data, data) == 0)
-			{
-				//liberar_mapa(data->texture_paths, ft_count(data->texture_paths));
 				return (0);
-			}
 		}
 		(map_data->config_count)++;
 	}
-	//liberar_mapa(data->texture_paths, ft_count(data->texture_paths));
 	return (1);
 }

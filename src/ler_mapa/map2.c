@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 12:32:47 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:49:50 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,29 @@ int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
 		else if (result == 0)
 			return (0);
 	}
-	linha_corrigida = ft_strdup(linha);
+	//linha_corrigida = ft_strdup(linha);
 	result1 = nova_linha_corrigida(linha_corrigida, linha, map_data, var);
 	if (result1)
 	{
 		if (result1 == 0)
+		{
+			map_data->mapa = 0;
 			return (0);
+		}
 	}
-	free_linha(linha_corrigida);
+	//free_linha(linha_corrigida);
 	return (1);
 }
+
+/*
+void	free_linha_corrigida(char *linha)
+{
+	if (linha)
+	{
+		free(linha);
+	}
+}
+	*/
 
 int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		char *arquivo)
@@ -127,10 +140,8 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		else if (result == -1)
 			continue ;
 		else if (result == 0)
-		{
-			map_data->map_iniciado = 0;
 			return (0);
-		}
 	}
+	//free_linha(linha_corrigida);
 	return (1);
 }

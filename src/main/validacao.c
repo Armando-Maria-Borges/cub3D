@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:31:07 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 17:14:39 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:10:21 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,16 @@ int	check_args(int ac, char **av)
 	return (0);
 }
 
-int	ft_count(char **mat)
-{
-	int	i;
-
-	if (!mat)
-		return (0);
-	i = 0;
-	while (mat[i])
-		i++;
-	return (i);
-}
-
 int	load_map(char *arquivo, t_data *data, t_map_data *map_data)
 {
 	data->mapa = ler_mapa(arquivo, data, map_data);
-	
-	if (!data->mapa || map_data->map_iniciado == 0)
+	if (!data->mapa)
 	{
 		printf("Error\n ao carregar o mapa\n");
-		//liberar_mapa(data->mapa, ft_count(data->mapa));
 		return (1);
 	}
+	if (!map_data->map_iniciado)
+		return (1);
 	return (0);
 }
 
@@ -66,7 +54,6 @@ int	validate_characters(t_data *data)
 {
 	int	number_caracter;
 
-	
 	number_caracter = check_other_cracter(data);
 	if (number_caracter > 0)
 	{

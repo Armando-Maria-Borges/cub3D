@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:18:48 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 17:51:08 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:25:24 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	size_t	a;
+	int	a;
 
 	a = 0;
 	while (str[a])

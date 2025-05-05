@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aux.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:19:39 by lnzila            #+#    #+#             */
-/*   Updated: 2025/03/18 09:19:41 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/05 22:28:20 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ int	fechar_janela(void *param)
 
 	data = (t_data *)param;
 	if (data->win)
+	{
 		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+		liberar_mapa(data->mapa, ft_strcount(data->mapa));
+		free_texturas(data);
+	}
 	exit(0);
 	return (0);
 }

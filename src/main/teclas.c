@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:24:01 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/28 12:16:18 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/05 22:24:52 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	key_press(int keycode, void *param)
 		mlx_destroy_window(data->mlx, data->win);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
+		liberar_mapa(data->mapa, ft_strcount(data->mapa));
+		free_texturas(data);
 		exit(0);
 	}
 	else if (keycode == KEY_W)

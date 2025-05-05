@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tratar_tabs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:07:06 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/23 08:21:07 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/05 22:16:34 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,17 @@ char	*substituir_tabs(const char *linha)
 	if (!nova_linha)
 		return (NULL);
 	return (substituir_tabs_aux(linha, nova_linha));
+}
+
+
+int	ft_strcount(char **mat)
+{
+	int	i;
+
+	if (!mat)
+		return (0);
+	i = 0;
+	while (mat[i])
+		i++;
+	return (i);
 }

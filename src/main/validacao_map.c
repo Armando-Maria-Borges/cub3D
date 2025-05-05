@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 07:29:35 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 09:22:08 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:30:33 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	completar_linhas_com_x(char **nova, size_t maior_linha)
 	}
 }
 
-int	validar_conexoes_mapa(char **nova, t_map_data *map_data)
+int	validar_conexoes_mapa(char **nova)
 {
 	int	y;
 	int	i;
@@ -87,7 +87,6 @@ int	validar_conexoes_mapa(char **nova, t_map_data *map_data)
 				|| (nova[y + 1][i] == '0' && nova[y + 2] == NULL))
 			{
 				printf("\n\nError\n-->Deve existir alguma ligacao entre 0 e x\n");
-				map_data->map_iniciado = 0;
 				return (0);
 			}
 			i++;

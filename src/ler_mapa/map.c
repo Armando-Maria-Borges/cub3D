@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:38:18 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 17:28:47 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:35:45 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ char	**ler_mapa(char *arquivo, t_data *data, t_map_data *map_data)
 		return (NULL);
 	}
 	if (!ler_mapa1(arquivo, data, map_data))
-	{
-		map_data->map_iniciado = 0;
 		return (NULL);
-	}
-	
 	return (map_data->mapa);
 }
 
