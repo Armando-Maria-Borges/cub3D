@@ -6,12 +6,12 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:18:44 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 09:39:52 by aborges          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:45:12 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #ifndef LIBFT_H
-#define LIBFT_H
+# define LIBFT_H
+
 # include <limits.h>
 # include <stdlib.h>
 # include <string.h>

@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 12:23:09 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:12:37 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (load_textures(&data))
 		return (1);
-	if (!print_map(&data, &map_data))
+	if (!print_map(&data))
 		return (1);
 	if (encontrar_player(&data))
 		return (1);

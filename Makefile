@@ -12,7 +12,7 @@
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror -g -Iincludes
 MLX_FLAGS = -L$(MLXDIR) -lmlx -lX11 -lXext -lm -lGL
 LIBFT_FLAGS = -L$(LIBFTDIR) -lft
 

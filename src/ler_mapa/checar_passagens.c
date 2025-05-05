@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/04/30 13:02:24 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:24:39 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 				if (ft_strlen(linha) != ft_strspn(linha, " "))
 				{
 					write(2, "\nError! EXISTE linha vazia dentro do mapa\n", 43);
+					map_data->map_iniciado = 0;
 					return (0);
 				}
 			}
@@ -75,9 +76,8 @@ int	nova_linha_corrigida(char *linha_corrigida, char *linha,
 		{
 			if (linha_corrigida[(var[1])] == '0')
 			{
-				map_data->map_iniciado = 0;
-				free_linha(linha_corrigida);
 				write(2, "Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n", 47);
+				map_data->map_iniciado = 0;
 				return (0);
 			}
 			(var[1])++;
@@ -87,12 +87,8 @@ int	nova_linha_corrigida(char *linha_corrigida, char *linha,
 	if (result)
 	{
 		if (result == 0)
-		{
-			free_linha(linha_corrigida);
 			return (0);
-		}
 	}
-	free_linha(linha_corrigida);
 	return (1);
 }
 
@@ -109,11 +105,12 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 			- 1] == '0')
 	{
 		map_data->map_iniciado = 0;
-		return (write(2, "Error\n INICIO OU FIM SEM PAREDE\n\n", 32), 0);
+		return (write(2, "Error\n INICIO OU FIM SEM PAREDE\n", 31), 0);
 	}
 	if (!linha_corrigida)
 	{
 		write(2, "Error\n Erro de processamento\n", 29);
+		map_data->map_iniciado = 0;
 		j = 0;
 		while (j < (var[0]))
 		{
@@ -138,6 +135,7 @@ int	processar_segunda_passagem4(t_data *data, char *linha_corrigida,
 		if (linha_corrigida[j] == '0')
 		{
 			write(2, "Error\nExiste caminho aberto na ultima linha\n", 44);
+			map_data->map_iniciado = 0;
 			return (0);
 		}
 		j++;
@@ -146,6 +144,7 @@ int	processar_segunda_passagem4(t_data *data, char *linha_corrigida,
 	if ((var[0]) != data->map_height)
 	{
 		write(2, "Error\nInconsistência no mapa\n", 29);
+		map_data->map_iniciado = 0;
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 13:18:19 by aborges          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:12:30 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,14 @@ typedef struct s_map_data
 	int				map_iniciado;
 }					t_map_data;
 
+typedef struct s_config
+{
+	char *ea;
+	char *we;
+	char *no;
+	char *so;
+}	t_config;
+
 typedef struct s_ray
 {
 	int				map_x;
@@ -129,14 +137,13 @@ typedef struct s_ray
 char				**criar_nova_matriz(t_data *data, size_t maior_linha);
 void				substituir_espacos_por_x(char **nova);
 void				completar_linhas_com_x(char **nova, size_t maior_linha);
-int					validar_conexoes_mapa(char **nova, t_map_data *map_data);
+int					validar_conexoes_mapa(char **nova);
 void				print_nova_matriz(char **nova);
 void				free_linha(char *str);
-int					ft_count(char **mat);
 
 // Main
 int					init_mlx(t_data *data);
-int					print_map(t_data *data, t_map_data *map_data);
+int					print_map(t_data *data);
 void				start_loop(t_data *data);
 void				init_data(t_data *data, t_map_data *map_data);
 
@@ -238,6 +245,8 @@ int					check_other_cracter(t_data *data);
 // AUX
 size_t				ft_strspn(const char *s, const char *accept);
 void				liberar_matriz(char **mat);
+void	free_texturas(t_data *data);
+void	free_config(t_config *config);
 
 // Funções de raycasting
 void				calc_side_dist(t_data *data, t_ray *ray);

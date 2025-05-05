@@ -34,6 +34,7 @@ int	we_ea(t_data *data, t_map_data *map_data, char *linha)
 	}
 	else
 		return (0);
+	free_texturas(data);
 	return (1);
 }
 
@@ -59,6 +60,7 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 	}
 	else
 		return (0);
+	free_texturas(data);
 	return (1);
 }
 
@@ -86,6 +88,7 @@ int	ft_processar_cordenadas(int *valor_return)
 	}
 	else
 		return (0);
+	//free_texturas(data);
 	return (1);
 }
 
@@ -98,4 +101,28 @@ int	ft_return_cordenadas(t_data *data, t_map_data *map_data, char *linha)
 	valor_return[2] = ft_chao(data, map_data, linha);
 	valor_return[3] = ft_teto(data, map_data, linha);
 	return (ft_processar_cordenadas(valor_return));
+}
+void	free_config(t_config *config)
+{
+	if (config->ea)
+		free(config->ea);
+	if (config->we)
+		free(config->we);
+	if (config->no)
+		free(config->no);
+	if (config->so)
+		free(config->so);
+	free(config);
+}
+
+void	free_texturas(t_data *data)
+{
+	if (data->texture_paths[2])
+		free(data->texture_paths[2]);
+	if (data->texture_paths[3])
+		free(data->texture_paths[3]);
+	if (data->texture_paths[0])
+		free(data->texture_paths[0]);
+	if (data->texture_paths[1])
+		free(data->texture_paths[1]);
 }
