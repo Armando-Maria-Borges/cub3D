@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:17:15 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/05 22:25:48 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/05 22:41:13 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	main(int argc, char **argv)
 
 	init_data(&data, &map_data);
 	if (check_args(argc, argv) || load_map(argv[1], &data, &map_data))
+	{
+		liberar_tudo(&data);
 		return (1);
+	}
 	if (validate_positions(&data) || validate_characters(&data))
 		return (1);
 	if (validate_textures(&data))

@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/05 19:49:50 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/06 08:19:20 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,19 +104,8 @@ int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
 			return (0);
 		}
 	}
-	//free_linha(linha_corrigida);
 	return (1);
 }
-
-/*
-void	free_linha_corrigida(char *linha)
-{
-	if (linha)
-	{
-		free(linha);
-	}
-}
-	*/
 
 int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		char *arquivo)

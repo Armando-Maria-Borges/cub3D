@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/05 22:16:51 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/05 22:39:23 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int					validar_conexoes_mapa(char **nova);
 void				print_nova_matriz(char **nova);
 void				free_linha(char *str);
 int					ft_strcount(char **mat);
+void				liberar_tudo(t_data *data);
 
 // Main
 int					init_mlx(t_data *data);

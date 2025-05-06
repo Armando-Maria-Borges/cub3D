@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/05 19:54:53 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/06 08:29:54 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	nova_linha_corrigida(char *linha_corrigida, char *linha,
 			{
 				write(2, "Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n", 47);
 				map_data->map_iniciado = 0;
-				free(linha_corrigida);
+				free_linha(linha_corrigida);
 				return (0);
 			}
 			(var[1])++;
@@ -106,11 +106,13 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 			- 1] == '0')
 	{
 		map_data->map_iniciado = 0;
-		return (write(2, "Error\n INICIO OU FIM SEM PAREDE\n", 31), 0);
+		free_linha(linha_corrigida);
+		return (write(2, "Error\nINICIO OU FIM SEM PAREDE\n", 31), 0);
 	}
 	if (!linha_corrigida)
 	{
-		write(2, "Error\n Erro de processamento\n", 29);
+		//free_linha(linha_corrigida);
+		write(2, "Error\nErro de processamento\n", 29);
 		map_data->map_iniciado = 0;
 		j = 0;
 		while (j < (var[0]))
@@ -122,7 +124,6 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 	}
 	map_data->mapa[(var[0])++] = linha_corrigida;
 	map_data->mapa[(var[0])] = '\0';
-
 	return (1);
 }
 

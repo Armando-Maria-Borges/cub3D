@@ -6,7 +6,7 @@
 /*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:07:06 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/05 22:16:34 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/06 09:06:22 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,14 @@ int	ft_strcount(char **mat)
 	while (mat[i])
 		i++;
 	return (i);
+}
+
+void	liberar_tudo(t_data *data)
+{
+	//mlx_destroy_window(data->mlx, data->win);
+	//mlx_destroy_display(data->mlx);
+	free(data->mlx);
+	liberar_mapa(data->mapa, ft_strcount(data->mapa));
+	free_texturas(data);
+	exit(0);
 }
