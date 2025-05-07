@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/05 22:39:23 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 13:17:26 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int					verificar_colisao_celula(t_data *data, double new_x,
 
 // Ler mapa
 void				liberar_mapa(char **mapa, int altura);
+void				liberar_memoria(t_map_data *map_data);
 char				**validar_e_alocar(t_data *data, t_map_data *map_data);
 int					processar_segunda_passagem(t_data *data,
 						t_map_data *map_data, char *arquivo);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:09:00 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/06 08:19:20 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:48:51 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	segunda_passagem_ciclo(t_map_data *map_data, int *var, char *linha,
 		else if (result == 0)
 			return (0);
 	}
-	//linha_corrigida = ft_strdup(linha);
 	result1 = nova_linha_corrigida(linha_corrigida, linha, map_data, var);
 	if (result1)
 	{
@@ -131,6 +130,5 @@ int	processar_segunda_passagem(t_data *data, t_map_data *map_data,
 		else if (result == 0)
 			return (0);
 	}
-	//free_linha(linha_corrigida);
 	return (1);
 }

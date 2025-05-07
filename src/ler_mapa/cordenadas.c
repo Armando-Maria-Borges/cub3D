@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cordenadas.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:43:10 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/05 19:10:35 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:48:19 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	we_ea(t_data *data, t_map_data *map_data, char *linha)
 	}
 	else
 		return (0);
-	//free_texturas(data);
 	return (1);
 }
 
@@ -60,7 +59,6 @@ int	no_so(t_data *data, t_map_data *map_data, char *linha)
 	}
 	else
 		return (0);
-	//free_texturas(data);
 	return (1);
 }
 
@@ -88,7 +86,6 @@ int	ft_processar_cordenadas(int *valor_return)
 	}
 	else
 		return (0);
-	//free_texturas(data);
 	return (1);
 }
 
@@ -103,28 +100,6 @@ int	ft_return_cordenadas(t_data *data, t_map_data *map_data, char *linha)
 	return (ft_processar_cordenadas(valor_return));
 }
 
-/*
-void	free_config(t_config *config)
-{
-	if (config->ea)
-		free(config->ea);
-	if (config->we)
-		free(config->we);
-	if (config->no)
-		free(config->no);
-	if (config->so)
-		free(config->so);
-	free(config);
-}
-
-data->texture_paths[0] = NULL;
-data->texture_paths[1] = NULL;
-data->texture_paths[2] = NULL;
-data->texture_paths[3] = NULL;
-
-free_texturas(&data);
-
-*/
 void	free_texturas(t_data *data)
 {
 	if (data->texture_paths[2])

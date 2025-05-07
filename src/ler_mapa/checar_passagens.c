@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checar_passagens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/06 08:29:54 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 13:12:37 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	processar_segunda_passagem2(char *linha, int *var, t_map_data *map_data)
 			{
 				if (ft_strlen(linha) != ft_strspn(linha, " "))
 				{
-					write(2, "\nError! EXISTE linha vazia dentro do mapa\n", 43);
+					write(2, "\nError! EXISTE linha vazia dentro do mapa\n",
+						43);
 					map_data->map_iniciado = 0;
 					return (0);
 				}
@@ -76,7 +77,8 @@ int	nova_linha_corrigida(char *linha_corrigida, char *linha,
 		{
 			if (linha_corrigida[(var[1])] == '0')
 			{
-				write(2, "Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n", 47);
+				write(2, "Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n",
+					47);
 				map_data->map_iniciado = 0;
 				free_linha(linha_corrigida);
 				return (0);
@@ -97,33 +99,19 @@ int	processar_segunda_passagem3(char *linha_corrigida, t_map_data *map_data,
 		int *var)
 {
 	int	k;
-	int	j;
 
 	k = 0;
+	if (!linha_corrigida)
+		return (write(2, "Error\nErro de processamento\n", 29),
+			map_data->map_iniciado = 0, liberar_memoria(map_data), 0);
 	while (linha_corrigida[k] == 32 || linha_corrigida[k] == 39)
 		k++;
 	if (linha_corrigida[k] == '0' || linha_corrigida[ft_strlen(linha_corrigida)
 			- 1] == '0')
-	{
-		map_data->map_iniciado = 0;
-		free_linha(linha_corrigida);
-		return (write(2, "Error\nINICIO OU FIM SEM PAREDE\n", 31), 0);
-	}
-	if (!linha_corrigida)
-	{
-		//free_linha(linha_corrigida);
-		write(2, "Error\nErro de processamento\n", 29);
-		map_data->map_iniciado = 0;
-		j = 0;
-		while (j < (var[0]))
-		{
-			free(map_data->mapa[j]);
-			j++;
-		}
-		return (0);
-	}
-	map_data->mapa[(var[0])++] = linha_corrigida;
-	map_data->mapa[(var[0])] = '\0';
+		return (map_data->map_iniciado = 0, free_linha(linha_corrigida),
+			write(2, "Error\nINICIO OU FIM SEM PAREDE\n", 31), 0);
+	map_data->mapa[var[0]++] = linha_corrigida;
+	map_data->mapa[var[0]] = NULL;
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tratar_tabs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:07:06 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/06 09:06:22 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:47:19 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	*substituir_tabs(const char *linha)
 	return (substituir_tabs_aux(linha, nova_linha));
 }
 
-
 int	ft_strcount(char **mat)
 {
 	int	i;
@@ -83,8 +82,6 @@ int	ft_strcount(char **mat)
 
 void	liberar_tudo(t_data *data)
 {
-	//mlx_destroy_window(data->mlx, data->win);
-	//mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	liberar_mapa(data->mapa, ft_strcount(data->mapa));
 	free_texturas(data);

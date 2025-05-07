@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iniciar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:50:08 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/05 19:07:01 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:50:02 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ size_t	print_original_map(t_data *data)
 	while (y < data->map_height)
 	{
 		if (!data->mapa[y])
-			return(0);
+			return (0);
 		printf("%s\n", data->mapa[y]);
 		if (maior_linha < ft_strlen(data->mapa[y]))
 			maior_linha = ft_strlen(data->mapa[y]);
@@ -69,7 +69,6 @@ void	init_data(t_data *data, t_map_data *data_mapa)
 	data->texture_paths[1] = NULL;
 	data->texture_paths[2] = NULL;
 	data->texture_paths[3] = NULL;
-
 	data_mapa->map_iniciado = 0;
 	ft_memset(data, 0, sizeof(t_data));
 }
