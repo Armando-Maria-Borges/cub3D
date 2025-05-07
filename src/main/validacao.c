@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validacao.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:31:07 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/30 18:10:21 by aborges          ###   ########.fr       */
+/*   Updated: 2025/05/07 18:29:47 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int	check_args(int ac, char **av)
-{
-	(void)av;
-	if (ac != 2)
-	{
-		printf("Error\nUsage: ./cub3d <mapa>\n");
-		return (1);
-	}
-	return (0);
-}
 
 int	load_map(char *arquivo, t_data *data, t_map_data *map_data)
 {

@@ -6,7 +6,7 @@
 /*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 08:56:15 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/07 13:17:26 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/07 18:05:40 by lnzila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ char				*substituir_tabs(const char *linha);
 
 int					check_number_position(t_data *data);
 int					check_other_cracter(t_data *data);
+int	verificar_extensao_cub(const char *nome_arquivo);
 
 // AUX
 size_t				ft_strspn(const char *s, const char *accept);

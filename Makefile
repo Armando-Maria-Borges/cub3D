@@ -6,7 +6,7 @@
 #    By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 12:16:34 by aborges           #+#    #+#              #
-#    Updated: 2025/04/30 00:24:30 by lnzila           ###   ########.fr        #
+#    Updated: 2025/05/07 18:22:05 by lnzila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS =	src/main/main.c					\
 		src/main/liberar2.c				\
 		src/main/validacao.c			\
 		src/main/validacao_map.c		\
+		src/main/validar_args.c			\
 		src/ler_mapa/map.c				\
 		src/ler_mapa/map1.c				\
 		src/ler_mapa/map2.c				\
