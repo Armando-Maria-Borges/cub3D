@@ -27,7 +27,7 @@
 
 # define NOVA_LARGURA 1400
 # define NOVA_ALTURA 1060
-# define TILE_SIZE 7
+# define TILE_SIZE 8
 # define FOV 1.0
 # define NUM_RAYS NOVA_LARGURA
 # define MAX_DEPTH 20
@@ -207,6 +207,7 @@ int					ft_return_cordenadas(t_data *data, t_map_data *map_data,
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int		get_pixel(t_texture *tex, int x, int y);
 void				desenhar_mapa(t_data *data);
+void				desenhar_minimapa(t_data *data);
 int					render_scene(void *param);
 void				carregar_cor(char *linha, int *r, int *g, int *b);
 void				raycast(t_data *data);

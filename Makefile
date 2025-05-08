@@ -34,6 +34,7 @@ SRCS =	src/main/main.c					\
 		src/aux/tratar_tabs.c			\
 		src/desenhar/desenhar_mapa.c	\
 		src/desenhar/desenhar.c			\
+		src/desenhar/desenhar_minimapa.c	\
 		src/jogador/posicionamento.c	\
 		src/jogador/mover_jogador.c		\
 		src/jogador/checar_colisao.c	\
