@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validacao.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:31:07 by lnzila            #+#    #+#             */
-/*   Updated: 2025/05/07 18:29:47 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/07 19:30:16 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	load_map(char *arquivo, t_data *data, t_map_data *map_data)
 	data->mapa = ler_mapa(arquivo, data, map_data);
 	if (!data->mapa)
 	{
-		printf("Error\n ao carregar o mapa\n");
+		printf("Error\nAo carregar o mapa\n");
 		return (1);
 	}
 	if (!map_data->map_iniciado)
@@ -34,6 +34,7 @@ int	validate_positions(t_data *data)
 	{
 		printf("\n\nError!. there is %d position for player.\n\n",
 			number_position);
+		liberar_tudo(data);
 		return (1);
 	}
 	return (0);
@@ -48,6 +49,7 @@ int	validate_characters(t_data *data)
 	{
 		printf("\n\nError!\nThere is %d caracter not found.\n\n",
 			number_caracter);
+		liberar_tudo(data);
 		return (1);
 	}
 	return (0);
@@ -63,6 +65,7 @@ int	validate_textures(t_data *data)
 		if (!data->texture_paths[i])
 		{
 			printf("Error!\nCaminho da textura %d não definido!\n", i);
+			liberar_tudo(data);
 			return (1);
 		}
 		printf("Textura %d lida do mapa: %s\n", i, data->texture_paths[i]);

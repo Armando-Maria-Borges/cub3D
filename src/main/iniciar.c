@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iniciar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:50:08 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/07 12:50:02 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/07 19:24:33 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	print_map(t_data *data)
 	substituir_espacos_por_x(nova);
 	completar_linhas_com_x(nova, maior_linha);
 	if (!validar_conexoes_mapa(nova))
+	{
+		liberar_matriz(nova);
+		liberar_tudo(data);
 		return (0);
+	}
 	liberar_matriz(nova);
 	return (1);
 }

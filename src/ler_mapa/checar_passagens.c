@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checar_passagens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 08:58:46 by aborges           #+#    #+#             */
-/*   Updated: 2025/05/07 13:12:37 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/07 20:20:10 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ int	nova_linha_corrigida(char *linha_corrigida, char *linha,
 		{
 			if (linha_corrigida[(var[1])] == '0')
 			{
-				write(2, "Error\n EXISTE CAMINHO ABERTO NA PRIMEIRA LINHA\n",
-					47);
+				printf("Error\nPRIMEIRA LINHA COM ERRO\n");
 				map_data->map_iniciado = 0;
 				free_linha(linha_corrigida);
 				return (0);

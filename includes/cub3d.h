@@ -244,7 +244,7 @@ char				*substituir_tabs(const char *linha);
 
 int					check_number_position(t_data *data);
 int					check_other_cracter(t_data *data);
-int	verificar_extensao_cub(const char *nome_arquivo);
+int					verificar_extensao_cub(const char *nome_arquivo);
 
 // AUX
 size_t				ft_strspn(const char *s, const char *accept);

@@ -25,7 +25,6 @@ static int	ft_strcmp(const char *s1, const char *s2)
 		return (1);
 	else
 		return (-1);
-	
 }
 
 int	verificar_extensao_cub(const char *nome_arquivo)

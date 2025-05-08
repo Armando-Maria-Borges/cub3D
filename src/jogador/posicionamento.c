@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   posicionamento.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnzila <lnzila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aborges <aborges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:33:02 by lnzila            #+#    #+#             */
-/*   Updated: 2025/04/29 23:52:12 by lnzila           ###   ########.fr       */
+/*   Updated: 2025/05/07 19:33:06 by aborges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,6 @@ int	encontrar_jogador(t_data *data)
 		y++;
 	}
 	printf("Jogador não encontrado no mapa!\n");
+	liberar_tudo(data);
 	return (0);
 }
