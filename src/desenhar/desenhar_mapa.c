@@ -20,7 +20,6 @@ int	render_scene(void *param)
 	pintar_chao_teto(data);
 	mover_jogador(data);
 	raycast(data);
-	desenhar_minimapa(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }
